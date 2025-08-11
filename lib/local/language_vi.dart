@@ -1010,4 +1010,75 @@ class LanguageVi extends BaseLanguage {
   String get cannotUseOldPassword => 'Cannot use old password';
   @override
   String get movieDeletedSuccessfullyFromDownloads => 'Movie deleted successfully from downloads.';
+@override
+  String get videoUnavailable => 'Video Unavailable';
+
+  @override
+  String get videoUnavailableMessage => 'The video you\'re trying to access is private or currently unavailable.';
+
+  @override
+  String get pleaseCheckLinkOrPrivacySettings => 'Please check the link or adjust the privacy settings.';
+
+  @override
+  String get advertisement => 'Advertisement';
+
+  @override
+  String get skipAd => 'Skip Ad';
+
+  @override
+  String get skipIn => 'Skip In';
+
+  @override
+  String get live => 'LIVE';
+
+  @override
+  String get tvGuide => 'TV Guide';
+
+  @override
+  String get liveTV => 'Live TV';
+
+  @override
+  String get recommendedChannels => 'Recommended Channels';
+
+  @override
+  String get channelCategories => 'Channel Categories';
+
+  @override
+  String get privacyLinkCheckMessage => "The video you're trying to access is private or currently unavailable.Please check the link or adjust the privacy settings.";
+
+  @override
+  String get liveStreamErrorMessage => 'Unable to load live stream. Please check your connection or try again later.';
+
+  @override
+  String get videoNotFound => 'Video Not Found';
+
+  @override
+  String get videoUnavailableTapToPlay => 'Video Unavailable. Tap to play again.';
+
+  @override
+  String get noProgram => 'Error loading EPG Data';
+
+  @override
+  String get noProgramsAvailable => 'No Programs Available';
+
+  @override
+  String get yesterday => 'Yesterday';
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String get tomorrow => 'Tomorrow';
+
+  @override
+  String get loginToWatchMessage => 'Please log in to watch this Live Streaming.';
+
+  @override
+  String get dayTime => 'Day Time';
+
+  @override
+  String get channels => 'Channels';
+
+  @override
+  String get recommendedForYou => 'Recommended For You';
 }
