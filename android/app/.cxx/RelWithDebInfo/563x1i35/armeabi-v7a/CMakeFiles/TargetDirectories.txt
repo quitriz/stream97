@@ -1,0 +1,2 @@
+/sath/apps/s951/android/app/.cxx/RelWithDebInfo/563x1i35/armeabi-v7a/CMakeFiles/edit_cache.dir
+/sath/apps/s951/android/app/.cxx/RelWithDebInfo/563x1i35/armeabi-v7a/CMakeFiles/rebuild_cache.dir

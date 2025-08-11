@@ -1,0 +1,2 @@
+/sath/apps/s943/android/app/.cxx/RelWithDebInfo/355e573d/x86_64/CMakeFiles/edit_cache.dir
+/sath/apps/s943/android/app/.cxx/RelWithDebInfo/355e573d/x86_64/CMakeFiles/rebuild_cache.dir

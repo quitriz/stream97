@@ -1,0 +1,118 @@
+name: streamit_flutter
+description: A new Flutter application.
+version: 9.4.3+61
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Required
+  cupertino_icons: ^1.0.8
+  intl: ^0.19.0
+  nb_utils: ^7.1.4
+  cached_network_image: ^3.4.1
+  flutter_vector_icons: ^2.0.0
+  google_nav_bar: ^5.0.7
+
+  # Html
+  html: ^0.15.5+1
+  http: ^1.3.0
+  flutter_html: ^3.0.0-beta.2
+
+  # Voice Search
+  speech_to_text: ^7.0.0
+
+  # State Management
+  mobx: ^2.5.0
+  flutter_mobx: ^2.3.0
+
+  # Font
+  google_fonts: ^6.2.1
+
+  # Launch url
+  url_launcher: ^6.3.1
+
+  # Rating
+  flutter_rating_bar: ^4.0.1
+
+  # Ads
+  google_mobile_ads: ^6.0.0
+
+  # Image selection
+  image_picker: ^1.1.2
+
+  # Video player
+  youtube_player_flutter: ^9.1.1
+  pod_player: ^0.2.2
+  cast: ^2.1.0
+
+  # Web-views
+  webview_flutter: ^4.10.0
+  flutter_custom_tabs: ^2.3.0
+
+  # Animation
+  lottie: ^3.3.1
+
+  # Firebase remote config
+  firebase_core: ^3.13.0
+  firebase_remote_config: ^5.4.3
+  firebase_crashlytics: ^4.3.5
+
+  #Firebase Notification
+  flutter_local_notifications: ^19.1.0
+  firebase_messaging: ^15.2.5
+
+  # Prevent Screenshot and Screen record
+  screen_protector: ^1.4.2+1
+
+  # shimmer effect
+  shimmer: ^3.0.0
+
+  # Share link
+  share_plus: ^10.1.4
+
+  # Download file and store
+  flutter_downloader: ^1.12.0
+  device_info_plus: ^11.3.3
+  permission_handler: ^12.0.0+1
+  path_provider: ^2.1.5
+
+  #others
+  percent_indicator: ^4.2.5
+  stream_transform: ^2.1.1
+  fl_pip: ^3.2.1
+
+
+
+  flutter_localizations:
+    sdk: flutter
+  encrypt: ^5.0.3
+
+
+  # in App Purchase
+  purchases_flutter: ^8.7.2
+
+
+  crypto: any
+  async: any
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mobx_codegen: ^2.7.0
+  build_runner: ^2.4.15
+  #flutter packages pub run build_runner build --delete-conflicting-outputs
+
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/icons/
+    - assets/lottie/
+    - assets/gif/
+    - assets/images/
+    - assets/images/flag/
+    - assets/

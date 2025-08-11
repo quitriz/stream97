@@ -1,0 +1,43 @@
+import 'package:nb_utils/nb_utils.dart';
+const app_name = "STREAMIT";
+
+const walk_titles = ["Watch On Any Devices ", "Download And Go ", "No Pesky Contract"];
+
+const walk_sub_titles = [
+  "Stream On Your Phone, Tablet, Laptop And TV Without Paying More",
+  "Save Your Data, Watch Offline On A Plane, Train or Submarine",
+  "Join Today, Cancel Anytime & No Extra Charges Contain",
+];
+
+const IOS_APP_LINK = 'https://apps.apple.com/us/app/streamit-movies-tv-shows/id1669870944';
+
+/// NOTE: Do not add slash (/) at the end of your domain.
+const mDomainUrl = "https://wordpress.iqonic.design/product/wp/streamit";
+
+const mBaseUrl = '$mDomainUrl/wp-json/';
+
+const aboutUsURL = "$mDomainUrl/about-us/";
+const termsConditionURL = "$mDomainUrl/terms-and-use/";
+const privacyPolicyURL = "$mDomainUrl/privacy-policy/";
+
+// google ads ID's
+final mAdMobAppId = isIOS
+    ? 'ca-app-pub-3940256099942544~1458002511' // iOS app ID
+    : 'ca-app-pub-3940256099942544~3347511713'; // Android app ID
+final mAdMobBannerId = isIOS
+    ? 'ca-app-pub-3940256099942544/2934735716' // iOS banner
+    : 'ca-app-pub-3940256099942544/6300978111'; // Android banner
+
+final mAdMobInterstitialId = isIOS
+    ? 'ca-app-pub-3940256099942544/4411468910' // iOS interstitial
+    : 'ca-app-pub-3940256099942544/1033173712'; // Android interstitial
+
+/// enable and disable AdS
+const disabledAds =false;
+
+/// Default app language
+const defaultLanguage = 'en';
+
+/// Woo Commerce keys
+const CONSUMER_KEY = '';
+const CONSUMER_SECRET = '';

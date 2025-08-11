@@ -1,0 +1,1 @@
+/sath/apps/s943/build/app/intermediates/cxx/RelWithDebInfo/355e573d/obj/armeabi-v7a

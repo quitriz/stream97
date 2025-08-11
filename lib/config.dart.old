@@ -1,0 +1,43 @@
+const app_name = "STREAMIT";
+
+const walk_titles = ["Watch On Any Devices ", "Download And Go ", "No Pesky Contract"];
+
+const walk_sub_titles = [
+  "Stream On Your Phone, Tablet, Laptop And TV Without Paying More",
+  "Save Your Data, Watch Offline On A Plane, Train or Submarine",
+  "Join Today, Cancel Anytime & No Extra Charges Contain",
+];
+
+const IOS_APP_LINK = 'https://apps.apple.com/us/app/streamit-movies-tv-shows/id1669870944';
+
+/// NOTE: Do not add slash (/) at the end of your domain.
+//const mDomainUrl = "https://wordpress.iqonic.design/product/wp/streamit";
+const mDomainUrl = "https://vn2.com/phim";
+
+const mBaseUrl = '$mDomainUrl/wp-json/';
+
+const aboutUsURL = "$mDomainUrl/about-us/";
+const termsConditionURL = "$mDomainUrl/terms-and-use/";
+const privacyPolicyURL = "$mDomainUrl/privacy-policy/";
+
+// google ads ID's
+const mAdMobAppId = '';
+const mAdMobBannerId = '';
+const mAdMobInterstitialId = '';
+
+/// enable and disable AdS
+const disabledAds =false;
+
+/// Default app language
+const defaultLanguage = 'en';
+
+/// Woo Commerce keys
+
+//Local const mDomainUrl ="";
+const CONSUMER_KEY = 'ck_9d46d51e66d80e7605b8e44c0ecaf4d213f78472';
+const CONSUMER_SECRET = 'cs_955e676a5338fa465d0e94e8c0d2e9a13d36c232';
+
+
+//Live
+//const CONSUMER_KEY = '';
+//const CONSUMER_SECRET = '';
