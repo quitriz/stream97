@@ -1050,7 +1050,7 @@ class LanguageVi extends BaseLanguage {
   String get liveStreamErrorMessage => 'Unable to load live stream. Please check your connection or try again later.';
 
   @override
-  String get videoNotFound => 'Video Not Found';
+  String get videoNotFound => 'Video Không Thấy';
 
   @override
   String get videoUnavailableTapToPlay => 'Video Unavailable. Tap to play again.';
@@ -1059,19 +1059,19 @@ class LanguageVi extends BaseLanguage {
   String get noProgram => 'Error loading EPG Data';
 
   @override
-  String get noProgramsAvailable => 'No Programs Available';
+  String get noProgramsAvailable => 'Chưa Có Chương Trình';
 
   @override
-  String get yesterday => 'Yesterday';
+  String get yesterday => 'Hôm Qua';
 
   @override
-  String get today => 'Today';
+  String get today => 'Hôm Nay';
 
   @override
-  String get tomorrow => 'Tomorrow';
+  String get tomorrow => 'Ngày Mai';
 
   @override
-  String get loginToWatchMessage => 'Please log in to watch this Live Streaming.';
+  String get loginToWatchMessage => 'Đăng Nhập Để Xem Trực Tuyến';
 
   @override
   String get dayTime => 'Day Time';
