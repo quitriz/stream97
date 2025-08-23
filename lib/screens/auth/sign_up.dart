@@ -203,11 +203,11 @@ class SignUpScreenState extends State<SignUpScreen>
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         30.height,
-                        Text(language!.createYourAccountFor,
+                        Text(language.createYourAccountFor,
                             style: boldTextStyle(size: 24),
                             textAlign: TextAlign.center),
                         8.height,
-                        Text(language!.registerAndExploreOur,
+                        Text(language.registerAndExploreOur,
                             style: secondaryTextStyle(color: Colors.white)),
                         24.height,
                         AppTextField(
@@ -226,7 +226,7 @@ class SignUpScreenState extends State<SignUpScreen>
                           textCapitalization: TextCapitalization.words,
                           decoration: inputDecoration(
                             context,
-                            hint: language!.firstName,
+                            hint: language.firstName,
                             hintStyle: secondaryTextStyle(),
                             prefixIcon: Icon(Icons.person_2_outlined,
                                 color: textSecondaryColorGlobal, size: 18),
@@ -256,7 +256,7 @@ class SignUpScreenState extends State<SignUpScreen>
                           textInputAction: TextInputAction.next,
                           decoration: inputDecoration(
                             context,
-                            hint: language!.lastName,
+                            hint: language.lastName,
                             hintStyle: secondaryTextStyle(),
                             prefixIcon: Icon(Icons.person_2_outlined,
                                 color: textSecondaryColorGlobal, size: 18),
@@ -279,7 +279,7 @@ class SignUpScreenState extends State<SignUpScreen>
                           textInputAction: TextInputAction.next,
                           decoration: inputDecoration(
                             context,
-                            hint: language!.username,
+                            hint: language.username,
                             hintStyle: secondaryTextStyle(),
                             prefixIcon: Icon(Icons.person_2_outlined,
                                 color: textSecondaryColorGlobal, size: 18),
@@ -302,7 +302,7 @@ class SignUpScreenState extends State<SignUpScreen>
                           textInputAction: TextInputAction.next,
                           decoration: inputDecoration(
                             context,
-                            hint: language!.email,
+                            hint: language.email,
                             hintStyle: secondaryTextStyle(),
                             prefixIcon: Icon(Icons.mail_outline,
                                 color: textSecondaryColorGlobal, size: 18),
@@ -346,17 +346,17 @@ class SignUpScreenState extends State<SignUpScreen>
                               color: colorPrimary, size: 18),
                           decoration: inputDecoration(
                             context,
-                            hint: language!.password,
+                            hint: language.password,
                             hintStyle: secondaryTextStyle(),
                             prefixIcon: Icon(Icons.lock,
                                 color: textSecondaryColorGlobal, size: 18),
                           ),
                           isPassword: true,
                           isValidationRequired: true,
-                          errorThisFieldRequired: language!.thisFieldIsRequired,
+                          errorThisFieldRequired: language.thisFieldIsRequired,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return language!.thisFieldIsRequired;
+                              return language.thisFieldIsRequired;
                             }
                             if (value.length < 8) {
                               return 'Password must be at least 8 characters long';
@@ -378,7 +378,7 @@ class SignUpScreenState extends State<SignUpScreen>
                             if (value!.isEmpty) return errorThisFieldRequired;
                             return passwordController.text == value
                                 ? null
-                                : language!.passWordNotMatch;
+                                : language.passWordNotMatch;
                           },
                           textInputAction: TextInputAction.done,
                           onFieldSubmitted: (arg) {
@@ -392,7 +392,7 @@ class SignUpScreenState extends State<SignUpScreen>
                               color: colorPrimary, size: 18),
                           decoration: inputDecoration(
                             context,
-                            hint: language!.confirmPassword,
+                            hint: language.confirmPassword,
                             hintStyle: secondaryTextStyle(),
                             prefixIcon: Icon(Icons.lock,
                                 color: textSecondaryColorGlobal, size: 18),
@@ -404,7 +404,7 @@ class SignUpScreenState extends State<SignUpScreen>
                           textColor: colorPrimary,
                           color: colorPrimary,
                           padding: EdgeInsets.only(top: 12, bottom: 12),
-                          child: Text(language!.signUp,
+                          child: Text(language.signUp,
                               style: primaryTextStyle(
                                   size: ts_normal.toInt(),
                                   color: Theme.of(context)
@@ -432,13 +432,13 @@ class SignUpScreenState extends State<SignUpScreen>
                           child: RichTextWidget(
                             list: <TextSpan>[
                               TextSpan(
-                                text: language!.alreadyAMember + ' ',
+                                text: language.alreadyAMember + ' ',
                                 style: secondaryTextStyle(
                                     fontFamily:
                                         GoogleFonts.nunito().fontFamily),
                               ),
                               TextSpan(
-                                text: language!.login,
+                                text: language.login,
                                 style: secondaryTextStyle(
                                     color: context.primaryColor,
                                     decoration: TextDecoration.underline,

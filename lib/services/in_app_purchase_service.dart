@@ -177,7 +177,7 @@ class InAppPurchaseService {
       appStore.setSubscriptionPlanStatus(userPlanStatus);
       if (ctx != null) finish(ctx, true);
       appStore.setSubscriptionPlanName(order.membershipName.validate());
-      appStore.setSubscriptionPlanId(order.membershipId.validate());
+      appStore.setSubscriptionPlanId(order.membershipId.validate().toString());
       if (!wasFreePlan) appStore.setActiveSubscriptionIdentifier(request["in_app_purchase_identifier"]);
       if (!wasFreePlan) appStore.setSubscriptionPlanExpDate(subscriptionExpirationDate);
       setValue(HAS_PURCHASE_STORED, true);

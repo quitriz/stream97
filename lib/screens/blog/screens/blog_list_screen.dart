@@ -104,7 +104,7 @@ class _BlogListScreenState extends State<BlogListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(language!.blogs, style: boldTextStyle(size: 20)),
+        title: Text(language.blogs, style: boldTextStyle(size: 20)),
         elevation: 0,
         centerTitle: true,
         backgroundColor: appBackground,
@@ -132,7 +132,7 @@ class _BlogListScreenState extends State<BlogListScreen> {
                 },
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintText: language!.search,
+                  hintText: language.search,
                   hintStyle: secondaryTextStyle(),
                   prefixIcon: Image.asset(
                     ic_search,
@@ -170,7 +170,7 @@ class _BlogListScreenState extends State<BlogListScreen> {
                         return Center(
                           child: NoDataWidget(
                             imageWidget: noDataImage(),
-                            title: isError ? language!.somethingWentWrong : language!.noData,
+                            title: isError ? language.somethingWentWrong : language.noData,
                           ),
                         );
                       }
@@ -180,7 +180,7 @@ class _BlogListScreenState extends State<BlogListScreen> {
                           return Center(
                             child: NoDataWidget(
                               imageWidget: noDataImage(),
-                              title: isError ? language!.somethingWentWrong : 'No Blogs Found for ${searchController.text}',
+                              title: isError ? language.somethingWentWrong : 'No Blogs Found for ${searchController.text}',
                             ),
                           );
                         } else {

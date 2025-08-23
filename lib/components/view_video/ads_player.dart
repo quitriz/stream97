@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:pod_player/pod_player.dart';
 import 'package:streamit_flutter/components/view_video/ad_view_player.dart';
+import 'package:streamit_flutter/components/view_video/video_widget.dart';
 import 'package:streamit_flutter/utils/common.dart';
 import '../../utils/constants.dart';
 import '../ad_components/ad_services.dart';
 import '../ad_components/html_ad_widget.dart';
 import 'custom_pod_player_overlays.dart';
 import '../../models/live_tv/live_channel_detail_model.dart';
+import 'package:streamit_flutter/utils/resources/extentions/string_extentions.dart';
 
 class VideoPlayerConfig {
   final bool autoPlay;
@@ -25,8 +27,10 @@ class AdVideoPlayerWidget extends StatefulWidget {
   final VideoPlayerConfig playerConfig;
   final AdEventCallback? onAdEvent;
   final bool isLive;
+  final PostType postType;
 
-  const AdVideoPlayerWidget({Key? key, required this.streamUrl, this.adConfig, required this.title, this.playerConfig = const VideoPlayerConfig(), this.onAdEvent, this.isLive = false})
+
+  const AdVideoPlayerWidget({Key? key, required this.streamUrl, this.adConfig, required this.title, this.playerConfig = const VideoPlayerConfig(), this.onAdEvent, this.isLive = false, required this.postType})
       : super(key: key);
 
   @override
@@ -51,12 +55,23 @@ class _AdVideoPlayerWidgetState extends State<AdVideoPlayerWidget> with VideoPla
 
   bool _isVideoAdPlaying = false;
 
+  bool _adsOnlyMode = false;
+
+  bool _adsCompleted = false;
+
+  //endregion
+
 //region Init
   @override
   void initState() {
     super.initState();
     _initializeServices();
-    _initializeStreamPlayer();
+    _adsOnlyMode = widget.streamUrl.getURLType() == VideoType.typeYoutube;
+    if (_adsOnlyMode) {
+      _startAdsOnlyFlow();
+    } else {
+      _initializeStreamPlayer();
+    }
   }
 
   void _initializeServices() {
@@ -92,6 +107,41 @@ class _AdVideoPlayerWidgetState extends State<AdVideoPlayerWidget> with VideoPla
     _streamController.addListener(_onStreamPlayerStateChanged);
   }
 
+  Future<void> _startAdsOnlyFlow() async {
+    try {
+      if (widget.adConfig?.adsType == AdTypeConst.vast) {
+        final vastUrl = widget.adConfig?.vastUrl;
+        if (vastUrl.validate().isNotEmpty) {
+          final vastAdUrl = await AdService.parseVastAd(vastUrl!);
+          if (vastAdUrl.validate().isNotEmpty) {
+            await _playVastVideoAd(vastAdUrl!);
+            return;
+          }
+        }
+        setState(() {
+          _adsCompleted = true;
+        });
+        return;
+      }
+
+      final preAds = widget.adConfig?.preRollAdsList ?? [];
+      if (preAds.isNotEmpty) {
+        await _playVideoAd(preAds.first, AdType.preRoll);
+        return;
+      }
+
+      setState(() {
+        _adsCompleted = true;
+      });
+    } catch (error) {
+      ErrorHandler.handleAdError(error, null, widget.onAdEvent);
+      setState(() {
+        _adsCompleted = true;
+      });
+    }
+  }
+  //endregion
+
   Future<void> _initializeAdController(String videoUrl) async {
     try {
       PerformanceMonitor.startTimer('ad_controller_init');
@@ -126,6 +176,7 @@ class _AdVideoPlayerWidgetState extends State<AdVideoPlayerWidget> with VideoPla
 
   void _onStreamPlayerStateChanged() {
     try {
+      if (_adsOnlyMode) return;
       final currentFullscreenState = _streamController.isFullScreen;
       if (_isFullscreen != currentFullscreenState) {
         setState(() {
@@ -168,7 +219,7 @@ class _AdVideoPlayerWidgetState extends State<AdVideoPlayerWidget> with VideoPla
 //region Ad Playback Logic
 
   Future<void> _playVastVideoAd(String videoUrl) async {
-    final vastAd = AdUnit(type: 'vast', videoUrl: videoUrl, skipEnabled: false);
+    final vastAd = AdUnit(type: AdTypeConst.vast, videoUrl: videoUrl, skipEnabled: false);
     _startVideoAd(vastAd);
     await _initializeAdController(videoUrl);
   }
@@ -206,7 +257,7 @@ class _AdVideoPlayerWidgetState extends State<AdVideoPlayerWidget> with VideoPla
 
   Future<void> _playPreRollAdIfNeeded() async {
     try {
-      if (widget.adConfig?.adsType == 'vast') {
+      if (widget.adConfig?.adsType == AdTypeConst.vast) {
         await _handleVastAd();
         return;
       }
@@ -250,8 +301,8 @@ class _AdVideoPlayerWidgetState extends State<AdVideoPlayerWidget> with VideoPla
     if (!AdService.shouldPlayMidRollAds(widget.adConfig)) {
       return;
     }
-    final interval = int.tryParse(widget.adConfig?.midRollInterval?.toString() ?? '0') ?? 0;
-    _timerService.startMidRollTimer(interval, _handleMidRollTick);
+    final interval = widget.adConfig?.midRollInterval;
+    _timerService.startMidRollTimer(interval!, _handleMidRollTick);
     _midRollTimerStarted = true;
   }
 
@@ -304,6 +355,14 @@ class _AdVideoPlayerWidgetState extends State<AdVideoPlayerWidget> with VideoPla
     _disposeAdController();
     _resetAdState();
     _isVideoAdPlaying = false;
+    if (_adsOnlyMode) {
+      if (mounted) {
+        setState(() {
+          _adsCompleted = true;
+        });
+      }
+      return;
+    }
     if (_isFullscreen && !_streamController.isFullScreen) {
       _streamController.enableFullScreen();
     }
@@ -396,6 +455,7 @@ class _AdVideoPlayerWidgetState extends State<AdVideoPlayerWidget> with VideoPla
 
 //region Ad Helper Methods
   List<Duration> _getAllAdBreaks() {
+    if (_adsOnlyMode) return const [];
     return AdService.calculateAdBreaks(widget.adConfig, _streamController.totalVideoLength);
   }
 
@@ -534,6 +594,26 @@ class _AdVideoPlayerWidgetState extends State<AdVideoPlayerWidget> with VideoPla
 
   @override
   Widget build(BuildContext context) {
+    if (_adsOnlyMode) {
+      if (_shouldShowAdPlayer() && !_adsCompleted) {
+        return Container(
+          width: double.infinity,
+          height: double.infinity,
+          child: _buildAdView(),
+        );
+      }
+
+      return VideoWidget(
+        videoURL: widget.streamUrl,
+        watchedTime: '',
+          videoType: widget.postType,
+        videoURLType: widget.streamUrl.getURLType(),
+        videoId: 0,
+        thumbnailImage: '',
+        isTrailer: true,
+      );
+    }
+
     return Container(
       width: double.infinity,
       height: double.infinity,

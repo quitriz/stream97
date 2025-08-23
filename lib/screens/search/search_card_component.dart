@@ -32,7 +32,11 @@ class SearchCardComponent extends StatelessWidget {
               episode.id = e.id;
               episode.postType = PostType.EPISODE;
 
-              await EpisodeDetailScreen(episode: episode, episodes: []).launch(context);
+              await EpisodeDetailScreen(
+                episode: episode, 
+                episodes: [],
+                tvShowUserHasAccess: null,
+              ).launch(context);
             } else {
               await MovieDetailScreen(movieData: e).launch(context);
             }

@@ -151,8 +151,8 @@ class ViewAllMoviesScreenState extends State<ViewAllMoviesScreen> {
               ).visible(isLoading),
             NoDataWidget(
               imageWidget: noDataImage(),
-              title: '$title ${language!.notFound}',
-              subTitle: '${language!.the} $title ${language!.hasNotYetBeenAdded}',
+              title: '$title ${language.notFound}',
+              subTitle: '${language.the} $title ${language.hasNotYetBeenAdded}',
             ).center().visible(!isLoading && movies.isEmpty && !hasError),
             Text(errorSomethingWentWrong, style: boldTextStyle(color: Colors.white)).center().visible(hasError),
             if (bannerAd != null && appStore.showAds)

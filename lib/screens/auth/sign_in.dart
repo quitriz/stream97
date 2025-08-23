@@ -217,16 +217,16 @@ class SignInScreenState extends State<SignInScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(language!.welcomeBack, style: boldTextStyle(size: 24)),
+                        Text(language.welcomeBack, style: boldTextStyle(size: 24)),
                         8.height,
-                        Text(language!.youHaveBeenMissed, style: secondaryTextStyle()),
+                        Text(language.youHaveBeenMissed, style: secondaryTextStyle()),
                         24.height,
                         AppTextField(
                           textFieldType: TextFieldType.USERNAME,
                           controller: emailController,
                           decoration: inputDecoration(
                             context,
-                            hint: language!.email + ' / ' + language!.username,
+                            hint: language.email + ' / ' + language.username,
                             hintStyle: secondaryTextStyle(),
                             prefixIcon: Icon(Icons.mail_outline, color: textSecondaryColorGlobal, size: 18),
                           ),
@@ -236,7 +236,7 @@ class SignInScreenState extends State<SignInScreen> {
                           textInputAction: TextInputAction.next,
                           focus: emailFocus,
                           nextFocus: passFocus,
-                          errorThisFieldRequired: language!.thisFieldIsRequired,
+                          errorThisFieldRequired: language.thisFieldIsRequired,
                         ),
                         16.height,
                         AppTextField(
@@ -258,13 +258,13 @@ class SignInScreenState extends State<SignInScreen> {
                           ),
                           decoration: inputDecoration(
                             context,
-                            hint: language!.password,
+                            hint: language.password,
                             hintStyle: secondaryTextStyle(),
                             prefixIcon: Icon(Icons.lock, color: textSecondaryColorGlobal, size: 18),
                           ),
                           isPassword: true,
                           isValidationRequired: true,
-                          errorThisFieldRequired: language!.thisFieldIsRequired,
+                          errorThisFieldRequired: language.thisFieldIsRequired,
                         ).paddingBottom(spacing_standard_new),
                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                               Row(
@@ -277,7 +277,7 @@ class SignInScreenState extends State<SignInScreen> {
                                       },
                                     ),
                                   ),
-                              Text(language!.rememberMe, style: secondaryTextStyle()).onTap(() {
+                              Text(language.rememberMe, style: secondaryTextStyle()).onTap(() {
                                     appStore.setRemember(!appStore.doRemember);
                                   }),
                                 ],
@@ -285,7 +285,7 @@ class SignInScreenState extends State<SignInScreen> {
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: Text(
-                                  language!.forgotPasswordData,
+                                  language.forgotPasswordData,
                               style: secondaryTextStyle(color: context.primaryColor, fontStyle: FontStyle.italic),
                             ).paddingSymmetric(vertical: spacing_standard_new, horizontal: spacing_standard).onTap(() {
                                   onForgotPasswordClicked(context);
@@ -294,7 +294,7 @@ class SignInScreenState extends State<SignInScreen> {
                             ]),
                         AppButton(
                           width: context.width(),
-                          child: Text(language!.login, style: boldTextStyle()),
+                          child: Text(language.login, style: boldTextStyle()),
                           color: colorPrimary,
                           onTap: () {
                             doSignIn(context);
@@ -308,11 +308,11 @@ class SignInScreenState extends State<SignInScreen> {
                           child: RichTextWidget(
                             list: <TextSpan>[
                               TextSpan(
-                                text: language!.dontHaveAnAccount + ' ',
+                                text: language.dontHaveAnAccount + ' ',
                                 style: secondaryTextStyle(fontFamily: GoogleFonts.nunito().fontFamily),
                               ),
                               TextSpan(
-                                text: language!.signUp,
+                                text: language.signUp,
                                 style: secondaryTextStyle(color: context.primaryColor, decoration: TextDecoration.underline, fontFamily: GoogleFonts.nunito().fontFamily),
                               ),
                             ],

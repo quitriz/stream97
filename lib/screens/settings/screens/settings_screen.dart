@@ -28,7 +28,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(language!.settings, style: primaryTextStyle(size: ts_large.toInt())),
+        title: Text(language.settings, style: primaryTextStyle(size: ts_large.toInt())),
         elevation: 0,
         centerTitle: true,
         backgroundColor: context.cardColor,
@@ -40,18 +40,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
           children: [
             if (appStore.isLogging)
               SettingWidget(
-                title: language!.changePassword,
+                title: language.changePassword,
                 titleTextStyle: primaryTextStyle(color: Colors.white),
                 leading: Image.asset(ic_lock, color: textSecondaryColor, height: 18),
                 trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Theme.of(context).textTheme.bodySmall?.color),
-                subTitle: language!.changePasswordText,
+                subTitle: language.changePasswordText,
                 onTap: () {
                   ChangePasswordScreen().launch(context);
                 },
               ),
             SettingWidget(
               leading: Image.asset(ic_language, color: textSecondaryColor, height: 18),
-              title: language!.language,
+              title: language.language,
               subTitle: getSelectedLanguageModel()?.name.validate(),
               titleTextStyle: primaryTextStyle(color: Colors.white),
               trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Theme.of(context).textTheme.bodySmall?.color),
@@ -61,8 +61,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             SettingWidget(
               leading: Image.asset(ic_privacy, color: textSecondaryColor, height: 18),
-              title: language!.privacyPolicy,
-              subTitle: language!.ourCommitmentToYour,
+              title: language.privacyPolicy,
+              subTitle: language.ourCommitmentToYour,
               titleTextStyle: primaryTextStyle(color: Colors.white),
               trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Theme.of(context).textTheme.bodySmall?.color),
               onTap: () {
@@ -71,7 +71,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             SettingWidget(
               leading: Image.asset(ic_document, color: textSecondaryColor, height: 18),
-              title: language!.termsConditions,
+              title: language.termsConditions,
               subTitle: 'Important Info Awaits: Peek Inside!',
               titleTextStyle: primaryTextStyle(color: Colors.white),
               trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Theme.of(context).textTheme.bodySmall?.color),
@@ -83,8 +83,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               future: getPackageInfo(),
               onSuccess: (d) => SettingWidget(
                 leading: Image.asset(ic_rate, color: textSecondaryColor, height: 18),
-                title: language!.rateUs,
-                subTitle: language!.loveItLetUsKnow,
+                title: language.rateUs,
+                subTitle: language.loveItLetUsKnow,
                 titleTextStyle: primaryTextStyle(color: Colors.white),
                 trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Theme.of(context).textTheme.bodySmall?.color),
                 onTap: () {
@@ -97,8 +97,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             SettingWidget(
               leading: Image.asset(ic_share, color: textSecondaryColor, height: 18),
-              title: language!.shareApp,
-              subTitle: language!.reachUsMore,
+              title: language.shareApp,
+              subTitle: language.reachUsMore,
               titleTextStyle: primaryTextStyle(color: Colors.white),
               trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Theme.of(context).textTheme.bodySmall?.color),
               onTap: () async {
@@ -112,7 +112,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               future: getPackageInfo(),
               onSuccess: (d) => SettingWidget(
                 leading: Image.asset(ic_about, color: textSecondaryColor, height: 18),
-                title: language!.aboutUs,
+                title: language.aboutUs,
                 subTitle: d.versionName.validate(),
                 titleTextStyle: primaryTextStyle(color: Colors.white),
                 trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Theme.of(context).textTheme.bodySmall?.color),
@@ -124,21 +124,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
             if (appStore.isLogging)
               SettingWidget(
                 leading: Icon(Icons.delete_outline, size: 20, color: Theme.of(context).textTheme.bodySmall?.color),
-                title: language!.deleteAccount,
-                subTitle: language!.confirmYouWantToLeave,
+                title: language.deleteAccount,
+                subTitle: language.confirmYouWantToLeave,
                 titleTextStyle: primaryTextStyle(),
                 trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Theme.of(context).textTheme.bodySmall?.color),
                 onTap: () async {
                   if (appStore.userEmail != DEFAULT_EMAIL) {
                     await showConfirmDialogCustom(
                       context,
-                      title: language!.areYouSureYou,
+                      title: language.areYouSureYou,
                       primaryColor: context.primaryColor,
-                      negativeText: language!.no,
-                      positiveText: language!.yes,
+                      negativeText: language.no,
+                      positiveText: language.yes,
                       onAccept: (context) async {
                         await deleteUserAccount().then((value) async {
-                          toast(language!.accountDeletedSuccessfully);
+                          toast(language.accountDeletedSuccessfully);
                           appStore.setLoading(false);
                           await FirebaseMessaging.instance.unsubscribeFromTopic('${appNameTopic}').then((v) {
                             log("${FirebaseMsgConst.topicUnSubscribed}$appNameTopic");
@@ -148,7 +148,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       },
                     );
                   } else {
-                    toast(language!.demoUserCanTPerformThisAction);
+                    toast(language.demoUserCanTPerformThisAction);
                   }
                 },
               ),
@@ -160,13 +160,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           if (appStore.isLogging) {
             showConfirmDialogCustom(
               context,
-              title: language!.doYouWantToLogout,
+              title: language.doYouWantToLogout,
               primaryColor: context.primaryColor,
-              negativeText: language!.no,
-              positiveText: language!.yes,
+              negativeText: language.no,
+              positiveText: language.yes,
               onAccept: (c) async {
                 await logout(isNewTask: true, context: context).then((value) {
-               toast(language!.youHaveBeenLoggedOutSuccessfully);
+               toast(language.youHaveBeenLoggedOutSuccessfully);
                 });
               },
             );
@@ -185,7 +185,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           }
         },
         child: Text(
-          appStore.isLogging ? language!.logOut : language!.login,
+          appStore.isLogging ? language.logOut : language.login,
           style: primaryTextStyle(color: context.primaryColor),
         ),
       ).paddingSymmetric(horizontal: 16, vertical: 20),

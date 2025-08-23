@@ -79,9 +79,9 @@ class _CastBottomSheetState extends State<CastBottomSheet> with TickerProviderSt
               unselectedLabelColor: Theme.of(context).textTheme.titleLarge!.color,
               labelColor: colorPrimary,
               tabs: [
-                Tab(child: Text(language!.all)),
-                Tab(child: Text(language!.movies)),
-                Tab(child: Text(language!.tVShows)),
+                Tab(child: Text(language.all)),
+                Tab(child: Text(language.movies)),
+                Tab(child: Text(language.tVShows)),
               ],
             ),
           ),

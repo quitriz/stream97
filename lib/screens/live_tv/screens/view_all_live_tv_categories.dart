@@ -64,18 +64,18 @@ class _ViewAllLiveTvCategoriesState extends State<ViewAllLiveTvCategories> {
                 onRetry: () {
                   init(showLoader: true);
                 },
-                retryText: language!.refresh,
+                retryText: language.refresh,
               ).center();
             },
             onSuccess: (AllLiveCategoryList data) {
               if (categoryList.isEmpty)
                 return NoDataWidget(
                   imageWidget: noDataImage(),
-                  title: language!.noDataFound,
+                  title: language.noDataFound,
                   onRetry: () {
                     init(showLoader: true);
                   },
-                  retryText: language!.refresh,
+                  retryText: language.refresh,
                 ).center();
               else
                 return SingleChildScrollView(

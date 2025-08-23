@@ -27,7 +27,6 @@ class CommonListItemComponent extends StatelessWidget {
   final bool isWatchList;
   final double? width;
   final VoidCallback? onTap;
-
   final bool isLandscape;
   final bool isLive;
 
@@ -51,7 +50,7 @@ class CommonListItemComponent extends StatelessWidget {
       appStore.setTrailerVideoPlayer(!isContinueWatch);
       MovieData episode = MovieData();
       episode.title = data.title;
-      episode.image = data.image;
+      episode.image = data.image.validate().isNotEmpty ? data.image : default_image;
       episode.id = data.id;
       episode.postType = PostType.EPISODE;
 
@@ -221,7 +220,7 @@ class CommonListItemComponent extends StatelessWidget {
                           alignment: Alignment.bottomCenter,
                           children: [
                             CachedImageWidget(
-                              url: data.portraitImage.validate(),
+                              url: data.portraitImage.validate().isEmpty ? default_image : data.portraitImage.validate(),
                               height: context.height() - 20,
                               width: context.width(),
                               fit: BoxFit.cover,
@@ -276,6 +275,44 @@ class CommonListItemComponent extends StatelessWidget {
                     ),
                   ).visible(appStore.showItemName),
                 ),
+
+                ///PPV Icons
+                if (!data.isRented.validate() &&
+                    data.isRent.validate() &&
+                    !(data.requiredPlan != null && appStore.subscriptionPlanId == data.requiredPlan.validate()) &&
+                    data.userHasAccess == false &&
+                    appStore.isMembershipEnabled)
+                  if (data.isRent.validate()) ...[
+                    ///Dynamic Icons Handling
+                    Positioned(
+                      top: 8,
+                      right: data.purchaseType == PurchaseType.anyone ? 38 : 8,
+                      child: CachedImageWidget(
+                        url: data.purchaseType == PurchaseType.anyone
+                            ? subscription
+                            : data.purchaseType == PurchaseType.ppv
+                                ? rent_image
+                                : subscription,
+                        width: 22,
+                        height: 22,
+                        color: data.purchaseType == PurchaseType.ppv ? null : subscriptionColor,
+                      ),
+                    ),
+                    if (data.purchaseType == PurchaseType.anyone)
+                      Positioned(
+                        top: 8,
+                        right: 8,
+                        child: CachedImageWidget(url: rent_image, width: 22, height: 22),
+                      ),
+                  ],
+
+                ///Rented Icon
+                if (data.isRented == true && appStore.isMembershipEnabled)
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: CachedImageWidget(url: rented_image, width: 22, height: 22),
+                  ),
               ],
             ),
     );

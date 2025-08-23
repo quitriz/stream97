@@ -226,7 +226,7 @@ class _DownloadVideoFromLinkWidgetState
           },
           constraints: const BoxConstraints(minHeight: 32, minWidth: 32),
           icon: Icon(Icons.refresh, color: colorPrimary),
-          tooltip: language!.refresh,
+          tooltip: language.refresh,
         );
       } else {
         return Offstage();

@@ -1093,4 +1093,77 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get recommendedForYou => 'Recommended For You';
+
+
+  @override
+  String get myRentals => 'My Rentals';
+
+  @override
+  String get manageRentals => 'Manage Rentals';
+
+  @override
+  String get validity => 'Validity';
+
+  @override
+  String get info => 'Information';
+
+  @override
+  String get upgradeToWatch => 'Upgrade to watch';
+
+  @override
+  String get subscribeToWatch => 'Subscribe to watch';
+
+  @override
+  String get rentOrUpgradeToWatch => 'Rent or Upgrade to watch';
+
+  @override
+  String get rentOrSubscribeToWatch => 'Rent or Subscribe to watch';
+
+  @override
+  String get recommended => 'Recommended';
+
+  @override
+  String get noRentalsFound => 'No rentals found';
+
+  @override
+  String get type => 'Type';
+
+  @override
+  String get purchaseDate => 'Purchase Date';
+
+  @override
+  String get expires => 'Expires';
+
+  @override
+  String get paymentStatus => 'Payment Status';
+
+  @override
+  String get totalAmount => 'Total Amount';
+
+  @override
+  String get day => 'Day';
+
+  @override
+  String get days => 'Days';
+
+  @override
+  String get rentFor => 'Rent for';
+
+  @override
+  String get unpaid => 'unpaid';
+
+  @override
+  String get rent => 'rent';
+
+  @override
+  String get rented => 'Rented';
+
+  @override
+  String get paymentCompletedSuccessfully => 'Payment completed successfully';
+
+  @override
+  String get checkoutUrlNotAvailable => 'Checkout URL not available';
+
+  @override
+  String get lifetimeAccess => 'Lifetime Access';
 }

@@ -18,12 +18,12 @@ class NoMembershipComponent extends StatelessWidget {
         RichText(
           textAlign: TextAlign.center,
           text: TextSpan(
-            text: language!.youDontHaveMembership,
+            text: language.youDontHaveMembership,
             style: primaryTextStyle(fontFamily: GoogleFonts.nunito().fontFamily),
             children: [
               WidgetSpan(
                 child: Text(
-                  language!.chooseAMembershipPlan,
+                  language.chooseAMembershipPlan,
                   style: primaryTextStyle(color: context.primaryColor, fontFamily: GoogleFonts.nunito().fontFamily),
                 ).onTap(() {
                   MembershipPlansScreen().launch(context).then((v) {

@@ -35,14 +35,14 @@ class _EditBlogCommentComponentState extends State<EditBlogCommentComponent> {
       finish(context);
       await updateBlogComment(commentId: widget.id.validate(), content: textController.text).then((value) async {
         widget.onUpdate.call(value);
-        toast(language!.commentUpdatedSuccessfully);
+        toast(language.commentUpdatedSuccessfully);
         appStore.setLoading(false);
       }).catchError((e) {
         appStore.setLoading(false);
         toast(e.toString(), print: true);
       });
     } else {
-      toast(language!.writeComment);
+      toast(language.writeComment);
     }
   }
 
@@ -57,7 +57,7 @@ class _EditBlogCommentComponentState extends State<EditBlogCommentComponent> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(language!.editComment, style: boldTextStyle(color: context.primaryColor, size: 20)),
+            Text(language.editComment, style: boldTextStyle(color: context.primaryColor, size: 20)),
             16.height,
             AppTextField(
               controller: textController,
@@ -67,7 +67,7 @@ class _EditBlogCommentComponentState extends State<EditBlogCommentComponent> {
               textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.only(left: 12, bottom: 10, top: 10, right: 10),
-                labelText: language!.comment,
+                labelText: language.comment,
                 labelStyle: secondaryTextStyle(),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: radius(),
@@ -95,7 +95,7 @@ class _EditBlogCommentComponentState extends State<EditBlogCommentComponent> {
             Row(
               children: [
                 AppButton(
-                  text: language!.cancel,
+                  text: language.cancel,
                   textColor: textPrimaryColorGlobal,
                   color: context.cardColor,
                   elevation: 0,
@@ -106,7 +106,7 @@ class _EditBlogCommentComponentState extends State<EditBlogCommentComponent> {
                 16.width,
                 AppButton(
                   textColor: Colors.white,
-                  text: language!.submit,
+                  text: language.submit,
                   elevation: 0,
                   color: context.primaryColor,
                   onTap: () {

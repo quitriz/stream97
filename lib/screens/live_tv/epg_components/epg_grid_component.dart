@@ -299,7 +299,7 @@ class _EPGGridComponentState extends State<EPGGridComponent> {
       ),
       child: Center(
         child: Text(
-            language!.noProgramsAvailable,
+            language.noProgramsAvailable,
           style: secondaryTextStyle(size: 10, color: Colors.white30),
         ),
       ),
@@ -470,7 +470,7 @@ class _EPGGridComponentState extends State<EPGGridComponent> {
                                                           ),
                                                           child:  Center(
                                                             child: Text(
-                                                              language!.noProgramsAvailable,
+                                                              language.noProgramsAvailable,
                                                               style: TextStyle(fontSize: 10, color: Colors.white30),
                                                             ),
                                                           ),
@@ -502,7 +502,7 @@ class _EPGGridComponentState extends State<EPGGridComponent> {
             height: 300,
             child: Center(
               child: Text(
-                language!.noProgram,
+                language.noProgram,
                 style: TextStyle(color: Colors.red, fontSize: 16),
               ),
             ),

@@ -58,7 +58,7 @@ class _ChannelDetailScreenState extends State<ChannelDetailScreen> with TickerPr
       appStore.liveChannelDetails = details;
     } catch (e) {
       log('Error fetching live channel details: $e');
-      toast(language!.somethingWentWrong);
+      toast(language.somethingWentWrong);
     } finally {
       if (isInitialLoad) {
         appStore.setLoading(false);
@@ -157,6 +157,7 @@ class _ChannelDetailScreenState extends State<ChannelDetailScreen> with TickerPr
                                   adConfig: channel.adConfiguration,
                                   title: channel.title.validate(),
                                   isLive: true,
+                                  postType: PostType.CHANNEL,
                                 ),
                               )
                             : Container(
@@ -172,14 +173,14 @@ class _ChannelDetailScreenState extends State<ChannelDetailScreen> with TickerPr
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      language!.loginToWatchMessage,
+                                      language.loginToWatchMessage,
                                       style: primaryTextStyle(size: 16, color: white),
                                       textAlign: TextAlign.center,
                                     ),
                                     16.height,
                                     AppButton(
                                       color: context.primaryColor,
-                                      text: language!.login,
+                                      text: language.login,
                                       elevation: 0,
                                       padding: EdgeInsets.zero,
                                       onTap: () {
@@ -232,13 +233,13 @@ class _ChannelDetailScreenState extends State<ChannelDetailScreen> with TickerPr
                               style: secondaryTextStyle(),
                               trimLines: 3,
                               trimMode: TrimMode.Line,
-                              trimCollapsedText: ' ...${language!.viewMore}',
-                              trimExpandedText: '  ${language!.viewLess}',
+                              trimCollapsedText: ' ...${language.viewMore}',
+                              trimExpandedText: '  ${language.viewLess}',
                             ).paddingSymmetric(horizontal: 16),
                           if (channel.recommendedChannels.validate().isNotEmpty) ...[
                             headingWidViewAll(
                               context,
-                              language!.recommendedChannels,
+                              language.recommendedChannels,
                               showViewMore: channel.recommendedChannels!.length > 6,
                               callback: () {
                                 ViewAllRecommendedChannelsScreen(
@@ -307,7 +308,7 @@ class _ChannelDetailScreenState extends State<ChannelDetailScreen> with TickerPr
                             ),
                           ],
                           16.height,
-                          Text(language!.tvGuide, style: boldTextStyle(size: 18)).paddingSymmetric(horizontal: 16),
+                          Text(language.tvGuide, style: boldTextStyle(size: 18)).paddingSymmetric(horizontal: 16),
                           8.height,
                           EPGGridComponent(
                             epgToday: epgStore.todayData,

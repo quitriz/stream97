@@ -89,7 +89,7 @@ class _CommentListScreenState extends State<CommentListScreen> {
       },
       child: Scaffold(
         appBar: appBarWidget(
-          widget.showComments ? language!.comments.capitalizeFirstLetter() : language!.lblRateAndReview,
+          widget.showComments ? language.comments.capitalizeFirstLetter() : language.lblRateAndReview,
           color: Colors.transparent,
           textColor: Colors.white,
           elevation: 0,
@@ -102,8 +102,8 @@ class _CommentListScreenState extends State<CommentListScreen> {
                 if (snap.hasError) {
                   return NoDataWidget(
                     imageWidget: noDataImage(),
-                    title: language!.somethingWentWrong,
-                    subTitle: language!.theContentHasNot,
+                    title: language.somethingWentWrong,
+                    subTitle: language.theContentHasNot,
                   ).center();
                 }
 
@@ -111,8 +111,8 @@ class _CommentListScreenState extends State<CommentListScreen> {
                   if (snap.data.validate().isEmpty) {
                     return NoDataWidget(
                       imageWidget: noDataImage(),
-                      title: language!.noCommentsAdded,
-                      subTitle: language!.letUsKnowWhat,
+                      title: language.noCommentsAdded,
+                      subTitle: language.letUsKnowWhat,
                     ).paddingSymmetric(horizontal: 40).center();
                   } else {
                     return AnimatedListView(
@@ -204,7 +204,7 @@ class _CommentListScreenState extends State<CommentListScreen> {
                       postId: widget.postId,
                       showComments: widget.showComments,
                       callForRefresh: () {
-                        toast(language!.lbWaitForCommentApproval);
+                        toast(language.lbWaitForCommentApproval);
                         widget.callForRefresh?.call();
                         finish(context);
                       },
@@ -227,7 +227,7 @@ class _CommentListScreenState extends State<CommentListScreen> {
                             BoxShadow(color: colorPrimary.withValues(alpha:0.2), blurRadius: 8.0, offset: Offset(0, -8)),
                           ],
                         ),
-                        child: Text(language!.loginToAddComment, style: boldTextStyle(color: context.primaryColor)),
+                        child: Text(language.loginToAddComment, style: boldTextStyle(color: context.primaryColor)),
                       ),
                     ),
             ),

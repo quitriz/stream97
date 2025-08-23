@@ -31,6 +31,42 @@ class VideoWidget extends StatelessWidget {
     required this.isTrailer,
   });
 
+  bool _isValidHttpUrl(String url) {
+    final value = url.validate().trim();
+    return value.startsWith('http://') || value.startsWith('https://');
+  }
+
+  bool _isValidTrailerUrl() {
+    final url = videoURL.validate().trim();
+    final type = videoURLType.validate().toLowerCase();
+
+    if (url.isEmpty) return false;
+
+    if (type == VideoType.typeYoutube) {
+      // Accept if we can extract a valid YouTube ID (supports bare 11-char IDs)
+      return url.getYouTubeId().isNotEmpty;
+    }
+
+    if (type == VideoType.typeVimeo) {
+      return url.getVimeoVideoId.validate().isNotEmpty;
+    }
+
+    if (type == VideoType.typeFile) {
+      // Local file paths are acceptable
+      return true;
+    }
+
+    // For generic URLs (including HLS files), require http/https scheme
+    return _isValidHttpUrl(url);
+  }
+
+  bool _shouldShowThumbnail() {
+    // Show thumbnail if URL/type missing OR if trailer URL is not valid/playable
+    if (videoURL.validate().isEmpty || videoURLType.validate().isEmpty) return true;
+    if (isTrailer && !_isValidTrailerUrl()) return true;
+    return false;
+  }
+
 
   Widget _buildErrorFallback(BuildContext context, Size cardSize) {
     return Container(
@@ -50,7 +86,7 @@ class VideoWidget extends StatelessWidget {
                 ),
                 SizedBox(height: 16),
                 Text(
-                  language!.videoUnavailableMessage,
+                  language.videoUnavailableMessage,
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.white70, fontSize: 14),
                 ),
@@ -85,7 +121,7 @@ class VideoWidget extends StatelessWidget {
           tileMode: TileMode.mirror,
         ),
       ),
-      child: videoURL.validate().isEmpty || videoURLType.validate().isEmpty
+      child: _shouldShowThumbnail()
           ? Stack(
               children: [
                 CachedImageWidget(
@@ -113,7 +149,8 @@ class VideoWidget extends StatelessWidget {
   }
 
   Widget _buildLiveStreamPlayer(BuildContext context, Size cardSize) {
-    if (videoURL.validate().isEmpty || !videoURL.validate().contains('.m3u8') && !videoURL.validate().contains('hls') && videoURLType.validate().toLowerCase() != VideoType.typeHLS) {
+    final url = videoURL.validate();
+    if (url.isEmpty || (!url.contains('.m3u8') && !url.contains('hls') && videoURLType.validate().toLowerCase() != VideoType.typeHLS) || !_isValidHttpUrl(url)) {
       log('Invalid live stream URL or type: $videoURL, Type: $videoURLType');
       return _buildErrorFallback(context, cardSize);
     }
@@ -157,6 +194,21 @@ class VideoWidget extends StatelessWidget {
         ),
       );
     } else if (videoURLType.validate().toLowerCase() == VideoType.typeVimeo) {
+      // Guard against missing/invalid Vimeo id
+      if (videoURL.getVimeoVideoId.validate().isEmpty) {
+        return Stack(
+          children: [
+            CachedImageWidget(
+              url: thumbnailImage.validate(),
+              width: cardSize.width,
+              height: cardSize.height,
+              fit: BoxFit.cover,
+            ).onTap(() {
+              onTap?.call();
+            }),
+          ],
+        );
+      }
       return InkWell(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
@@ -169,6 +221,21 @@ class VideoWidget extends StatelessWidget {
         ),
       );
     } else {
+      // For non-YouTube/Vimeo types, if this is a trailer ensure we only play proper http/https URLs
+      if (isTrailer && !_isValidHttpUrl(videoURL.validate())) {
+        return Stack(
+          children: [
+            CachedImageWidget(
+              url: thumbnailImage.validate(),
+              width: cardSize.width,
+              height: cardSize.height,
+              fit: BoxFit.cover,
+            ).onTap(() {
+              onTap?.call();
+            }),
+          ],
+        );
+      }
       return InkWell(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,

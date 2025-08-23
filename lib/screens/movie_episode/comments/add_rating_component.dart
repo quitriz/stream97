@@ -42,12 +42,12 @@ class _AddRatingComponentState extends State<AddRatingComponent> {
     bool hasAlreadyReviewed = appStore.reviewList.any((review) => review.userId == currentUserId);
 
     if (hasAlreadyReviewed) {
-      toast(language!.youHaveAlreadySubmittedReview);
+      toast(language.youHaveAlreadySubmittedReview);
       return;
     }
 
     if (mainCommentCont.text.trim().isEmpty && selectedRating == 0) {
-      toast(language!.pleaseProvideRating);
+      toast(language.pleaseProvideRating);
       return;
     }
 
@@ -109,7 +109,7 @@ class _AddRatingComponentState extends State<AddRatingComponent> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(language!.lblPleaseRateUs, style: primaryTextStyle(size: 14)),
+                Text(language.lblPleaseRateUs, style: primaryTextStyle(size: 14)),
                 8.height,
                 Container(
                   decoration: BoxDecoration(
@@ -141,14 +141,14 @@ class _AddRatingComponentState extends State<AddRatingComponent> {
             errorThisFieldRequired: errorThisFieldRequired,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.only(top: 8, bottom: 8),
-              hintText: widget.showComments ? language!.addAComment : language!.lblAddYourReview,
+              hintText: widget.showComments ? language.addAComment : language.lblAddYourReview,
               hintStyle: primaryTextStyle(),
               suffixIcon: IconButton(
                 icon: Icon(Icons.send, color: colorPrimary),
                 onPressed: () {
                   hideKeyboard(context);
                   if (selectedRating == 0) {
-                    toast(language!.pleaseSelectRatingBeforeSubmittingYourReview);
+                    toast(language.pleaseSelectRatingBeforeSubmittingYourReview);
                     return;
                   }
                   if (appStore.isLogging)

@@ -73,7 +73,7 @@ class _ManageDevicesScreenState extends State<ManageDevicesScreen> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
         centerTitle: true,
-        title: Text(language!.manageDevices, style: boldTextStyle()),
+        title: Text(language.manageDevices, style: boldTextStyle()),
       ),
       body: Stack(
         children: [
@@ -82,7 +82,7 @@ class _ManageDevicesScreenState extends State<ManageDevicesScreen> {
             child: Column(
               children: [
                 Text(
-                  language!.manageDeviceText,
+                  language.manageDeviceText,
                   style: secondaryTextStyle(),
                   textAlign: TextAlign.center,
                 ),
@@ -117,14 +117,14 @@ class _ManageDevicesScreenState extends State<ManageDevicesScreen> {
                                     padding: EdgeInsets.all(6),
                                     decoration: BoxDecoration(color: context.primaryColor.withAlpha(30)),
                                     child: Text(
-                                      '${language!.currentDevice}',
+                                      '${language.currentDevice}',
                                       style: secondaryTextStyle(color: context.primaryColor, size: 12),
                                     ),
                                     margin: EdgeInsets.only(bottom: 6),
                                   ),
-                                Text('${language!.model}: ' + device.deviceModel.validate(), style: primaryTextStyle()),
-                                Text('${language!.deviceId}: ' + device.deviceId.validate(), style: secondaryTextStyle()),
-                                Text('${language!.loginTime}: ' + formattedDate, style: secondaryTextStyle()),
+                                Text('${language.model}: ' + device.deviceModel.validate(), style: primaryTextStyle()),
+                                Text('${language.deviceId}: ' + device.deviceId.validate(), style: secondaryTextStyle()),
+                                Text('${language.loginTime}: ' + formattedDate, style: secondaryTextStyle()),
                               ],
                             ),
                             if (device.deviceId != appStore.loginDevice)
@@ -135,13 +135,13 @@ class _ManageDevicesScreenState extends State<ManageDevicesScreen> {
                                   onTap: () {
                                     showConfirmDialogCustom(
                                       context,
-                                      title: '${language!.areYouSureYouWantToLogOutFromThisDevice}',
+                                      title: '${language.areYouSureYouWantToLogOutFromThisDevice}',
                                       primaryColor: colorPrimary,
-                                      negativeText: language!.no,
-                                      positiveText: language!.yes,
+                                      negativeText: language.no,
+                                      positiveText: language.yes,
                                       onAccept: (context) async {
                                         removeDevice(id: device.deviceId.validate()).then((value){
-                                          toast(language!.youHaveBeenLoggedOutFromThisDevice);
+                                          toast(language.youHaveBeenLoggedOutFromThisDevice);
                                         });
                                       },
                                     );
@@ -159,12 +159,12 @@ class _ManageDevicesScreenState extends State<ManageDevicesScreen> {
           if (deviceList.isEmpty && !appStore.isLoading)
             NoDataWidget(
               imageWidget: noDataImage(),
-              title: language!.noData,
+              title: language.noData,
             ).center(),
           if (isError && !appStore.isLoading)
             NoDataWidget(
               imageWidget: noDataImage(),
-              title: language!.somethingWentWrong,
+              title: language.somethingWentWrong,
             ).center(),
           Observer(
             builder: (_) {

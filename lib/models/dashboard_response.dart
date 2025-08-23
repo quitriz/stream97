@@ -42,8 +42,10 @@ class Slider {
   String? type;
   List? ids;
   PostType? postType;
+  bool? isRent;
+  String? purchaseType;
 
-  Slider({this.data, this.title, this.viewAll, this.type, this.ids, this.postType});
+  Slider({this.data, this.title, this.viewAll, this.type, this.ids, this.postType, this.isRent, this.purchaseType});
 
   factory Slider.fromJson(Map<String, dynamic> json) {
     return Slider(
@@ -52,6 +54,8 @@ class Slider {
       viewAll: json['view_all'],
       type: json['type'],
       ids: json['ids'] == null ? [] : json['ids'],
+      isRent: json['is_rent'] ?? false,
+      purchaseType: json['purchase_type'] ?? '',
       postType: json['post_type'] != null
           ? json['post_type'] == 'movie'
               ? PostType.MOVIE

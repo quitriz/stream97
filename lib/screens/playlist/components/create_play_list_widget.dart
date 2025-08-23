@@ -25,9 +25,9 @@ class _CreatePlayListWidgetState extends State<CreatePlayListWidget> {
 
   @override
   void initState() {
-    _playListTypeList.add(DataModel(title: language!.movies, data: playlistMovie));
-    _playListTypeList.add(DataModel(title: language!.episodes, data: playlistEpisodes));
-    _playListTypeList.add(DataModel(title: language!.videos, data: playlistVideo));
+    _playListTypeList.add(DataModel(title: language.movies, data: playlistMovie));
+    _playListTypeList.add(DataModel(title: language.episodes, data: playlistEpisodes));
+    _playListTypeList.add(DataModel(title: language.videos, data: playlistVideo));
 
     if (widget.playlistType != null) {
       _playlistType = _playListTypeList.firstWhere((element) => element.data == widget.playlistType);
@@ -49,7 +49,7 @@ class _CreatePlayListWidgetState extends State<CreatePlayListWidget> {
       widget.onPlaylistCreated?.call();
     }).catchError((e) {
       appStore.setLoading(false);
-      toast(language!.somethingWentWrong);
+      toast(language.somethingWentWrong);
       log("====>>>>Create Playlist Error : ${e.toString()}");
       finish(context);
     });
@@ -96,7 +96,7 @@ class _CreatePlayListWidgetState extends State<CreatePlayListWidget> {
                   style: primaryTextStyle(),
                   decoration: InputDecoration(
                     hintText: "E.g. Coffee Break",
-                    labelText: language!.playlistTitle,
+                    labelText: language.playlistTitle,
                     labelStyle: primaryTextStyle(color: Color(0xFFA8A8A8)),
                     hintStyle: primaryTextStyle(color: Color(0xFF484848)),
                     focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Color(0xFF696969))),
@@ -106,14 +106,14 @@ class _CreatePlayListWidgetState extends State<CreatePlayListWidget> {
                   ),
                   validator: (value) {
                     if (value!.isEmpty)
-                      return language!.thisFieldIsRequired;
-                    else if (value.startsWith(" ")) return language!.enterValidPlaylistName;
+                      return language.thisFieldIsRequired;
+                    else if (value.startsWith(" ")) return language.enterValidPlaylistName;
                     return null;
                   },
                 ),
                 16.height,
                 Text(
-                  language!.selectWhereYouWant,
+                  language.selectWhereYouWant,
                   style: primaryTextStyle(color: Color(0xFFA8A8A8)),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
@@ -157,7 +157,7 @@ class _CreatePlayListWidgetState extends State<CreatePlayListWidget> {
                               }
                             },
                             color: colorPrimary,
-                            child: Text(language!.createList, style: boldTextStyle(color: Colors.white)),
+                            child: Text(language.createList, style: boldTextStyle(color: Colors.white)),
                           );
                   },
                 ),

@@ -62,7 +62,7 @@ class _ViewLiveTvCategoryChannelsState extends State<ViewLiveTvCategoryChannels>
                 onRetry: () {
                   init();
                 },
-                retryText: language!.refresh,
+                retryText: language.refresh,
               ).center();
             },
             onSuccess: (LiveCategoryList data) {
@@ -74,7 +74,7 @@ class _ViewLiveTvCategoryChannelsState extends State<ViewLiveTvCategoryChannels>
                   onRetry: () {
                     init();
                   },
-                  retryText: language!.refresh,
+                  retryText: language.refresh,
                 ).center();
               else
                 return GridView.builder(

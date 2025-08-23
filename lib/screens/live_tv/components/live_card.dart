@@ -19,7 +19,7 @@ class LiveTagComponent extends StatelessWidget {
           borderRadius: BorderRadius.circular(4),
         ),
         child: Text(
-          language!.live,
+          language.live,
           style: TextStyle(
             color: Colors.white,
             fontSize: 8,

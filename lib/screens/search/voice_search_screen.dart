@@ -16,7 +16,7 @@ class _VoiceSearchScreenState extends State<VoiceSearchScreen> {
   SpeechToText speech = SpeechToText();
   bool isListening = false;
 
-  String text = language!.listening;
+  String text = language.listening;
   bool showButton = false;
 
   Future<void> listen() async {
@@ -36,7 +36,7 @@ class _VoiceSearchScreenState extends State<VoiceSearchScreen> {
 
         await 5.seconds.delay;
 
-        if (text == language!.listening) {
+        if (text == language.listening) {
           showButton = true;
           setState(() {});
         } else {
@@ -92,7 +92,7 @@ class _VoiceSearchScreenState extends State<VoiceSearchScreen> {
             color: colorPrimary,
           ).visible(!showButton),
           Text(
-            language!.tapToSpeak,
+            language.tapToSpeak,
             style: boldTextStyle(size: 20),
             textAlign: TextAlign.center,
           ).paddingSymmetric(horizontal: 40).visible(showButton)
@@ -100,7 +100,7 @@ class _VoiceSearchScreenState extends State<VoiceSearchScreen> {
       ).center(),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.only(bottom: 20),
-        child: Text(language!.searchMoviesTvShowsVideos, style: primaryTextStyle(), textAlign: TextAlign.center),
+        child: Text(language.searchMoviesTvShowsVideos, style: primaryTextStyle(), textAlign: TextAlign.center),
       ),
     );
   }

@@ -45,18 +45,18 @@ class LoginBottomSheet extends StatelessWidget {
                           children: [
                             if (!appStore.isLogging) ...[
                               20.height,
-                              Text(language!.youMustBeLogged, style: primaryTextStyle()),
+                              Text(language.youMustBeLogged, style: primaryTextStyle()),
                               16.height,
                               ElevatedButton(
                                 onPressed: () {
                                   finish(context);
                                   SignUpScreen().launch(context);
                                 },
-                                child: Text(language!.registerNow, style: boldTextStyle()),
+                                child: Text(language.registerNow, style: boldTextStyle()),
                                 style: ButtonStyle(backgroundColor: WidgetStateProperty.all(colorPrimary)),
                               ),
                               16.height,
-                              Text(language!.alreadyAMember, style: primaryTextStyle()),
+                              Text(language.alreadyAMember, style: primaryTextStyle()),
                               TextButton(
                                 onPressed: () {
                                   finish(context);
@@ -64,7 +64,7 @@ class LoginBottomSheet extends StatelessWidget {
                                     redirectTo: () {},
                                   ).launch(context);
                                 },
-                                child: Text(language!.loginNow, style: boldTextStyle(color: context.primaryColor)),
+                                child: Text(language.loginNow, style: boldTextStyle(color: context.primaryColor)),
                               ),
                             ] else
                               ElevatedButton(
@@ -78,7 +78,7 @@ class LoginBottomSheet extends StatelessWidget {
                                       }
                                     });
                                 },
-                                child: Text(language!.joinNow, style: boldTextStyle(color: Colors.white)),
+                                child: Text(language.joinNow, style: boldTextStyle(color: Colors.white)),
                                 style: ButtonStyle(backgroundColor: WidgetStateProperty.all(colorPrimary)),
                               ),
                           ],
@@ -92,7 +92,7 @@ class LoginBottomSheet extends StatelessWidget {
           ),
         );
       },
-      child: Text(language!.viewInfo, style: boldTextStyle(color: Colors.white)),
+      child: Text(language.viewInfo, style: boldTextStyle(color: Colors.white)),
       style: ButtonStyle(backgroundColor: WidgetStateProperty.all(colorPrimary)),
     );
   }

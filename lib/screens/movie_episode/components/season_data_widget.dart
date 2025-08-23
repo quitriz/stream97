@@ -156,9 +156,10 @@ class SeasonDataWidgetState extends State<SeasonDataWidget> {
                       episodes: episodes,
                       index: index,
                       lastIndex: episodes.validate().length,
+                      tvShowUserHasAccess: widget.hasUserAccess,
                     ).launch(context);
                   } else {
-                    toast(language!.youDontHaveMembership);
+                    toast(language.youDontHaveMembership);
                   }
                 },
               );
@@ -167,12 +168,12 @@ class SeasonDataWidgetState extends State<SeasonDataWidget> {
         else if (episodes.validate().isEmpty && !isLoading)
           NoDataWidget(
             imageWidget: noDataImage(),
-            title: language!.notFound,
+            title: language.notFound,
           )
         else if (isError)
           NoDataWidget(
             imageWidget: noDataImage(),
-            title: language!.somethingWentWrong,
+            title: language.somethingWentWrong,
           ),
         LoadingDotsWidget().visible(isLoading),
       ],

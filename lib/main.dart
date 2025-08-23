@@ -16,6 +16,7 @@ import 'package:streamit_flutter/screens/home_screen.dart';
 import 'package:streamit_flutter/screens/splash_screen.dart';
 import 'package:streamit_flutter/store/app_store.dart';
 import 'package:streamit_flutter/store/epg_store.dart';
+import 'package:streamit_flutter/store/rental_store.dart';
 import 'package:streamit_flutter/store/user_store.dart';
 import 'package:streamit_flutter/utils/app_theme.dart';
 import 'package:streamit_flutter/utils/app_widgets.dart';
@@ -35,10 +36,11 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 AppStore appStore = AppStore();
 UserStore userStore = UserStore();
 EPGStore epgStore = EPGStore();
+RentalStore rentalStore = RentalStore();
 
 bool mIsLoggedIn = false;
 int adShowCount = 0;
-BaseLanguage? language;
+late BaseLanguage language;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

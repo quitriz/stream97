@@ -717,4 +717,53 @@ abstract class BaseLanguage {
   String get channels;
 
   String get recommendedForYou;
+
+
+  String get myRentals;
+
+  String get manageRentals;
+
+  String get validity;
+
+  String get info;
+
+  String get upgradeToWatch;
+
+  String get subscribeToWatch;
+
+  String get rentOrUpgradeToWatch;
+
+  String get rentOrSubscribeToWatch;
+
+  String get recommended;
+
+  String get noRentalsFound;
+
+  String get type;
+
+  String get purchaseDate;
+
+  String get expires;
+
+  String get paymentStatus;
+
+  String get totalAmount;
+
+  String get day;
+
+  String get days;
+
+  String get rentFor;
+
+  String get unpaid;
+
+  String get rent;
+
+  String get rented;
+
+  String get paymentCompletedSuccessfully;
+
+  String get checkoutUrlNotAvailable;
+
+  String get lifetimeAccess;
 }

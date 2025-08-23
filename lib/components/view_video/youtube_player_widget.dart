@@ -170,9 +170,6 @@ class _YoutubePlayerWidgetState extends State<YoutubePlayerWidget> {
               return player;
             },
           ),
-        if (!widget.isSlider) ...[
-          const Positioned(left: 8, top: 8, child: BackButton()),
-        ],
         if (widget.isTrailer && youtubePlayerController != null && !youtubePlayerController!.value.isControlsVisible
             // &&
             // !widget.isSlider

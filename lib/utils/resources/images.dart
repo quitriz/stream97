@@ -47,7 +47,11 @@ const ic_blog = 'assets/icons/ic_blog.png';
 const ic_notification = 'assets/icons/ic_notification.png';
 const ic_add_playlist='assets/icons/ic_add_playlist.png';
 const ic_premium='assets/icons/ic_premium.png';
+const ic_rent = 'assets/icons/ic_rent.png';
 const default_image='assets/images/default_image.png';
+const rent_image = 'assets/images/rent.png';
+const rented_image = 'assets/images/rented.png';
+const subscription = 'assets/images/subscribe.png';
 
 
 /// GIF

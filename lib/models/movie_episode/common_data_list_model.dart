@@ -21,6 +21,16 @@ class CommonDataListModel {
   String? channelStreamType;
   String? portraitImage;
   bool? isUpcoming;
+  bool? userHasAccess;
+  bool? isRent;
+  bool? isRented;
+  String? rentInfo;
+  String? purchaseType;
+  int? price;
+  String? discount;
+  int? discountedPrice;
+  String? validity;
+  List<String>? requiredPlan;
   AdConfiguration? adConfiguration;
 
   CommonDataListModel({
@@ -43,6 +53,16 @@ class CommonDataListModel {
     this.portraitImage,
     this.isUpcoming,
     this.adConfiguration,
+    this.userHasAccess = false,
+    this.isRent = false,
+    this.isRented = false,
+    this.rentInfo,
+    this.purchaseType = '',
+    this.price,
+    this.discount,
+    this.discountedPrice,
+    this.validity,
+    this.requiredPlan,
   });
 
   factory CommonDataListModel.fromJson(Map<String, dynamic> json) {
@@ -77,6 +97,16 @@ class CommonDataListModel {
       adConfiguration: json['ad_configuration'] != null
           ? AdConfiguration.fromJson(json['ad_configuration'])
           : null,
+      userHasAccess: json['user_has_access'] ?? false,
+      isRent: json['is_rent'] ?? false,
+      isRented: json['is_rented'] ?? false,
+      rentInfo: json['rent_info'],
+      purchaseType: json['purchase_type'] ?? '',
+      price: json['price'],
+      discount: json['discount'],
+      discountedPrice: json['discounted_price'],
+      validity: json['validity'],
+      requiredPlan: json['required_plan'],
     );
   }
 
@@ -100,6 +130,16 @@ class CommonDataListModel {
     data['stream_type'] = this.channelStreamType;
     data['portrait_image'] = this.portraitImage;
     data['is_upcoming'] = this.isUpcoming;
+    data['is_rent'] = this.isRent;
+    data['user_has_access'] = this.userHasAccess;
+    data['is_rented'] = this.isRented;
+    data['rent_info'] = this.rentInfo;
+    data['purchase_type'] = this.purchaseType;
+    data['price'] = this.price;
+    data['discount'] = this.discount;
+    data['discounted_price'] = this.discountedPrice;
+    data['validity'] = this.validity;
+    data['required_plan'] = this.requiredPlan;
     if (this.adConfiguration != null) {
       data['ad_configuration'] = this.adConfiguration!.toJson();
     }

@@ -33,7 +33,7 @@ class EPGTimelineHeaderWidget extends StatelessWidget {
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(8), bottomLeft: Radius.circular(8))),
               child: Center(
                 child: Text(
-                  '${language!.dayTime} / \n ${language!.channels}',
+                  '${language.dayTime} / \n ${language.channels}',
                   style: boldTextStyle(size: 14, color: Colors.white),
                   textAlign: TextAlign.center,
                 ),
@@ -57,7 +57,7 @@ class EPGTimelineHeaderWidget extends StatelessWidget {
                           Expanded(
                             child: _buildDateSelectorItem(
                               context: context,
-                              label: language!.yesterday,
+                              label: language.yesterday,
                               dateStr: epgStore.dates.isNotEmpty ? epgStore.dates[0] : '',
                               index: 0,
                             ),
@@ -70,7 +70,7 @@ class EPGTimelineHeaderWidget extends StatelessWidget {
                           Expanded(
                             child: _buildDateSelectorItem(
                               context: context,
-                              label: language!.today,
+                              label: language.today,
                               dateStr: epgStore.dates.length > 1 ? epgStore.dates[1] : '',
                               index: 1,
                             ),
@@ -83,7 +83,7 @@ class EPGTimelineHeaderWidget extends StatelessWidget {
                           Expanded(
                             child: _buildDateSelectorItem(
                               context: context,
-                              label: language!.tomorrow,
+                              label: language.tomorrow,
                               dateStr: epgStore.dates.length > 2 ? epgStore.dates[2] : '',
                               index: 2,
                             ),

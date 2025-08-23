@@ -18,9 +18,9 @@ import 'package:streamit_flutter/utils/resources/colors.dart';
 
 class MembershipPlansScreen extends StatefulWidget {
   final String? selectedPlanId;
+  final List<String>? requiredPlanIds;
 
-  const MembershipPlansScreen({Key? key, this.selectedPlanId})
-      : super(key: key);
+  const MembershipPlansScreen({Key? key, this.selectedPlanId, this.requiredPlanIds}) : super(key: key);
 
   @override
   State<MembershipPlansScreen> createState() => _MembershipPlansScreenState();
@@ -48,6 +48,43 @@ class _MembershipPlansScreenState extends State<MembershipPlansScreen> {
     );
   }
 
+  ///Helper methods to determine plan status
+  bool _isPlanRecommended(MembershipModel plan) {
+    if (widget.requiredPlanIds == null || widget.requiredPlanIds!.isEmpty) {
+      return false;
+    }
+    return widget.requiredPlanIds!.contains(plan.id.toString());
+  }
+
+  ///Helper method to check if the user is on the current plan
+  bool _isUserCurrentPlan(MembershipModel plan) {
+    return appStore.subscriptionPlanId.isNotEmpty && plan.id.toString() == appStore.subscriptionPlanId;
+  }
+
+  ///Helper method to get the best recommended plan
+  MembershipModel? _getBestRecommendedPlan() {
+    if (widget.requiredPlanIds == null || widget.requiredPlanIds!.isEmpty) {
+      return null;
+    }
+    List<MembershipModel> recommendedPlans = plans.where((plan) => widget.requiredPlanIds!.contains(plan.id.toString())).toList();
+
+    if (recommendedPlans.isEmpty) return null;
+
+    recommendedPlans.sort((a, b) => (a.billingAmount ?? 0).compareTo(b.billingAmount ?? 0));
+
+    MembershipModel bestPlan = recommendedPlans.first;
+    if (_isUserCurrentPlan(bestPlan)) {
+      for (MembershipModel plan in recommendedPlans) {
+        if (!_isUserCurrentPlan(plan)) {
+          return plan;
+        }
+      }
+      return null;
+    }
+
+    return bestPlan;
+  }
+
   Future<void> getInAppPlan() async {
     appStore.setLoading(true);
     InAppPurchaseService.getMembershipPlanList().then((offering) {
@@ -59,33 +96,26 @@ class _MembershipPlansScreenState extends State<MembershipPlansScreen> {
 
   Future<void> getInAppPackageForSelectedPlan() async {
     if (inAppOffering!.availablePackages.validate().isNotEmpty) {
-      int index = inAppOffering!.availablePackages.validate().indexWhere(
-          (element) =>
-              element.storeProduct.identifier ==
-              (isIOS
-                  ? selectedPlan!.appStorePlanIdentifier
-                  : selectedPlan!.playStorePlanIdentifier.validate()));
-      if (index > -1)
-        selectedInAppPlan = inAppOffering!.availablePackages.validate()[index];
+      int index = inAppOffering!.availablePackages
+          .validate()
+          .indexWhere((element) => element.storeProduct.identifier == (isIOS ? selectedPlan!.appStorePlanIdentifier : selectedPlan!.playStorePlanIdentifier.validate()));
+      if (index > -1) selectedInAppPlan = inAppOffering!.availablePackages.validate()[index];
 
       if (selectedInAppPlan != null) {
         log('Selected Plan from Offerings: '
             'identifier: ${selectedInAppPlan!.identifier}, '
             'storeProduct: ${selectedInAppPlan!.storeProduct.identifier}, '
             'price: ${selectedInAppPlan!.storeProduct.priceString}');
-        if (appStore.activeSubscriptionIdentifier ==
-            selectedInAppPlan!.storeProduct.identifier) {
+        if (appStore.activeSubscriptionIdentifier == selectedInAppPlan!.storeProduct.identifier) {
           toast("This plan is already active kindly try to upgrade plan");
         } else {
-          InAppPurchaseService.buySubscriptionPlan(context,
-              planToPurchase: selectedInAppPlan!,
-              levelId: selectedPlan!.id.validate());
+          InAppPurchaseService.buySubscriptionPlan(context, planToPurchase: selectedInAppPlan!, levelId: selectedPlan!.id.validate());
         }
       } else {
-        toast(language?.revenueCatIdentifierMissMach);
+        toast(language.revenueCatIdentifierMissMach);
       }
     } else {
-      toast(language?.noOfferingsFound);
+      toast(language.noOfferingsFound);
     }
   }
 
@@ -97,13 +127,13 @@ class _MembershipPlansScreenState extends State<MembershipPlansScreen> {
       if (plans.isNotEmpty) {
         if (widget.selectedPlanId.validate().isNotEmpty &&
             plans.any(
-              (element) =>
-                  element.productId == widget.selectedPlanId.validate(),
+              (element) => element.productId == widget.selectedPlanId.validate(),
             ))
-          selectedPlan = plans.firstWhere(
-              (el) => el.productId == widget.selectedPlanId.validate());
+          selectedPlan = plans.firstWhere((el) => el.productId == widget.selectedPlanId.validate());
         else {
-          if (widget.selectedPlanId == null) selectedPlan = plans.first;
+          if (widget.selectedPlanId == null) {
+            selectedPlan = _getBestRecommendedPlan() ?? plans.first;
+          }
         }
       }
       setState(() {});
@@ -117,15 +147,9 @@ class _MembershipPlansScreenState extends State<MembershipPlansScreen> {
   }
 
   Future<void> pmpPayment() async {
-    await WebViewScreen(
-            url: selectedPlan!.checkoutUrl.validate() +
-                '&web_view_nonce=${appStore.userNonce}&user_id=${appStore.userId}',
-            title: language!.payment)
-        .launch(context)
-        .then((x) async {
+    await WebViewScreen(url: selectedPlan!.checkoutUrl.validate() + '&web_view_nonce=${appStore.userNonce}&user_id=${appStore.userId}', title: language.payment).launch(context).then((x) async {
       appStore.setLoading(true);
-      await getMembershipLevelForUser(userId: appStore.userId.validate())
-          .then((membershipPlan) {
+      await getMembershipLevelForUser(userId: appStore.userId.validate()).then((membershipPlan) {
         if (membershipPlan != null) {
           MembershipModel membership = MembershipModel.fromJson(membershipPlan);
 
@@ -148,10 +172,7 @@ class _MembershipPlansScreenState extends State<MembershipPlansScreen> {
 
       // Skip payment message for free plans
       if (selectedPlan!.billingAmount.validate().toDouble() == 0.0) {
-        InAppPurchaseService.buySubscriptionPlan(context,
-            planToPurchase: null,
-            levelId: selectedPlan!.id.validate(),
-            isFreePlan: true);
+        InAppPurchaseService.buySubscriptionPlan(context, planToPurchase: null, levelId: selectedPlan!.id.validate(), isFreePlan: true);
         return;
       }
 
@@ -160,14 +181,12 @@ class _MembershipPlansScreenState extends State<MembershipPlansScreen> {
         pmpPayment();
       } else if (index == 1) {
         finish(context, true);
-        WooCommerceScreen(orderId: selectedPlan!.productId.validate())
-            .launch(context);
+        WooCommerceScreen(orderId: selectedPlan!.productId.validate()).launch(context);
       } else if (index == 2) {
         getInAppPackageForSelectedPlan();
       }
     } else {
-      toast(
-          'Selected subscription plan is already active.Try to upgrade the plan');
+      toast('Selected subscription plan is already active.Try to upgrade the plan');
     }
   }
 
@@ -188,7 +207,7 @@ class _MembershipPlansScreenState extends State<MembershipPlansScreen> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
         centerTitle: true,
-        title: Text(language!.membershipPlans, style: boldTextStyle()),
+        title: Text(language.membershipPlans, style: boldTextStyle()),
       ),
       body: Observer(
         builder: (_) => Stack(
@@ -199,18 +218,20 @@ class _MembershipPlansScreenState extends State<MembershipPlansScreen> {
                 itemCount: plans.length,
                 itemBuilder: (ctx, index) {
                   MembershipModel plan = plans[index];
+                  bool isRecommended = _isPlanRecommended(plan);
+                  bool isCurrentPlan = _isUserCurrentPlan(plan);
 
                   if (plan.name.validate().isNotEmpty)
                     return GestureDetector(
                       onTap: () {
+                        if (isCurrentPlan) return;
+
                         if (selectedPlan == plan) {
                           selectedPlan = null;
                           setState(() {});
                         } else {
-                          if (widget.selectedPlanId != plan.id) {
-                            selectedPlan = plan;
-                            setState(() {});
-                          }
+                          selectedPlan = plan;
+                          setState(() {});
                         }
                       },
                       child: Stack(
@@ -221,113 +242,100 @@ class _MembershipPlansScreenState extends State<MembershipPlansScreen> {
                             margin: EdgeInsets.symmetric(vertical: 8),
                             decoration: BoxDecoration(
                               border: Border.all(
-                                  color: widget.selectedPlanId == plan.id
+                                  color: isCurrentPlan
                                       ? appGreenColor
                                       : selectedPlan == plan
                                           ? context.primaryColor
-                                          : textColorThird),
-                              color: widget.selectedPlanId == plan.id
+                                          : isRecommended
+                                              ? colorAccent.withValues(alpha: 0.7)
+                                              : textColorThird),
+                              color: isCurrentPlan
                                   ? appGreenColor.withAlpha(20)
                                   : selectedPlan == plan
                                       ? context.primaryColor.withAlpha(30)
-                                      : context.cardColor,
-                              borderRadius: radius(),
+                                      : isRecommended
+                                          ? colorAccent.withAlpha(10)
+                                          : context.cardColor,
+                              borderRadius: radius()
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(plan.name.validate(),
-                                    style: boldTextStyle()),
-                                if (plan.description.validate().isNotEmpty)
-                                  Text(plan.description.validate(),
-                                          style: secondaryTextStyle())
-                                      .paddingSymmetric(vertical: 6),
-                                if (plan.initialPayment == 0 &&
-                                    plan.billingAmount == 0)
-                                  Text(language!.free, style: boldTextStyle())
-                                else if (plan.initialPayment ==
-                                    plan.billingAmount)
+                                Row(
+                                  children: [
+                                    /// Recommended tag
+                                    if (isRecommended)
+                                      Container(
+                                        margin: EdgeInsets.only(right: 8),
+                                        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                        decoration: BoxDecoration(
+                                          color: colorAccent,
+                                          borderRadius: radius(4),
+                                        ),
+                                        child: Text(language.recommended, style: boldTextStyle(color: Colors.white, size: 12)),
+                                      ),
+                                    if (isCurrentPlan)
+                                      Container(
+                                        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                        decoration: BoxDecoration(
+                                          color: appGreenColor,
+                                          borderRadius: radius(4),
+                                        ),
+                                        child: Text(language.yourPlan, style: boldTextStyle(color: Colors.white, size: 12)),
+                                      ),
+                                  ],
+                                ),
+                                if (isRecommended || isCurrentPlan) 8.height,
+                                Text(plan.name.validate(), style: boldTextStyle()),
+                                if (plan.description.validate().isNotEmpty) Text(plan.description.validate(), style: secondaryTextStyle()).paddingSymmetric(vertical: 6),
+                                if (plan.initialPayment == 0 && plan.billingAmount == 0)
+                                  Text(language.free, style: boldTextStyle())
+                                else if (plan.initialPayment == plan.billingAmount)
                                   Text(
                                     '${appStore.pmpCurrency}${plan.initialPayment} ${plan.cycleNumber == '1' ? 'per ${plan.cyclePeriod}' : 'every ${plan.cycleNumber} ${plan.cyclePeriod}'}',
                                     style: boldTextStyle(),
                                   )
-                                else if (plan.initialPayment !=
-                                    plan.billingAmount)
+                                else if (plan.initialPayment != plan.billingAmount)
                                   RichText(
                                     text: TextSpan(
                                       children: <TextSpan>[
                                         TextSpan(
-                                          text:
-                                              '${appStore.pmpCurrency}${plan.initialPayment}',
-                                          style: boldTextStyle(
-                                              size: 14,
-                                              fontFamily: GoogleFonts.nunito()
-                                                  .fontFamily),
+                                          text: '${appStore.pmpCurrency}${plan.initialPayment}',
+                                          style: boldTextStyle(size: 14, fontFamily: GoogleFonts.nunito().fontFamily),
                                         ),
                                         TextSpan(
                                           text: ' now and then',
-                                          style: primaryTextStyle(
-                                              size: 14,
-                                              fontFamily: GoogleFonts.nunito()
-                                                  .fontFamily),
+                                          style: primaryTextStyle(size: 14, fontFamily: GoogleFonts.nunito().fontFamily),
                                         ),
                                         TextSpan(
                                           text:
                                               ' ${appStore.pmpCurrency}${plan.initialPayment} ${plan.cycleNumber == '1' ? 'per ${plan.cyclePeriod}' : 'every ${plan.cycleNumber} ${plan.cyclePeriod}'}',
-                                          style: boldTextStyle(
-                                              size: 14,
-                                              fontFamily: GoogleFonts.nunito()
-                                                  .fontFamily),
+                                          style: boldTextStyle(size: 14, fontFamily: GoogleFonts.nunito().fontFamily),
                                         ),
                                         TextSpan(
-                                          text:
-                                              ' for ${plan.billingAmount == 1 ? 'per ${plan.cyclePeriod}' : 'every ${plan.billingAmount} ${plan.cyclePeriod}'}',
-                                          style: boldTextStyle(
-                                              size: 14,
-                                              fontFamily: GoogleFonts.nunito()
-                                                  .fontFamily),
+                                          text: ' for ${plan.billingAmount == 1 ? 'per ${plan.cyclePeriod}' : 'every ${plan.billingAmount} ${plan.cyclePeriod}'}',
+                                          style: boldTextStyle(size: 14, fontFamily: GoogleFonts.nunito().fontFamily),
                                         ),
                                         TextSpan(
-                                          text:
-                                              ' After your initial payment, your first',
-                                          style: primaryTextStyle(
-                                              size: 14,
-                                              fontFamily: GoogleFonts.nunito()
-                                                  .fontFamily),
+                                          text: ' After your initial payment, your first',
+                                          style: primaryTextStyle(size: 14, fontFamily: GoogleFonts.nunito().fontFamily),
                                         ),
                                         TextSpan(
-                                          text:
-                                              '${plan.trialLimit} payments will cost ${appStore.pmpCurrency}${plan.trialAmount}.',
-                                          style: primaryTextStyle(
-                                              size: 14,
-                                              fontFamily: GoogleFonts.nunito()
-                                                  .fontFamily),
+                                          text: '${plan.trialLimit} payments will cost ${appStore.pmpCurrency}${plan.trialAmount}.',
+                                          style: primaryTextStyle(size: 14, fontFamily: GoogleFonts.nunito().fontFamily),
                                         ),
                                       ],
                                     ),
                                   ),
-                                if (plan.expirationNumber != "0" &&
-                                    plan.expirationPeriod.validate().isNotEmpty)
+                                if (plan.expirationNumber != "0" && plan.expirationPeriod.validate().isNotEmpty)
                                   Text(
-                                    '${language!.membershipExpiresAfter} ${plan.expirationNumber} ${plan.expirationPeriod}.',
+                                    '${language.membershipExpiresAfter} ${plan.expirationNumber} ${plan.expirationPeriod}.',
                                     style: secondaryTextStyle(),
-                                  ),
-                                if (widget.selectedPlanId == plan.id)
-                                  Container(
-                                    child: Text(language!.yourPlan,
-                                        style: primaryTextStyle(size: 14)),
-                                    decoration: BoxDecoration(
-                                      color: appGreenColor,
-                                      borderRadius: radius(2),
-                                    ),
-                                    margin: EdgeInsets.only(top: 8),
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 6, vertical: 4),
                                   ),
                               ],
                             ),
                           ),
-                          if (widget.selectedPlanId != plan.id)
+                          if (!isCurrentPlan)
                             Positioned(
                               child: IconButton(
                                 onPressed: () {
@@ -335,33 +343,19 @@ class _MembershipPlansScreenState extends State<MembershipPlansScreen> {
                                     selectedPlan = null;
                                     setState(() {});
                                   } else {
-                                    if (widget.selectedPlanId != plan.id) {
-                                      selectedPlan = plan;
-                                      setState(() {});
-                                    }
+                                    selectedPlan = plan;
+                                    setState(() {});
                                   }
                                 },
                                 icon: Icon(
-                                  selectedPlan == plan &&
-                                          widget.selectedPlanId != plan.id
-                                      ? Icons.radio_button_checked
-                                      : Icons.circle_outlined,
-                                  color: selectedPlan == plan &&
-                                          widget.selectedPlanId != plan.id
-                                      ? context.primaryColor
-                                      : context.iconColor,
+                                  selectedPlan == plan ? Icons.radio_button_checked : Icons.circle_outlined,
+                                  color: selectedPlan == plan ? context.primaryColor : context.iconColor,
                                 ),
-                                splashColor:
-                                    colorPrimary.withValues(alpha: 0.2),
-                                highlightColor:
-                                    colorPrimary.withValues(alpha: 0.2),
+                                splashColor: colorPrimary.withValues(alpha: 0.2),
+                                highlightColor: colorPrimary.withValues(alpha: 0.2),
                               ),
-                              right: appStore.selectedLanguageCode != 'ar'
-                                  ? 0
-                                  : null,
-                              left: appStore.selectedLanguageCode == 'ar'
-                                  ? 0
-                                  : null,
+                              right: appStore.selectedLanguageCode != 'ar' ? 0 : null,
+                              left: appStore.selectedLanguageCode == 'ar' ? 0 : null,
                               top: 8,
                             )
                         ],
@@ -374,12 +368,12 @@ class _MembershipPlansScreenState extends State<MembershipPlansScreen> {
             if (plans.isEmpty && !appStore.isLoading && !isError)
               NoDataWidget(
                 imageWidget: noDataImage(),
-                title: language!.noData,
+                title: language.noData,
               ).center(),
             if (isError && !appStore.isLoading)
               NoDataWidget(
                 imageWidget: noDataImage(),
-                title: language!.somethingWentWrong,
+                title: language.somethingWentWrong,
               ).center(),
             if (appStore.isLoading) LoaderWidget().center(),
           ],
@@ -388,15 +382,12 @@ class _MembershipPlansScreenState extends State<MembershipPlansScreen> {
       bottomNavigationBar: selectedPlan != null && !appStore.isLoading
           ? AppButton(
               width: context.width() - 32,
-              text: language!.selectAndProceed,
+              text: language.selectAndProceed,
               color: context.primaryColor,
               onTap: () {
                 // Skip payment for free plans
                 if (selectedPlan!.billingAmount.validate().toDouble() == 0.0) {
-                  InAppPurchaseService.buySubscriptionPlan(context,
-                      planToPurchase: null,
-                      levelId: selectedPlan!.id.validate(),
-                      isFreePlan: true);
+                  InAppPurchaseService.buySubscriptionPlan(context, planToPurchase: null, levelId: selectedPlan!.id.validate(), isFreePlan: true);
                   return;
                 }
 

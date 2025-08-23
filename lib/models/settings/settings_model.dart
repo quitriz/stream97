@@ -20,7 +20,7 @@ class SettingsModel {
       pmproCurrency: json['pmpro_currency'] is String ? json['pmpro_currency'] : "",
       pmproPayments: json['pmpro_payments'] is Map<String, dynamic> ? PmproPayments.fromJson(json['pmpro_payments']) : null,
       currencySymbol: json['currency_symbol'] is String ? json['currency_symbol'] : "",
-      isMembershipEnabled: json['is_membership_enable'] is int ? json['is_membership_enable'] : 0,
+      isMembershipEnabled: json["is_membership_enable"],
       wooConsumerKey: json['wc_consumer_key'] is String ? json['wc_consumer_key'] : "",
       wooConsumerSecret: json['wc_consumer_secret'] is String ? json['wc_consumer_secret'] : "",
       isLiveEnabled: json['is_live_streaming_enable'] is bool ? json['is_live_streaming_enable'] : false,
@@ -33,7 +33,7 @@ class SettingsModel {
   int? showTitles;
   int? showAds;
 
-  int? isMembershipEnabled;
+  bool? isMembershipEnabled;
   PmproPayments? pmproPayments;
 
   bool get isPaymentMethodAvailable => pmproPayments != null;

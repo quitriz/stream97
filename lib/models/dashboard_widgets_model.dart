@@ -22,7 +22,7 @@ List<DashboardWidgetsModel> getFragments() {
 
   list.add(
     DashboardWidgetsModel(
-      fragment: language!.home,
+      fragment: language.home,
       icon: Icon(Icons.home_outlined, size: 24, color: Colors.white),
       selectedIcon: Icon(Icons.home_filled, color: colorPrimary, size: 22),
       widget: HomeFragment(),
@@ -41,7 +41,7 @@ List<DashboardWidgetsModel> getFragments() {
   }
   list.add(
     DashboardWidgetsModel(
-      fragment: language!.watchList,
+      fragment: language.watchList,
       icon: Icon(Icons.bookmark_border, size: 20, color: Colors.white),
       selectedIcon: Icon(Icons.bookmark, color: colorPrimary, size: 22),
       widget: WatchlistFragment(),
@@ -49,7 +49,7 @@ List<DashboardWidgetsModel> getFragments() {
   );
   list.add(
     DashboardWidgetsModel(
-      fragment: language!.genre,
+      fragment: language.genre,
       icon: Image.asset(ic_genre, color: Colors.white, height: 20, width: 20),
       selectedIcon: Image.asset(ic_genre_filled,
           color: colorPrimary, height: 18, width: 18),
@@ -58,7 +58,7 @@ List<DashboardWidgetsModel> getFragments() {
   );
   list.add(
     DashboardWidgetsModel(
-      fragment: language!.profile,
+      fragment: language.profile,
       icon: Icon(Icons.person_outlined, size: 24, color: Colors.white),
       selectedIcon: Icon(Icons.person, color: colorPrimary, size: 24),
       widget: MoreFragment(),

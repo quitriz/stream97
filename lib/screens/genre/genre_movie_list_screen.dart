@@ -121,13 +121,13 @@ class GenreMovieListScreenState extends State<GenreMovieListScreen> {
               ),
               NoDataWidget(
                 imageWidget: noDataImage(),
-                title: language!.noContentFound,
-                subTitle: language!.theContentHasNot,
+                title: language.noContentFound,
+                subTitle: language.theContentHasNot,
               ).center().visible(!appStore.isLoading && genreMovieList.isEmpty && !hasError),
               NoDataWidget(
                 imageWidget: noDataImage(),
-                title: language!.noContentFound,
-                subTitle: language!.somethingWentWrong,
+                title: language.noContentFound,
+                subTitle: language.somethingWentWrong,
               ).center().visible(!appStore.isLoading && genreMovieList.isEmpty && hasError),
               Observer(
                 builder: (context) => LoaderWidget().visible(appStore.isLoading),

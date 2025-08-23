@@ -62,7 +62,7 @@ class GenreListScreenState extends State<GenreListScreen> {
               errorBuilder: (p0) {
                 return NoDataWidget(
                   imageWidget: noDataImage(),
-                  title: language!.noGenresFound,
+                  title: language.noGenresFound,
                   onRetry: () {
                     page = 1;
                     isLastPage = false;

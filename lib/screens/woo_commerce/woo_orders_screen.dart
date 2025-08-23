@@ -87,7 +87,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
             },
           ),
           titleSpacing: 0,
-          title: Text(language!.pastInvoices, style: boldTextStyle(size: 22)),
+          title: Text(language.pastInvoices, style: boldTextStyle(size: 22)),
           elevation: 0,
           centerTitle: true,
         ),
@@ -108,7 +108,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                   if (orderList.isEmpty && !isError) {
                     return NoDataWidget(
                       imageWidget: noDataImage(),
-                      title: language!.noData,
+                      title: language.noData,
                     ).center();
                   } else if (isError) {
                     return NoDataWidget(
@@ -151,26 +151,26 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                   children: [
                                     Row(
                                       children: [
-                                        Text('${language!.plan}: ', style: primaryTextStyle()),
+                                        Text('${language.plan}: ', style: primaryTextStyle()),
                                         Text(orderList[index].lineItems.validate()[0].name.validate(), style: boldTextStyle(color: context.primaryColor)),
                                       ],
                                     ),
                                     Row(
                                       children: [
-                                        Text('${language!.orderNumber}: ', style: primaryTextStyle(size: 14)),
+                                        Text('${language.orderNumber}: ', style: primaryTextStyle(size: 14)),
                                         Text(orderList[index].id.validate().toString(), style: secondaryTextStyle()),
                                       ],
                                     ),
                                     Row(
                                       children: [
-                                        Text('${language!.date}: ', style: primaryTextStyle(size: 14)),
+                                        Text('${language.date}: ', style: primaryTextStyle(size: 14)),
                                         Text(formatDate(orderList[index].dateCreated.validate()), style: secondaryTextStyle()),
                                       ],
                                     ),
                                     10.height,
                                     Row(
                                       children: [
-                                        Text('${language!.total}: ', style: boldTextStyle()),
+                                        Text('${language.total}: ', style: boldTextStyle()),
                                         Text(orderList[index].total.validate(), style: primaryTextStyle()),
                                       ],
                                     ),

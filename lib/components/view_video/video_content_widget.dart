@@ -145,12 +145,12 @@ class VideoContentWidget extends StatelessWidget {
                   Icon(Icons.error_outline, size: 48, color: Colors.white),
                   16.height,
                   Text(
-                    language!.videoUnavailable,
+                    language.videoUnavailable,
                     style: boldTextStyle(size: 20, color: Colors.white),
                   ),
                   8.height,
                   Text(
-                    language!.privacyLinkCheckMessage,
+                    language.privacyLinkCheckMessage,
                     style: secondaryTextStyle(color: Colors.white),
                     textAlign: TextAlign.center,
                   ).paddingSymmetric(horizontal: 32),

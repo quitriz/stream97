@@ -1,10 +1,38 @@
 import 'billing_model.dart';
 
 class PmpOrderModel {
+  int? id;
+  String? code;
+  int? userId;
+  String? inAppPurchaseIdentifier;
+  int? membershipId;
+  String? membershipName;
+  BillingModel? billing;
+  num? subtotal;
+  num? tax;
+  num? total;
+  String? paymentType;
+  String? cardType;
+  String? accountNumber;
+  String? expirationMonth;
+  String? expirationYear;
+  String? status;
+  String? gateway;
+  String? gatewayEnvironment;
+  String? paymentTransactionId;
+  String? subscriptionTransactionId;
+  int? timestamp;
+  int? affiliateId;
+  String? affiliateSubId;
+  String? notes;
+  int? checkoutId;
+  String? invoiceUrl;
+
   PmpOrderModel({
     this.id,
     this.code,
     this.userId,
+    this.inAppPurchaseIdentifier,
     this.membershipId,
     this.membershipName,
     this.billing,
@@ -12,10 +40,10 @@ class PmpOrderModel {
     this.tax,
     this.total,
     this.paymentType,
-    this.cardtype,
-    this.accountnumber,
-    this.expirationmonth,
-    this.expirationyear,
+    this.cardType,
+    this.accountNumber,
+    this.expirationMonth,
+    this.expirationYear,
     this.status,
     this.gateway,
     this.gatewayEnvironment,
@@ -23,9 +51,10 @@ class PmpOrderModel {
     this.subscriptionTransactionId,
     this.timestamp,
     this.affiliateId,
-    this.affiliateSubid,
+    this.affiliateSubId,
     this.notes,
     this.checkoutId,
+    this.invoiceUrl,
   });
 
   PmpOrderModel.fromJson(dynamic json) {
@@ -39,10 +68,10 @@ class PmpOrderModel {
     tax = json['tax'];
     total = json['total'];
     paymentType = json['payment_type'];
-    cardtype = json['cardtype'];
-    accountnumber = json['accountnumber'];
-    expirationmonth = json['expirationmonth'];
-    expirationyear = json['expirationyear'];
+    cardType = json['card_type'];
+    accountNumber = json['account_number'];
+    expirationMonth = json['expiration_month'];
+    expirationYear = json['expiration_year'];
     status = json['status'];
     gateway = json['gateway'];
     gatewayEnvironment = json['gateway_environment'];
@@ -50,35 +79,11 @@ class PmpOrderModel {
     subscriptionTransactionId = json['subscription_transaction_id'];
     timestamp = json['timestamp'];
     affiliateId = json['affiliate_id'];
-    affiliateSubid = json['affiliate_subid'];
+    affiliateSubId = json['affiliate_sub_id'];
     notes = json['notes'];
     checkoutId = json['checkout_id'];
+    invoiceUrl = json["invoice_url"];
   }
-
-  String? id;
-  String? code;
-  String? userId;
-  String? membershipId;
-  String? membershipName;
-  BillingModel? billing;
-  String? subtotal;
-  String? tax;
-  String? total;
-  String? paymentType;
-  String? cardtype;
-  String? accountnumber;
-  String? expirationmonth;
-  String? expirationyear;
-  String? status;
-  String? gateway;
-  String? gatewayEnvironment;
-  String? paymentTransactionId;
-  String? subscriptionTransactionId;
-  String? timestamp;
-  String? affiliateId;
-  String? affiliateSubid;
-  String? notes;
-  String? checkoutId;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -94,10 +99,10 @@ class PmpOrderModel {
     map['tax'] = tax;
     map['total'] = total;
     map['payment_type'] = paymentType;
-    map['cardtype'] = cardtype;
-    map['accountnumber'] = accountnumber;
-    map['expirationmonth'] = expirationmonth;
-    map['expirationyear'] = expirationyear;
+    map['card_type'] = cardType;
+    map['account_number'] = accountNumber;
+    map['expiration_month'] = expirationMonth;
+    map['expiration_year'] = expirationYear;
     map['status'] = status;
     map['gateway'] = gateway;
     map['gateway_environment'] = gatewayEnvironment;
@@ -105,9 +110,10 @@ class PmpOrderModel {
     map['subscription_transaction_id'] = subscriptionTransactionId;
     map['timestamp'] = timestamp;
     map['affiliate_id'] = affiliateId;
-    map['affiliate_subid'] = affiliateSubid;
+    map['affiliate_sub_id'] = affiliateSubId;
     map['notes'] = notes;
     map['checkout_id'] = checkoutId;
+    map['invoice_url'] = invoiceUrl;
     return map;
   }
 }

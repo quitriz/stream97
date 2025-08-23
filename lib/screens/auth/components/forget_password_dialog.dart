@@ -22,11 +22,11 @@ class _ForgetPasswordDialogState extends State<ForgetPasswordDialog> {
       formKey1.currentState!.save();
 
       if (emailCont.text.trim().isEmpty) {
-        toast(language!.thisFieldIsRequired);
+        toast(language.thisFieldIsRequired);
         return;
       }
       if (!emailCont.text.trim().validateEmail()) {
-        toast(language!.enterValidEmail);
+        toast(language.enterValidEmail);
         return;
       }
       hideKeyboard(context);
@@ -52,7 +52,7 @@ class _ForgetPasswordDialogState extends State<ForgetPasswordDialog> {
         mainAxisSize: MainAxisSize.min,
         children: [
           30.height,
-          Text(language!.forgotPasswordData, style: boldTextStyle(size: 18)),
+          Text(language.forgotPasswordData, style: boldTextStyle(size: 18)),
           10.height,
           Text(
             'Don’t worry! it happens. please enter the email associated with your account',
@@ -66,12 +66,12 @@ class _ForgetPasswordDialogState extends State<ForgetPasswordDialog> {
             keyboardType: TextInputType.emailAddress,
             decoration: inputDecoration(
               context,
-              hint: language!.email,
+              hint: language.email,
               hintStyle: secondaryTextStyle(),
               prefixIcon: Icon(Icons.mail_outline, color: textSecondaryColorGlobal, size: 18),
             ),
             validator: (value) {
-              if (value!.isEmpty) return language!.thisFieldIsRequired;
+              if (value!.isEmpty) return language.thisFieldIsRequired;
               return null;
             },
             onFieldSubmitted: (s) {
@@ -86,7 +86,7 @@ class _ForgetPasswordDialogState extends State<ForgetPasswordDialog> {
             width: context.width(),
             color: colorPrimary,
             splashColor: colorPrimary,
-            child: Text(language!.submit, style: boldTextStyle(color: Colors.white)),
+            child: Text(language.submit, style: boldTextStyle(color: Colors.white)),
           ).center(),
           30.height,
         ],

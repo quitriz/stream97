@@ -22,7 +22,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdk 35
+    compileSdk 36
     namespace 'com.vn2.phim'
     ndkVersion "27.0.12077973"
 
@@ -37,7 +37,7 @@ android {
     defaultConfig {
         applicationId "com.vn2.phim"
         minSdkVersion 25
-        targetSdkVersion 35
+        targetSdkVersion 36
         versionCode 55
         versionName "8.5.1"
         multiDexEnabled true

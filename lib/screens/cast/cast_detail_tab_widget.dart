@@ -104,7 +104,7 @@ class CastDetailTabWidgetState extends State<CastDetailTabWidget> {
                     4.height,
                     if (data.characterName.validate().isNotEmpty)
                       Text(
-                        '${language!.as} ${data.characterName.validate()}',
+                        '${language.as} ${data.characterName.validate()}',
                         style: secondaryTextStyle(color: Colors.grey.shade500),
                       ).paddingBottom(4),
                     Text(data.releaseYear.validate(), style: secondaryTextStyle(color: Colors.grey.shade500)),
@@ -120,8 +120,8 @@ class CastDetailTabWidgetState extends State<CastDetailTabWidget> {
         ),
         NoDataWidget(
           imageWidget: noDataImage(),
-          title: language!.noContentFound,
-          subTitle: language!.theContentHasNot,
+          title: language.noContentFound,
+          subTitle: language.theContentHasNot,
         ).center().visible(_list.isEmpty && !isLoading),
         LoaderWidget().visible(isLoading),
       ],

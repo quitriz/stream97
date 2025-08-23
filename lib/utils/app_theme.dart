@@ -19,7 +19,7 @@ class AppTheme {
     fontFamily: GoogleFonts.nunito().fontFamily,
     radioTheme: RadioThemeData(fillColor: WidgetStateProperty.all(Colors.white), overlayColor: WidgetStateProperty.all(Colors.white)),
     appBarTheme: AppBarTheme(
-      color: appBackground,
+      backgroundColor: appBackground,
       iconTheme: IconThemeData(color: textColorPrimary),
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.light,

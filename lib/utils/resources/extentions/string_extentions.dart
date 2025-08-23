@@ -46,12 +46,20 @@ extension StExt on String {
   }
 
   bool get isYoutubeUrl {
+    final url = this.validate().trim();
     for (var exp in [
-      RegExp(r"^https:\/\/(?:www\.|m\.)?youtube\.com\/watch\?v=([_\-a-zA-Z0-9]{11}).*$"),
-      RegExp(r"^https:\/\/(?:www\.|m\.)?youtube(?:-nocookie)?\.com\/embed\/([_\-a-zA-Z0-9]{11}).*$"),
-      RegExp(r"^https:\/\/youtu\.be\/([_\-a-zA-Z0-9]{11}).*$")
+      // watch with v param in any order
+      RegExp(r"^(?:https?:)?\/\/(?:www\.|m\.)?youtube\.com\/.*[?&]v=([_\-a-zA-Z0-9]{11}).*$", caseSensitive: false),
+      // embed
+      RegExp(r"^(?:https?:)?\/\/(?:www\.|m\.)?youtube(?:-nocookie)?\.com\/embed\/([_\-a-zA-Z0-9]{11})(?:\?.*)?$", caseSensitive: false),
+      // youtu.be short
+      RegExp(r"^(?:https?:)?\/\/youtu\.be\/([_\-a-zA-Z0-9]{11})(?:\?.*)?$", caseSensitive: false),
+      // shorts
+      RegExp(r"^(?:https?:)?\/\/(?:www\.)?youtube\.com\/shorts\/([_\-a-zA-Z0-9]{11})(?:\?.*)?$", caseSensitive: false),
+      // live
+      RegExp(r"^(?:https?:)?\/\/(?:www\.)?youtube\.com\/live\/([_\-a-zA-Z0-9]{11})(?:\?.*)?$", caseSensitive: false),
     ]) {
-      Match? match = exp.firstMatch(this);
+      final match = exp.firstMatch(url);
       if (match != null && match.groupCount >= 1) return true;
     }
     return false;
@@ -81,30 +89,43 @@ extension StExt on String {
 
   String getYouTubeId({bool trimWhitespaces = true}) {
     String url = this.validate();
-    if (!url.contains('http') && (url.length == 11)) return url;
     if (trimWhitespaces) url = url.trim();
+    // If it's just the 11-char ID
+    if (!url.contains('http') && RegExp(r'^[A-Za-z0-9_-]{11}$').hasMatch(url)) return url;
 
     for (var exp in [
-      RegExp(r"^https://(?:www\.|m\.)?youtube\.com/watch\?v=([_\-a-zA-Z0-9]{11}).*$"),
-      RegExp(r"^https://(?:www\.|m\.)?youtube(?:-nocookie)?\.com/embed/([_\-a-zA-Z0-9]{11}).*$"),
-      RegExp(r"^https://youtu\.be/([_\-a-zA-Z0-9]{11}).*$"),
-      RegExp(r"^https://(?:www\.)?youtube\.com/live/([_\-a-zA-Z0-9]{11})(?:\?.*)?$")
+      // watch with v param in any order
+      RegExp(r"^(?:https?:)?\/\/(?:www\.|m\.)?youtube\.com\/.*[?&]v=([_\-a-zA-Z0-9]{11}).*$", caseSensitive: false),
+      // embed
+      RegExp(r"^(?:https?:)?\/\/(?:www\.|m\.)?youtube(?:-nocookie)?\.com\/embed\/([_\-a-zA-Z0-9]{11})(?:\?.*)?$", caseSensitive: false),
+      // youtu.be short
+      RegExp(r"^(?:https?:)?\/\/youtu\.be\/([_\-a-zA-Z0-9]{11})(?:\?.*)?$", caseSensitive: false),
+      // shorts
+      RegExp(r"^(?:https?:)?\/\/(?:www\.)?youtube\.com\/shorts\/([_\-a-zA-Z0-9]{11})(?:\?.*)?$", caseSensitive: false),
+      // live
+      RegExp(r"^(?:https?:)?\/\/(?:www\.)?youtube\.com\/live\/([_\-a-zA-Z0-9]{11})(?:\?.*)?$", caseSensitive: false),
     ]) {
-      Match? match = exp.firstMatch(url);
+      final match = exp.firstMatch(url);
       if (match != null && match.groupCount >= 1) return match.group(1)!;
     }
+    // Fallback: generic extractor
+    final generic = RegExp(r'(?:v=|\/)([A-Za-z0-9_-]{11})(?:(?:&|\?|\/).*)?$');
+    final m = generic.firstMatch(url);
+    if (m != null && m.groupCount >= 1) return m.group(1)!;
     return '';
   }
 
   String getURLType() {
-    if (this.validate().isYoutubeUrl) {
+    final value = this.validate().trim();
+    if (value.isYoutubeUrl) {
       return VideoType.typeYoutube;
-    } else if (this.validate().contains('vimeo')) {
+    } else if (value.contains('vimeo')) {
       return VideoType.typeVimeo;
-    } else if (this.validate().contains('/storage') || this.validate().contains('/var/mobile/Containers/')) {
+    } else if (value.contains('/storage') || value.contains('/var/mobile/Containers/')) {
       return VideoType.typeFile;
-    } else
+    } else {
       return VideoType.typeURL;
+    }
   }
 
   PlayVideoFrom getPlatformVideo() {
@@ -122,16 +143,16 @@ extension StExt on String {
   String title() {
     switch (this) {
       case dashboardTypeHome:
-        return language!.home;
+        return language.home;
       case dashboardTypeTVShow:
-        return language!.tVShows;
+        return language.tVShows;
       case dashboardTypeMovie:
-        return language!.movies;
+        return language.movies;
       case dashboardTypeVideo:
-        return language!.videos;
+        return language.videos;
 
       case dashboardTypeEpisode:
-        return language!.episode.capitalizeFirstLetter();
+        return language.episode.capitalizeFirstLetter();
       default:
         return this;
     }

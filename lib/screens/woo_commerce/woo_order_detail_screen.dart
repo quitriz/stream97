@@ -42,7 +42,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
             },
           ),
           titleSpacing: 0,
-          title: Text(language!.orderDetails, style: boldTextStyle(size: 22)),
+          title: Text(language.orderDetails, style: boldTextStyle(size: 22)),
           elevation: 0,
           centerTitle: true,
         ),
@@ -56,7 +56,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('${language!.orderStatus}:', style: boldTextStyle()),
+                      Text('${language.orderStatus}:', style: boldTextStyle()),
                       Text(
                         widget.orderDetails.status.validate().capitalizeFirstLetter(),
                         style: boldTextStyle(color: context.primaryColor, size: 18),
@@ -71,7 +71,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                       children: [
                         Row(
                           children: [
-                            Text('${language!.orderNumber}:', style: primaryTextStyle()),
+                            Text('${language.orderNumber}:', style: primaryTextStyle()),
                             8.width,
                             Text(widget.orderDetails.id.validate().toString(), style: primaryTextStyle()).expand(),
                           ],
@@ -79,7 +79,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                         8.height,
                         Row(
                           children: [
-                            Text('${language!.date}:', style: primaryTextStyle()),
+                            Text('${language.date}:', style: primaryTextStyle()),
                             8.width,
                             Text(formatDate(widget.orderDetails.dateCreated.validate().toString()), style: primaryTextStyle()).expand(),
                           ],
@@ -87,7 +87,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                         8.height,
                         Row(
                           children: [
-                            Text('${language!.email}:', style: primaryTextStyle()),
+                            Text('${language.email}:', style: primaryTextStyle()),
                             8.width,
                             Text(appStore.userEmail.validate(), style: primaryTextStyle()).expand(),
                           ],
@@ -96,7 +96,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                     ),
                   ),
                   16.height,
-                  Text('${language!.products}:', style: boldTextStyle()),
+                  Text('${language.products}:', style: boldTextStyle()),
                   16.height,
                   Container(
                     decoration: BoxDecoration(color: search_edittext_color, borderRadius: radius(defaultAppButtonRadius)),
@@ -125,7 +125,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('${language!.total}:', style: boldTextStyle()),
+                            Text('${language.total}:', style: boldTextStyle()),
                             Text(widget.orderDetails.total.validate(), style: primaryTextStyle()),
                           ],
                         ),
@@ -142,7 +142,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
         bottomNavigationBar: widget.orderDetails.needsPayment.validate()
             ? AppButton(
                 width: context.width() - 32,
-                text: language!.makePayment,
+                text: language.makePayment,
                 color: context.primaryColor,
                 onTap: () async {
                   if (widget.orderDetails.paymentUrl != null && widget.orderDetails.paymentUrl.validate().isNotEmpty) {

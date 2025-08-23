@@ -53,7 +53,7 @@ class _UpcomingRelatedMovieListWidgetState extends State<UpcomingRelatedMovieLis
                     setState(() {});
                   },
                   child: Text(
-                    language!.recommendedMovies,
+                    language.recommendedMovies,
                     style: secondaryTextStyle(
                       size: 16,
                       color: selected == UpcomingList.RELATED ? context.primaryColor : textSecondaryColorGlobal,
@@ -67,7 +67,7 @@ class _UpcomingRelatedMovieListWidgetState extends State<UpcomingRelatedMovieLis
                     setState(() {});
                   },
                   child: Text(
-                    language!.upcomingMovies,
+                    language.upcomingMovies,
                     style: secondaryTextStyle(
                       size: 16,
                       color: selected == UpcomingList.UPCOMING_MOVIE ? context.primaryColor : textSecondaryColorGlobal,
@@ -81,7 +81,7 @@ class _UpcomingRelatedMovieListWidgetState extends State<UpcomingRelatedMovieLis
                     setState(() {});
                   },
                   child: Text(
-                    language!.upcomingVideo,
+                    language.upcomingVideo,
                     style: secondaryTextStyle(
                       size: 16,
                       color: selected == UpcomingList.UPCOMING_VIDEO ? context.primaryColor : textSecondaryColorGlobal,

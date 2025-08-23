@@ -1094,4 +1094,77 @@ class LanguageFr extends BaseLanguage {
 
   @override
   String get recommendedForYou => 'Recommandé pour vous';
+
+
+  @override
+  String get myRentals => 'Mes locations';
+
+  @override
+  String get manageRentals => 'Gérer les locations';
+
+  @override
+  String get validity => 'Validité';
+
+  @override
+  String get info => 'Informations';
+
+  @override
+  String get upgradeToWatch => 'Passez à la montre';
+
+  @override
+  String get subscribeToWatch => 'Abonnez-vous pour regarder';
+
+  @override
+  String get rentOrUpgradeToWatch => 'Louer ou mettre à niveau pour regarder';
+
+  @override
+  String get rentOrSubscribeToWatch => 'Louez ou abonnez-vous pour regarder';
+
+  @override
+  String get recommended => 'Recommandé';
+
+  @override
+  String get noRentalsFound => 'Aucune location trouvée';
+
+  @override
+  String get type => 'Taper';
+
+  @override
+  String get purchaseDate => "Date d'achat";
+
+  @override
+  String get expires => 'Expire';
+
+  @override
+  String get paymentStatus => 'Statut de paiement';
+
+  @override
+  String get totalAmount => 'Montant total';
+
+  @override
+  String get day => 'Jour';
+
+  @override
+  String get days => 'Jours';
+
+  @override
+  String get rentFor => 'Louer pour';
+
+  @override
+  String get unpaid => 'non rémunéré';
+
+  @override
+  String get rent => 'louer';
+
+  @override
+  String get rented => 'Loué';
+
+  @override
+  String get paymentCompletedSuccessfully => 'Paiement effectué avec succès';
+
+  @override
+  String get checkoutUrlNotAvailable => 'URL de paiement non disponible';
+
+  @override
+  String get lifetimeAccess => 'Accès à vie';
 }

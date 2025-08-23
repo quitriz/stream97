@@ -14,6 +14,7 @@ import 'package:streamit_flutter/screens/pmp/screens/membership_plans_screen.dar
 import 'package:streamit_flutter/main.dart';
 import 'package:streamit_flutter/network/rest_apis.dart';
 import 'package:streamit_flutter/screens/pmp/screens/my_account_screen.dart';
+import 'package:streamit_flutter/screens/pmp/screens/my_rentals_screen.dart';
 import 'package:streamit_flutter/screens/settings/screens/edit_profile_screen.dart';
 import 'package:streamit_flutter/screens/settings/screens/manage_devices_screen.dart';
 import 'package:streamit_flutter/screens/auth/sign_in.dart';
@@ -136,7 +137,7 @@ class MoreFragmentState extends State<MoreFragment> {
         return Scaffold(
           backgroundColor: Colors.black,
           appBar: AppBar(
-            title: Text(language!.profile, style: primaryTextStyle(size: ts_large.toInt(), color: textColorPrimary)),
+            title: Text(language.profile, style: primaryTextStyle(size: ts_large.toInt(), color: textColorPrimary)),
             backgroundColor: Colors.black,
             automaticallyImplyLeading: false,
             elevation: 0,
@@ -226,19 +227,19 @@ class MoreFragmentState extends State<MoreFragment> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          appStore.subscriptionPlanName.validate().isNotEmpty ? appStore.subscriptionPlanName.validate() : language!.free,
+                                          appStore.subscriptionPlanName.validate().isNotEmpty ? appStore.subscriptionPlanName.validate() : language.free,
                                           style: primaryTextStyle(color: white, size: 20),
                                         ),
                                         if (appStore.subscriptionPlanExpDate.validate().toInt() != 0)
                                           Text(
-                                            language!.validTill + DateTime.fromMillisecondsSinceEpoch(appStore.subscriptionPlanExpDate.validate().toInt() * 1000).toString().getFormattedDate()!,
+                                            language.validTill + DateTime.fromMillisecondsSinceEpoch(appStore.subscriptionPlanExpDate.validate().toInt() * 1000).toString().getFormattedDate()!,
                                             style: secondaryTextStyle(),
                                           ).paddingOnly(top: 4),
                                       ],
                                     ),
                                   ).expand(),
                                   16.width,
-                                  Text(appStore.subscriptionPlanId.isNotEmpty ? language!.upgradePlan : language!.subscribeNow, style: boldTextStyle(color: colorPrimary, size: 14)).onTap(() {
+                                  Text(appStore.subscriptionPlanId.isNotEmpty ? language.upgradePlan : language.subscribeNow, style: boldTextStyle(color: colorPrimary, size: 14)).onTap(() {
                                     MembershipPlansScreen(
                                       selectedPlanId: appStore.subscriptionPlanId,
                                     ).launch(context).then((v) {
@@ -256,7 +257,7 @@ class MoreFragmentState extends State<MoreFragment> {
                           children: [
                             headingWidViewAll(
                               context,
-                              language!.continueWatching,
+                              language.continueWatching,
                               showViewMore: continueWatch.validate().length > 4,
                               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                               callback: () async {
@@ -280,7 +281,7 @@ class MoreFragmentState extends State<MoreFragment> {
                           children: [
                             headingWidViewAll(
                               context,
-                              language!.downloads,
+                              language.downloads,
                               showViewMore: appStore.downloadedItemList.length > 3,
                               callback: () async {},
                             ),
@@ -323,7 +324,7 @@ class MoreFragmentState extends State<MoreFragment> {
                                               onCancel: (c) {
                                                 finish(c);
                                               },
-                                              title: language!.areYouSureYouWantToDeleteThisMovieFromDownloads,
+                                              title: language.areYouSureYouWantToDeleteThisMovieFromDownloads,
                                               onAccept: (_) async {
                                                 try {
                                                   addOrRemoveFromLocalStorage(data, isDelete: true);
@@ -378,12 +379,28 @@ class MoreFragmentState extends State<MoreFragment> {
                         children: <Widget>[
                           Divider(height: 0, thickness: 1),
                           SettingSection(
-                            title: Text(language!.manageAccount, style: boldTextStyle(size: 20, color: Colors.white)),
+                            title: Text(language.manageAccount, style: boldTextStyle(size: 20, color: Colors.white)),
                             headingDecoration: BoxDecoration(color: Colors.black),
                             items: [
+                              if (appStore.isMembershipEnabled)
                               SettingWidget(
-                                title: language!.playlists,
-                                subTitle: language!.watchYourNextList,
+                                title: language.myRentals,
+                                subTitle: language.manageRentals,
+                                titleTextStyle: primaryTextStyle(color: Colors.white),
+                                leading: CachedImageWidget(
+                                  url: ic_rent,
+                                  height: 18,
+                                  width: 18,
+                                  color: context.iconColor,
+                                ),
+                                trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Theme.of(context).textTheme.bodySmall?.color),
+                                onTap: (){
+                                  MyRentalsScreen().launch(context);
+                                },
+                              ),
+                              SettingWidget(
+                                title: language.playlists,
+                                subTitle: language.watchYourNextList,
                                 titleTextStyle: primaryTextStyle(color: Colors.white),
                                 leading: CachedImageWidget(
                                   url: ic_add_playlist,
@@ -405,9 +422,9 @@ class MoreFragmentState extends State<MoreFragment> {
                                 },
                               ),
                               SettingWidget(
-                                title: language!.notifications,
+                                title: language.notifications,
                                 titleTextStyle: primaryTextStyle(color: Colors.white),
-                                subTitle: language!.viewTheNewArrivals,
+                                subTitle: language.viewTheNewArrivals,
                                 leading: Stack(
                                   fit: StackFit.loose,
                                   clipBehavior: Clip.none,
@@ -442,8 +459,8 @@ class MoreFragmentState extends State<MoreFragment> {
 
                               ),
                               SettingWidget(
-                                title: language!.manageDevices,
-                                subTitle: language!.youCanManageUnfamilier,
+                                title: language.manageDevices,
+                                subTitle: language.youCanManageUnfamilier,
                                 titleTextStyle: primaryTextStyle(color: Colors.white),
                                 leading: CachedImageWidget(
                                   url: ic_security,
@@ -466,7 +483,7 @@ class MoreFragmentState extends State<MoreFragment> {
                               ),
                               if (appStore.isLogging)
                                 SettingWidget(
-                                  title: language!.signOutFromAllDevices,
+                                  title: language.signOutFromAllDevices,
                                   titleTextStyle: primaryTextStyle(color: Colors.white),
                                   leading: CachedImageWidget(
                                     url: ic_power_off,
@@ -478,10 +495,10 @@ class MoreFragmentState extends State<MoreFragment> {
                                   onTap: () {
                                     showConfirmDialogCustom(
                                       context,
-                                      title: language!.logOutAllDeviceConfirmation,
+                                      title: language.logOutAllDeviceConfirmation,
                                       primaryColor: colorPrimary,
-                                      negativeText: language!.no,
-                                      positiveText: language!.yes,
+                                      negativeText: language.no,
+                                      positiveText: language.yes,
                                       onAccept: (c) async {
                                         await logout(logoutFromAll: true, context: context, isNewTask: true);
                                       },

@@ -43,7 +43,7 @@ class _ReviewWidgetState extends State<ReviewWidget> {
           backgroundColor: context.cardColor,
           titlePadding:
               EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
-          title: Text(language!.editReview, style: primaryTextStyle()),
+          title: Text(language.editReview, style: primaryTextStyle()),
           contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -54,7 +54,7 @@ class _ReviewWidgetState extends State<ReviewWidget> {
                 style: secondaryTextStyle(),
                 maxLines: 3,
                 decoration: InputDecoration(
-                  hintText: language!.editYourReview,
+                  hintText: language.editYourReview,
                   hintStyle: secondaryTextStyle(),
                   isDense: true,
                   contentPadding:
@@ -97,7 +97,7 @@ class _ReviewWidgetState extends State<ReviewWidget> {
                 finish(context);
               },
               child: Text(
-                language!.cancel,
+                language.cancel,
                 style: primaryTextStyle(color: Colors.white, size: 14),
               ),
             ),
@@ -112,7 +112,7 @@ class _ReviewWidgetState extends State<ReviewWidget> {
               onTap: () async {
                 if (commentController.text.trim().isEmpty &&
                     currentRating == 0) {
-                  toast(language!.pleaseProvideRating);
+                  toast(language.pleaseProvideRating);
                   return;
                 }
                 appStore.setLoading(true);
@@ -136,11 +136,11 @@ class _ReviewWidgetState extends State<ReviewWidget> {
                   commentController.clear();
                 }).catchError((error) {
                   appStore.setLoading(false);
-                  toast(language!.pleaseTryAgain);
+                  toast(language.pleaseTryAgain);
                 });
               },
               child: Text(
-                language!.update,
+                language.update,
                 style: boldTextStyle(color: Colors.white, size: 14),
               ),
             ),
@@ -178,14 +178,14 @@ class _ReviewWidgetState extends State<ReviewWidget> {
                       widget.postType == PostType.VIDEO
                           ? Text(
                               appStore.reviewList.length > 1
-                                  ? language!.comments.capitalizeFirstLetter()
-                                  : language!.comment.capitalizeFirstLetter(),
+                                  ? language.comments.capitalizeFirstLetter()
+                                  : language.comment.capitalizeFirstLetter(),
                               style: boldTextStyle(size: 16),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             )
                           : Text(
-                              language!.lblRateAndReview,
+                              language.lblRateAndReview,
                               style: boldTextStyle(size: 16),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -208,7 +208,7 @@ class _ReviewWidgetState extends State<ReviewWidget> {
                           EdgeInsets.symmetric(horizontal: 12, vertical: 0),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
-                    child: Text(language!.viewAll, style: secondaryTextStyle()),
+                    child: Text(language.viewAll, style: secondaryTextStyle()),
                   ).visible(appStore.reviewList.length > 3),
                 ],
               ),
@@ -329,7 +329,7 @@ class _ReviewWidgetState extends State<ReviewWidget> {
                                                 size: 12,
                                                 color: Colors.blue[300]),
                                             4.width,
-                                            Text(language!.edit,
+                                            Text(language.edit,
                                                 style: secondaryTextStyle(
                                                     size: 10,
                                                     color: Colors.blue[300])),
@@ -342,11 +342,11 @@ class _ReviewWidgetState extends State<ReviewWidget> {
                                       onTap: () {
                                         showConfirmDialogCustom(
                                           context,
-                                          title: language!
+                                          title: language
                                               .areYouSureYouWantToDeleteThisReview,
                                           primaryColor: colorPrimary,
-                                          positiveText: language!.delete,
-                                          negativeText: language!.cancel,
+                                          positiveText: language.delete,
+                                          negativeText: language.cancel,
                                           onAccept: (value) {
                                             var request = {
                                               'post_id': widget.postId,
@@ -388,7 +388,7 @@ class _ReviewWidgetState extends State<ReviewWidget> {
                                                 size: 12,
                                                 color: Colors.red[300]),
                                             4.width,
-                                            Text(language!.delete,
+                                            Text(language.delete,
                                                 style: secondaryTextStyle(
                                                     size: 10,
                                                     color: Colors.red[300])),

@@ -34,13 +34,13 @@ class _PlaylistListWidgetState extends State<PlaylistListWidget> {
     super.initState();
 
     if (widget.playlistType == playlistMovie) {
-      noDataTitle = language!.movies;
+      noDataTitle = language.movies;
     } else if (widget.playlistType == playlistTvShows) {
-      noDataTitle = language!.tVShows;
+      noDataTitle = language.tVShows;
     }else if (widget.playlistType == playlistEpisodes) {
-      noDataTitle = language!.episodes;
+      noDataTitle = language.episodes;
     } else {
-      noDataTitle = language!.videos;
+      noDataTitle = language.videos;
     }
     setState(() {});
   }
@@ -79,19 +79,19 @@ class _PlaylistListWidgetState extends State<PlaylistListWidget> {
                     if (snap.data.validate().isEmpty) {
                       return NoDataWidget(
                         imageWidget: noDataImage(),
-                        title: '${language!.noPlaylistsFoundFor} $noDataTitle',
-                        subTitle: '${language!.createPlaylistAndAdd} $noDataTitle',
+                        title: '${language.noPlaylistsFoundFor} $noDataTitle',
+                        subTitle: '${language.createPlaylistAndAdd} $noDataTitle',
                         onRetry: () {
                           finish(context);
                           createPlayList(context);
                         },
-                        retryText: language!.createPlaylist,
+                        retryText: language.createPlaylist,
                       );
                     } else {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(language!.addToPlaylist, style: boldTextStyle(size: 18)).paddingSymmetric(vertical: 8, horizontal: 16),
+                          Text(language.addToPlaylist, style: boldTextStyle(size: 18)).paddingSymmetric(vertical: 8, horizontal: 16),
                           ListView.builder(
                             itemCount: snap.data.validate().length,
                             itemBuilder: (ctx, index) {
@@ -114,7 +114,7 @@ class _PlaylistListWidgetState extends State<PlaylistListWidget> {
                                       navigator.pop();
                                     }).catchError((e) {
                                       log("====>>>>Add to Playlist Error : ${e.toString()}");
-                                      toast(language!.somethingWentWrong);
+                                      toast(language.somethingWentWrong);
                                     });
 
                                     _data.isInPlaylist = !_data.isInPlaylist;
@@ -138,7 +138,7 @@ class _PlaylistListWidgetState extends State<PlaylistListWidget> {
                     }
                   } else if (snap.hasError) {
                     log("====>Movie Detail Playlist Error : ${snap.error.toString()}");
-                    return Text(language!.somethingWentWrong, style: primaryTextStyle(size: 22)).center();
+                    return Text(language.somethingWentWrong, style: primaryTextStyle(size: 22)).center();
                   }
                   return CircularProgressIndicator(strokeWidth: 2).center().paddingAll(16);
                 },

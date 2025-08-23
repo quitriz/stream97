@@ -123,7 +123,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWidget(
-        language!.notifications,
+        language.notifications,
         elevation: 0,
         color: Theme.of(context).cardColor,
         textColor: Colors.white,
@@ -136,8 +136,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 primaryColor: colorPrimary,
                 cancelable: false,
                 dialogType: DialogType.DELETE,
-                positiveText: language!.clear,
-                title: language!.clearNotificationConfirmation,
+                positiveText: language.clear,
+                title: language.clearNotificationConfirmation,
                 onCancel: (value) {
                   finish(context);
                 },
@@ -172,8 +172,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       labelStyle: boldTextStyle(color: Colors.white),
                       unselectedLabelStyle: primaryTextStyle(color: Colors.white),
                       tabs: [
-                        Tab(text: language!.unRead),
-                        Tab(text: language!.read),
+                        Tab(text: language.unRead),
+                        Tab(text: language.read),
                       ],
                       onTap: (value) {
                         if (value == 0) {
@@ -191,7 +191,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     if (snap.hasError) {
                       return NoDataWidget(
                         imageWidget: noDataImage(),
-                        title: language!.somethingWentWrong,
+                        title: language.somethingWentWrong,
                       ).center();
                     }
 
@@ -199,7 +199,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       if (snap.data.validate().isEmpty) {
                         return NoDataWidget(
                           imageWidget: noDataImage(),
-                          title: language!.noNotificationsFound,
+                          title: language.noNotificationsFound,
                         ).center();
                       } else {
                         return AnimatedListView(

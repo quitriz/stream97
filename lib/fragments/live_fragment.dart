@@ -17,7 +17,6 @@ import '../models/live_tv/live_category_list_model.dart';
 import '../screens/live_tv/screens/view_all_live_tv_categories.dart';
 
 class LiveFragment extends StatefulWidget {
-  static String tag = '/Live Fragment';
 
   const LiveFragment({Key? key}) : super(key: key);
 
@@ -77,7 +76,7 @@ class _LiveFragmentState extends State<LiveFragment> {
       child: Scaffold(
         backgroundColor: CupertinoColors.black,
         appBar: AppBar(
-          title: Text(language!.liveTV,
+          title: Text(language.liveTV,
               style: boldTextStyle(color: Colors.white, size: 20)),
           automaticallyImplyLeading: false,
           centerTitle: false,
@@ -163,7 +162,7 @@ class _LiveFragmentState extends State<LiveFragment> {
                           16.height,
                           headingWidViewAll(
                             context,
-                            language!.channelCategories,
+                            language.channelCategories,
                             showViewMore: true,
                             callback: () {
                               ViewAllLiveTvCategories().launch(context);

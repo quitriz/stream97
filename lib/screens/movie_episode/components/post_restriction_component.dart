@@ -33,7 +33,7 @@ class PostRestrictionComponent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '${language!.thisContentIsFor}$restrictedPlans ${language!.membersOnly}',
+                '${language.thisContentIsFor}$restrictedPlans ${language.membersOnly}',
                 style: primaryTextStyle(),
                 textAlign: TextAlign.center,
               ).paddingSymmetric(horizontal: 20, vertical: 8),
@@ -50,7 +50,7 @@ class PostRestrictionComponent extends StatelessWidget {
                         }
                       });
                   },
-                  child: Text(language!.joinNow, style: boldTextStyle(color: Colors.white)),
+                  child: Text(language.joinNow, style: boldTextStyle(color: Colors.white)),
                   style: ButtonStyle(backgroundColor: WidgetStateProperty.all(colorPrimary)),
                 ),
             ],

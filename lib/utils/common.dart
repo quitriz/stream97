@@ -4,21 +4,24 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:fl_pip/fl_pip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as custom_tab;
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:streamit_flutter/config.dart';
-import 'package:streamit_flutter/models/movie_episode/comment_model.dart';
-import 'package:streamit_flutter/models/download_data.dart';
 import 'package:streamit_flutter/models/auth/login_response.dart';
+import 'package:streamit_flutter/models/download_data.dart';
+import 'package:streamit_flutter/models/movie_episode/comment_model.dart';
 import 'package:streamit_flutter/network/network_utils.dart';
 import 'package:streamit_flutter/network/rest_apis.dart';
 import 'package:streamit_flutter/utils/constants.dart';
@@ -84,18 +87,18 @@ String parseHtmlString(String? htmlString) {
 
 String buildLikeCountText(int like) {
   if (like > 1) {
-    return '$like ${language!.likes}';
+    return '$like ${language.likes}';
   } else {
-    return '$like ${language!.like}';
+    return '$like ${language.like}';
   }
 }
 
 String buildCommentCountText(int comment) {
-  if (comment == 0) return language!.lblNoRatingsYet;
+  if (comment == 0) return language.lblNoRatingsYet;
   if (comment > 1) {
-    return '$comment ${language!.ratings}';
+    return '$comment ${language.ratings}';
   } else {
-    return '$comment  ${language!.lblRating}';
+    return '$comment  ${language.lblRating}';
   }
 }
 
@@ -166,14 +169,14 @@ Future<CommentModel> buildComment({int? parentId, required String content, requi
     comment.rating = rating;*/
 
     return await addComment(request).then((value) {
-      toast(language!.commentAdded);
+      toast(language.commentAdded);
       return value;
     }).catchError((error) {
       toast(error.toString());
       return CommentModel();
     });
   } else {
-    throw (language!.writeSomething);
+    throw (language.writeSomething);
   }
 }
 
@@ -256,7 +259,7 @@ Future<void> addOrRemoveFromLocalStorage(DownloadData data, {bool isDelete = fal
           final file = File(data.filePath.validate());
           if (await file.exists()) {
             await file.delete().then((value) {
-              toast(language!.movieDeletedSuccessfullyFromDownloads);
+              toast(language.movieDeletedSuccessfullyFromDownloads);
               log('File Deleted  ===============> ${value.toString()}');
             }).catchError((e) {
               log('Error ===============> ${e.toString()}');
@@ -300,8 +303,8 @@ Future<String> getQualitiesAsync({required String videoId, required String embed
   }
 }
 
-Future<void> appLaunchUrl(String url, {bool forceWebView = false}) async {
-  await url_launcher.launchUrl(Uri.parse(url), mode: LaunchMode.inAppWebView).catchError((e) {
+Future<void> appLaunchUrl(String url, {bool forceWebView = false, LaunchMode mode = LaunchMode.inAppWebView}) async {
+  await url_launcher.launchUrl(Uri.parse(url), mode: mode).catchError((e) {
     log(e);
     toast('Invalid URL: $url');
     return Future.value(false);
@@ -362,22 +365,22 @@ void showResumeVideoDialog({required BuildContext context, required VoidCallback
       return AlertDialog(
         surfaceTintColor: context.cardColor,
         backgroundColor: context.cardColor,
-        title: Text(language!.resumeVideo, style: boldTextStyle()),
-        content: Text(language!.doYouWishTo, style: primaryTextStyle()),
+        title: Text(language.resumeVideo, style: boldTextStyle()),
+        content: Text(language.doYouWishTo, style: primaryTextStyle()),
         actions: [
           TextButton(
             onPressed: () {
               finish(context);
               starOver.call();
             },
-            child: Text(language!.startOver, style: primaryTextStyle()),
+            child: Text(language.startOver, style: primaryTextStyle()),
           ),
           TextButton(
             onPressed: () async {
               finish(context);
               resume.call();
             },
-            child: Text(language!.resume, style: primaryTextStyle()),
+            child: Text(language.resume, style: primaryTextStyle()),
           )
         ],
       );
@@ -419,6 +422,19 @@ String formatDate(String date) {
   DateTime input = DateFormat('yyyy-MM-DDTHH:mm:ss').parse(date, true);
 
   return DateFormat.yMMMMd().format(input).toString();
+}
+
+String getYearFromDate(String dateString) {
+  if (dateString.isEmpty) return '';
+  try {
+    DateTime dateTime = DateTime.parse(dateString);
+    return dateTime.year.toString();
+  } catch (e) {
+    if (dateString.length >= 4) {
+      return dateString.substring(0, 4);
+    }
+    return '';
+  }
 }
 
 InputDecoration inputDecoration(
@@ -501,7 +517,7 @@ String streamitFormatTime(int timestamp) {
   } else
     result = countYears(difference);
 
-  return result != language!.justNow.capitalizeFirstLetter() ? result + ' ${language!.ago.toLowerCase()}' : result;
+  return result != language.justNow.capitalizeFirstLetter() ? result + ' ${language.ago.toLowerCase()}' : result;
 }
 
 String getPostContent(String? postContent) {
@@ -551,13 +567,13 @@ extension DurationExtensions on Duration {
 }
 
 extension AdUnitExtensions on AdUnit {
-  bool get isVideoAd => type?.toLowerCase() == 'video' || type?.toLowerCase() == 'vast';
+  bool get isVideoAd => type == AdTypeConst.video || type == AdTypeConst.vast;
 
-  bool get isHtmlAd => type?.toLowerCase() == 'html';
+  bool get isHtmlAd => type == AdTypeConst.html;
 
   bool get isOverlayAd => isHtmlAd && overlay == true;
 
-  bool get isCompanionAd => isHtmlAd && overlay != true && adFormat?.toLowerCase() == 'companion';
+  bool get isCompanionAd => isHtmlAd && overlay != true && adFormat?.toLowerCase() == AdTypeConst.companion;
 
   bool get canBeSkipped => skipEnabled.validate();
 
@@ -566,4 +582,188 @@ extension AdUnitExtensions on AdUnit {
   int get skipDurationInSeconds => skipDurationAsDuration.inSeconds;
 
   Duration get adDuration => Duration(seconds: duration ?? 5);
+}
+
+String getPostTypeString(PostType? contentType) {
+  if (contentType == null) return '';
+
+  switch (contentType) {
+    case PostType.MOVIE:
+      return ReviewConst.reviewTypeMovie;
+    case PostType.TV_SHOW:
+      return 'Tv Show';
+    case PostType.EPISODE:
+      return ReviewConst.reviewTypeEpisode;
+    case PostType.VIDEO:
+      return ReviewConst.reviewTypeVideo;
+    case PostType.NONE:
+    default:
+      return '';
+  }
+}
+
+/// Rental Price Widget for Pay-Per-View or Rental Movies
+Widget rentalPriceWidget({required num discountedPrice, required num price}) {
+  final bool hasDiscount = price != discountedPrice;
+
+  if (hasDiscount) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text('${language.rentFor} ', style: boldTextStyle(color: rentButtonTextColor)),
+        Text(
+          '${appStore.pmpCurrency}${price}',
+          style: boldTextStyle(color: white, decoration: TextDecoration.lineThrough, decorationColor: white, textDecorationStyle: TextDecorationStyle.solid).copyWith(decorationThickness: 2.43),
+        ),
+        4.width,
+        Text('${appStore.pmpCurrency}${discountedPrice}', style: boldTextStyle(color: rentButtonTextColor)),
+      ],
+    );
+  } else {
+    return Text(
+      '${language.rentFor} ${appStore.pmpCurrency}${discountedPrice}',
+      style: boldTextStyle(color: rentButtonTextColor),
+    );
+  }
+}
+
+/// Function to check if the device is running Android 12 or above
+Future<bool> requestStoragePermissionForDownload() async {
+  try {
+    if (Platform.isAndroid) {
+      final deviceInfo = DeviceInfoPlugin();
+      final androidInfo = await deviceInfo.androidInfo;
+      final sdkInt = androidInfo.version.sdkInt;
+
+      if (sdkInt >= 33) {
+        // Android 13+ (API 33+) - No special permissions needed for app-specific directories
+        // We'll use app-specific external storage which doesn't require permissions
+        return true;
+      } else {
+        // Android 12 and below - Use legacy storage permission
+        var status = await Permission.storage.status;
+
+        if (status.isGranted) {
+          return true;
+        }
+
+        status = await Permission.storage.request();
+
+        if (status.isGranted) {
+          return true;
+        } else if (status.isPermanentlyDenied) {
+          await openAppSettings();
+          return false;
+        } else {
+          return false;
+        }
+      }
+    }
+
+    return true; // For iOS and other platforms
+  } catch (e) {
+    print('Permission request error: $e');
+    return false;
+  }
+}
+
+Future<String> getDownloadDirectory() async {
+  if (Platform.isAndroid) {
+    final deviceInfo = DeviceInfoPlugin();
+    final androidInfo = await deviceInfo.androidInfo;
+    final sdkInt = androidInfo.version.sdkInt;
+
+    if (sdkInt >= 33) {
+      // For Android 13+, use app-specific external directory
+      // This doesn't require any special permissions
+      final directory = await getExternalStorageDirectory();
+      if (directory != null) {
+        // Create a Downloads folder in app-specific directory
+        final downloadDir = Directory('${directory.path}/Downloads');
+        if (!await downloadDir.exists()) {
+          await downloadDir.create(recursive: true);
+        }
+        return downloadDir.path;
+      } else {
+        // Fallback to internal storage
+        final directory = await getApplicationDocumentsDirectory();
+        return directory.path;
+      }
+    } else {
+      // For older versions, use the public Documents directory
+      return '/storage/emulated/0/Documents';
+    }
+  }
+
+  // For other platforms
+  final directory = await getApplicationDocumentsDirectory();
+  return directory.path;
+}
+
+
+
+/// Function to download a file using FlutterDownloader with options for notification and file opening
+Future<bool> downloadFile({
+  required String url,
+  required String fileName,
+  String? directoryPath,
+  bool showNotification = true,
+  bool openFileFromNotification = true,
+}) async {
+  try {
+    // Step 1: Request storage permission (only for older Android versions)
+    final hasPermission = await requestStoragePermissionForDownload();
+
+    if (!hasPermission) {
+      print('Storage permission denied. Cannot download file.');
+      return false;
+    }
+
+    // Step 2: Get appropriate directory path
+    final dirPath = directoryPath ?? await getDownloadDirectory();
+
+    // Step 3: Ensure directory exists
+    final directory = Directory(dirPath);
+    if (!await directory.exists()) {
+      try {
+        await directory.create(recursive: true);
+      } catch (e) {
+        print('Failed to create directory: $e');
+        return false;
+      }
+    }
+
+    // Step 4: Download file using your existing code
+    final taskId = await FlutterDownloader.enqueue(
+      url: url,
+      fileName: '${fileName}_invoice.pdf',
+      savedDir: dirPath,
+      showNotification: showNotification,
+      openFileFromNotification: openFileFromNotification,
+    );
+
+    if (taskId != null) {
+      print('Download started successfully');
+      print('File: ${fileName}_invoice.pdf');
+      print('Location: $dirPath');
+
+      // For SDK 33+, show user where file is saved since it's in app directory
+      if (Platform.isAndroid) {
+        final deviceInfo = DeviceInfoPlugin();
+        final androidInfo = await deviceInfo.androidInfo;
+        if (androidInfo.version.sdkInt >= 33) {
+          print('Note: File saved in app-specific directory. Use a file manager to access.');
+        }
+      }
+
+      return true;
+    } else {
+      print('Failed to start download');
+      return false;
+    }
+
+  } catch (e) {
+    print('Download error: $e');
+    return false;
+  }
 }

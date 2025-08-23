@@ -46,6 +46,16 @@ class MovieData {
   bool? isUpcoming;
   String trailerLinkType;
   AdConfiguration? adConfiguration;
+  bool? isRent;
+  bool? isRented;
+  String? rentInfo;
+  String? purchaseType;
+  int? price;
+  String? discount;
+  num? discountedPrice;
+  int? validity;
+  List<String>? requiredPlan;
+  String? checkOutUrl;
 
   MovieData({
     this.avgRating,
@@ -89,6 +99,16 @@ class MovieData {
     this.isUpcoming,
     this.trailerLinkType = '',
     this.adConfiguration,
+    this.isRent = false,
+    this.isRented = false,
+    this.rentInfo,
+    this.purchaseType = '',
+    this.price,
+    this.discount,
+    this.discountedPrice,
+    this.validity,
+    this.requiredPlan,
+    this.checkOutUrl,
   });
 
   factory MovieData.fromJson(Map<String, dynamic> json) {
@@ -174,6 +194,16 @@ class MovieData {
       adConfiguration: json['ad_configuration'] != null
           ? AdConfiguration.fromJson(json['ad_configuration'])
           : null, // Added adConfiguration parsing
+      isRent: json['is_rent'] ?? false,
+      isRented: json['is_rented'] ?? false,
+      rentInfo: json['rent_info'],
+      purchaseType: json['purchase_type'] ?? '',
+      price: json['price'],
+      discount: json['discount'],
+      discountedPrice: json['discounted_price'],
+      validity: json['validity'],
+      requiredPlan: _parseRequiredPlan(json['required_plan']),
+      checkOutUrl: json['checkout_url'],
     );
   }
 
@@ -239,8 +269,37 @@ class MovieData {
     if (adConfiguration != null) {
       data['ad_configuration'] =
           adConfiguration!.toJson(); // Added adConfiguration serialization
+      data['is_rent'] = this.isRent;
+      data['is_rented'] = this.isRented;
+      data['rent_info'] = this.rentInfo;
+      data['purchase_type'] = this.purchaseType;
+      data['price'] = this.price;
+      data['discount'] = this.discount;
+      data['discounted_price'] = this.discountedPrice;
+      data['validity'] = this.validity;
+      data['required_plan'] = this.requiredPlan;
+      data['checkout_url'] = this.checkOutUrl;
     }
     return data;
+  }
+
+  static List<String>? _parseRequiredPlan(dynamic requiredPlan) {
+    if (requiredPlan == null) {
+      return null;
+    }
+
+    if (requiredPlan is String) {
+      if (requiredPlan.isEmpty) {
+        return [];
+      }
+      return [requiredPlan];
+    }
+
+    if (requiredPlan is List) {
+      return List<String>.from(requiredPlan.map((item) => item.toString()));
+    }
+
+    return null;
   }
 }
 

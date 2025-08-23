@@ -52,14 +52,14 @@ class CommentWidgetState extends State<CommentWidget> {
             children: [
               if (widget.postType == PostType.VIDEO)
                 Text(
-                  widget.comments.length > 1 ? language!.comments.capitalizeFirstLetter() : language!.comment.capitalizeFirstLetter(),
+                  widget.comments.length > 1 ? language.comments.capitalizeFirstLetter() : language.comment.capitalizeFirstLetter(),
                   style: primaryTextStyle(size: 18),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 )
               else
                 Text(
-                  language!.lblRateAndReview,
+                  language.lblRateAndReview,
                   style: primaryTextStyle(size: 18),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -149,7 +149,7 @@ class CommentWidgetState extends State<CommentWidget> {
             postId: widget.postId.validate(),
             showComments: widget.postType == PostType.VIDEO,
             callForRefresh: () {
-              toast(language!.lbWaitForCommentApproval);
+              toast(language.lbWaitForCommentApproval);
             },
           ).cornerRadiusWithClipRRect(20),
         ],
@@ -159,7 +159,7 @@ class CommentWidgetState extends State<CommentWidget> {
         postId: widget.postId.validate(),
         showComments: widget.postType == PostType.VIDEO,
         callForRefresh: () {
-          toast(language!.lbWaitForCommentApproval);
+          toast(language.lbWaitForCommentApproval);
         },
       ).cornerRadiusWithClipRRect(20);
   }

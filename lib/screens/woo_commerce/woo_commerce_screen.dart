@@ -98,7 +98,7 @@ class _WooCommerceScreenState extends State<WooCommerceScreen> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
         centerTitle: true,
-        title: Text(language!.orderDetails, style: boldTextStyle()),
+        title: Text(language.orderDetails, style: boldTextStyle()),
       ),
       body: Stack(
         children: [
@@ -108,7 +108,7 @@ class _WooCommerceScreenState extends State<WooCommerceScreen> {
             errorBuilder: (error) {
               return NoDataWidget(
                 title: error.toString(),
-                retryText: language!.refresh,
+                retryText: language.refresh,
                 onRetry: () {
 
                 },
@@ -134,7 +134,7 @@ class _WooCommerceScreenState extends State<WooCommerceScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('${language!.product}', style: boldTextStyle(size: 22, color: colorPrimary)),
+                                Text('${language.product}', style: boldTextStyle(size: 22, color: colorPrimary)),
                                 6.height,
                                 Text(productData!.name.validate(), style: boldTextStyle()),
                                 6.height,
@@ -143,7 +143,7 @@ class _WooCommerceScreenState extends State<WooCommerceScreen> {
                                   Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text('${language!.category}: ', style: boldTextStyle(size: 14)),
+                                      Text('${language.category}: ', style: boldTextStyle(size: 14)),
                                       Wrap(
                                         children: productData!.categories!.map((e) {
                                           return Text(e.name.validate(), style: primaryTextStyle(size: 14));
@@ -162,19 +162,19 @@ class _WooCommerceScreenState extends State<WooCommerceScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('${language!.cartDetails}', style: boldTextStyle(size: 22, color: colorPrimary)),
+                                Text('${language.cartDetails}', style: boldTextStyle(size: 22, color: colorPrimary)),
                                 16.height,
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('${language!.subtotal}: ', style: boldTextStyle(size: 14)),
+                                    Text('${language.subtotal}: ', style: boldTextStyle(size: 14)),
                                     Text(productData!.price.validate(), style: primaryTextStyle(size: 14)),
                                   ],
                                 ),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('${language!.total}: ', style: boldTextStyle(size: 14)),
+                                    Text('${language.total}: ', style: boldTextStyle(size: 14)),
                                     Text(total.toString(), style: primaryTextStyle(size: 14)),
                                   ],
                                 ),
@@ -191,7 +191,7 @@ class _WooCommerceScreenState extends State<WooCommerceScreen> {
                         child: AppButton(
                           width: context.width() - 32,
                           height: 40,
-                          text: '${language!.checkout}',
+                          text: '${language.checkout}',
                           color: context.primaryColor,
                           onTap: () {
                             createOrderApi();

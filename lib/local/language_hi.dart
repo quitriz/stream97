@@ -1092,4 +1092,77 @@ class LanguageHi extends BaseLanguage {
 
   @override
   String get recommendedForYou => 'आप के लिए अनुशंसित';
+
+
+  @override
+  String get myRentals => 'मेरा किराया';
+
+  @override
+  String get manageRentals => 'किराये का प्रबंधन करें';
+
+  @override
+  String get validity => 'वैधता';
+
+  @override
+  String get info => 'जानकारी';
+
+  @override
+  String get upgradeToWatch => 'देखने के लिए अपग्रेड करें';
+
+  @override
+  String get subscribeToWatch => 'देखने के लिए सदस्यता लें';
+
+  @override
+  String get rentOrUpgradeToWatch => 'देखने के लिए किराए पर लें या अपग्रेड करें';
+
+  @override
+  String get rentOrSubscribeToWatch => 'देखने के लिए किराए पर लें या सदस्यता लें';
+
+  @override
+  String get recommended => 'अनुशंसित';
+
+  @override
+  String get noRentalsFound => 'कोई किराया नहीं मिला';
+
+  @override
+  String get type => 'प्रकार';
+
+  @override
+  String get purchaseDate => 'खरीद की तारीख';
+
+  @override
+  String get expires => 'समय-सीमा समाप्त';
+
+  @override
+  String get paymentStatus => 'भुगतान स्थिति';
+
+  @override
+  String get totalAmount => 'कुल राशि';
+
+  @override
+  String get day => 'दिन';
+
+  @override
+  String get days => 'दिन';
+
+  @override
+  String get rentFor => 'किराए के लिए';
+
+  @override
+  String get unpaid => 'अवैतनिक';
+
+  @override
+  String get rent => 'किराया';
+
+  @override
+  String get rented => 'किराए पर';
+
+  @override
+  String get paymentCompletedSuccessfully => 'भुगतान सफलतापूर्वक पूरा हुआ';
+
+  @override
+  String get checkoutUrlNotAvailable => 'चेकआउट URL उपलब्ध नहीं है';
+
+  @override
+  String get lifetimeAccess => 'आजीवन पहुँच';
 }

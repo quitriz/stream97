@@ -78,7 +78,7 @@ class _LiveTvSliderComponentState extends State<LiveTvSliderComponent> {
                 child: Wrap(
                   spacing: 6,
                   children: [
-                    Text(language!.streamNow, style: primaryTextStyle()),
+                    Text(language.streamNow, style: primaryTextStyle()),
                     Icon(Icons.play_arrow, color: Colors.white),
                   ],
                 ),

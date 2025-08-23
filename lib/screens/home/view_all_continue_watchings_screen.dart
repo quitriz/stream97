@@ -77,7 +77,7 @@ class ViewAllContinueWatchingScreenState extends State<ViewAllContinueWatchingSc
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(language!.continueWatching, style: primaryTextStyle(color: Colors.white, size: 22)),
+        title: Text(language.continueWatching, style: primaryTextStyle(color: Colors.white, size: 22)),
         centerTitle: false,
         backgroundColor: Theme.of(context).cardColor,
       ),
@@ -90,8 +90,8 @@ class ViewAllContinueWatchingScreenState extends State<ViewAllContinueWatchingSc
               return NoDataWidget(
                 imageWidget: noDataImage(),
                 title: p0,
-                subTitle: language!.somethingWentWrong,
-                retryText: language!.refresh,
+                subTitle: language.somethingWentWrong,
+                retryText: language.refresh,
                 onRetry: () {
                   init();
                 },
@@ -101,8 +101,8 @@ class ViewAllContinueWatchingScreenState extends State<ViewAllContinueWatchingSc
               if (continueWatchList.isEmpty && !appStore.isLoading)
                 return NoDataWidget(
                   imageWidget: noDataImage(),
-                  title: language!.notFound,
-                  retryText: language!.watchNow,
+                  title: language.notFound,
+                  retryText: language.watchNow,
                   onRetry: () {
                     finish(context);
                   },
@@ -167,7 +167,7 @@ class ViewAllContinueWatchingScreenState extends State<ViewAllContinueWatchingSc
                               onCancel: (c) {
                                 finish(c);
                               },
-                              title: language!.areYouSureYouWantToDeleteThisFromYourContinueWatching,
+                              title: language.areYouSureYouWantToDeleteThisFromYourContinueWatching,
                               onAccept: (_) async {
                                 finish(context);
                                 await deleteVideoContinueWatch(postId: data.id.validate(), postType: data.postType).then((v) {

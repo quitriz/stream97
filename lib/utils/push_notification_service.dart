@@ -9,6 +9,7 @@ import 'package:streamit_flutter/screens/movie_episode/screens/episode_detail_sc
 import 'package:streamit_flutter/screens/pmp/screens/membership_plans_screen.dart' show MembershipPlansScreen;
 import 'package:streamit_flutter/utils/common.dart';
 import 'package:streamit_flutter/utils/resources/colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../main.dart';
 import '../models/movie_episode/common_data_list_model.dart';
 import '../models/movie_episode/movie_detail_response.dart';
@@ -70,6 +71,9 @@ class PushNotificationService {
   }
 
   Future<void> handleNotificationClick(RemoteMessage message, {bool isForeGround = false}) async {
+    if (message.data['url'] != null && message.data['url'] is String) {
+      appLaunchUrl(message.data['url'], mode: LaunchMode.externalApplication);
+    }
     printLogsNotificationData(message);
     if (isForeGround) {
       showNotification(currentTimeStamp(), message.notification!.title.validate(), message.notification!.body.validate(), message);

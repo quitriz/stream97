@@ -76,7 +76,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWidget(
-        language!.changePassword,
+        language.changePassword,
         elevation: 0,
         color: Theme.of(context).cardColor,
         textColor: Colors.white,
@@ -96,7 +96,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       style: primaryTextStyle(),
                       controller: oldPassCont,
                       decoration: InputDecoration(
-                        labelText: language!.password,
+                        labelText: language.password,
                         labelStyle: primaryTextStyle(color: Colors.white),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: colorPrimary)),
@@ -120,9 +120,9 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       obscureText: oldPasswordVisible,
                       validator: (value) {
                         if (value!.isEmpty)
-                          return language!.pleaseEnterPassword;
+                          return language.pleaseEnterPassword;
                         if (value.length < passwordLength)
-                          return language!.passwordLengthShouldBeMoreThan6;
+                          return language.passwordLengthShouldBeMoreThan6;
                         return null;
                       },
                       textInputAction: TextInputAction.next,
@@ -135,7 +135,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       style: primaryTextStyle(),
                       controller: newPassCont,
                       decoration: InputDecoration(
-                        labelText: language!.newPassword,
+                        labelText: language.newPassword,
                         labelStyle: primaryTextStyle(color: Colors.white),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: colorPrimary)),
@@ -161,11 +161,11 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       obscureText: newPasswordVisible,
                       validator: (value) {
                         if (value!.isEmpty)
-                          return language!.pleaseEnterNewPassword;
+                          return language.pleaseEnterNewPassword;
                         if (value.length < passwordLength)
-                          return language!.passwordLengthShouldBeMoreThan6;
+                          return language.passwordLengthShouldBeMoreThan6;
                         if (value == oldPassCont.text)
-                          return language!.cannotUseOldPassword;
+                          return language.cannotUseOldPassword;
                         return null;
                       },
                       textInputAction: TextInputAction.next,
@@ -179,7 +179,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       style: primaryTextStyle(),
                       controller: confNewPassCont,
                       decoration: InputDecoration(
-                        labelText: language!.confirmPassword,
+                        labelText: language.confirmPassword,
                         labelStyle: primaryTextStyle(color: Colors.white),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: colorPrimary)),
@@ -205,11 +205,11 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       obscureText: confPasswordVisible,
                       validator: (value) {
                         if (value!.isEmpty)
-                          return language!.pleaseEnterConfirmPassword;
+                          return language.pleaseEnterConfirmPassword;
                         if (value.length < passwordLength)
-                          return language!.passwordLengthShouldBeMoreThan6;
+                          return language.passwordLengthShouldBeMoreThan6;
                         if (value.trim() != newPassCont.text.trim())
-                          return language!.bothPasswordShouldBeMatched;
+                          return language.bothPasswordShouldBeMatched;
                         return null;
                       },
                       textInputAction: TextInputAction.done,
@@ -220,7 +220,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     ),
                     20.height,
                     AppButton(
-                      text: language!.submit,
+                      text: language.submit,
                       width: context.width(),
                       color: colorPrimary,
                       onTap: () {

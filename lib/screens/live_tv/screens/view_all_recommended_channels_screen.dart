@@ -23,7 +23,7 @@ class _ViewAllRecommendedChannelsScreenState extends State<ViewAllRecommendedCha
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          language!.recommendedForYou,
+          language.recommendedForYou,
           style: boldTextStyle(color: Colors.white, size: 20),
         ),
         backgroundColor: context.cardColor,

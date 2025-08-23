@@ -81,21 +81,21 @@ class _ViewAllLiveTvChannelsState extends State<ViewAllLiveTvChannels> {
                   });
                   init(showLoader: true, page: mPage);
                 },
-                retryText: language!.refresh,
+                retryText: language.refresh,
               ).center();
             },
             onSuccess: (data) {
               if (channelList.isEmpty)
                 return NoDataWidget(
                   imageWidget: noDataImage(),
-                  title: '${language!.noDataFound} for ${widget.categoryTitle}',
+                  title: '${language.noDataFound} for ${widget.categoryTitle}',
                   onRetry: () {
                     setState(() {
                       mPage = 1;
                     });
                     init(showLoader: true, page: mPage);
                   },
-                  retryText: language!.refresh,
+                  retryText: language.refresh,
                 ).center();
               else
                 return AnimatedScrollView(

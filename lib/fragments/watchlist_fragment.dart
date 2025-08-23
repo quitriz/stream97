@@ -111,7 +111,7 @@ class WatchlistFragmentState extends State<WatchlistFragment> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(language!.watchList, style: boldTextStyle(color: Colors.white, size: 20)),
+          title: Text(language.watchList, style: boldTextStyle(color: Colors.white, size: 20)),
           automaticallyImplyLeading: false,
           backgroundColor: context.cardColor,
           centerTitle: false,
@@ -156,7 +156,7 @@ class WatchlistFragmentState extends State<WatchlistFragment> {
                                     'user_id': userId,
                                   };
 
-                                  toast(language!.pleaseWait);
+                                  toast(language.pleaseWait);
                                   watchlistMovie(req).then((value) {
                                     List<CommonDataListModel>? temp = [];
                                     movieList.validate().forEach((element) {
@@ -193,13 +193,13 @@ class WatchlistFragmentState extends State<WatchlistFragment> {
               if (movieList.isEmpty && !appStore.isLoading && !isError)
                 NoDataWidget(
                   imageWidget: noDataImage(),
-                  title: language!.yourWatchListIsEmpty,
-                  subTitle: language!.keepTrackOfEverything,
+                  title: language.yourWatchListIsEmpty,
+                  subTitle: language.keepTrackOfEverything,
                 ).paddingSymmetric(horizontal: 50).center(),
               if (isError && !appStore.isLoading)
                 NoDataWidget(
                   imageWidget: noDataImage(),
-                  title: language!.somethingWentWrong,
+                  title: language.somethingWentWrong,
                 ).center(),
               if (appStore.isLoading && movieList.isEmpty && mPage == 1)
                 LoaderWidget()

@@ -30,7 +30,7 @@ class LanguageScreenState extends State<LanguageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget(language!.language, color: Colors.transparent, textColor: Colors.white, elevation: 0),
+      appBar: appBarWidget(language.language, color: Colors.transparent, textColor: Colors.white, elevation: 0),
       body: LanguageSelectionWidget(
         onLanguageChange: (local) async {
           if (await isNetworkAvailable()) {

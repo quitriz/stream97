@@ -101,7 +101,7 @@ class CastDetailScreenState extends State<CastDetailScreen> {
                     //region personalDetail and description
                    
                     Text(
-                      language!.description,
+                      language.description,
                       style: primaryTextStyle(size: 18),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -112,37 +112,37 @@ class CastDetailScreenState extends State<CastDetailScreen> {
                       textAlign: TextAlign.start,
                       trimLines: 3,
                       trimMode: TrimMode.Line,
-                      trimCollapsedText: ' ...${language!.viewMore}',
-                      trimExpandedText: '  ${language!.viewLess}',
+                      trimCollapsedText: ' ...${language.viewMore}',
+                      trimExpandedText: '  ${language.viewLess}',
                     ).paddingSymmetric(horizontal: 16),
 
                     Text(
-                      language!.personalInfo,
+                      language.personalInfo,
                       style: primaryTextStyle(size: 18),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ).paddingAll(16),
                     Row(
                       children: [
-                        PersonalInfoWidget(title: cast.data!.category.validate(), subTitle: language!.knownFor).expand(),
+                        PersonalInfoWidget(title: cast.data!.category.validate(), subTitle: language.knownFor).expand(),
                         Container(height: 50, width: 0.2, color: Colors.grey.shade500),
-                        PersonalInfoWidget(title: cast.data!.credits.toString().validate(), subTitle: language!.knownCredits).expand(),
+                        PersonalInfoWidget(title: cast.data!.credits.toString().validate(), subTitle: language.knownCredits).expand(),
                       ],
                     ),
                     16.height,
                     Row(
                       children: [
-                        PersonalInfoWidget(title: cast.data!.placeOfBirth.validate(), subTitle: language!.placeOfBirth).center().expand(),
+                        PersonalInfoWidget(title: cast.data!.placeOfBirth.validate(), subTitle: language.placeOfBirth).center().expand(),
                         Container(height: 50, width: 0.2, color: Colors.grey.shade500),
-                        PersonalInfoWidget(title: cast.data!.alsoKnownAs.validate(), subTitle: language!.alsoKnownAs).expand(),
+                        PersonalInfoWidget(title: cast.data!.alsoKnownAs.validate(), subTitle: language.alsoKnownAs).expand(),
                       ],
                     ),
                     16.height,
                     Row(
                       children: [
-                        PersonalInfoWidget(title: '${cast.data!.birthday.validate(value: '-')}', subTitle: language!.birthday).expand(),
+                        PersonalInfoWidget(title: '${cast.data!.birthday.validate(value: '-')}', subTitle: language.birthday).expand(),
                         Container(height: 50, width: 0.2, color: Colors.grey.shade500),
-                        PersonalInfoWidget(title: '${cast.data!.deathDay.validate(value: '-')}', subTitle: language!.deathDay).expand(),
+                        PersonalInfoWidget(title: '${cast.data!.deathDay.validate(value: '-')}', subTitle: language.deathDay).expand(),
                       ],
                     ),
                     16.height,
@@ -152,7 +152,7 @@ class CastDetailScreenState extends State<CastDetailScreen> {
 
                     //region mostViewList
                     Text(
-                      language!.mostViewed,
+                      language.mostViewed,
                       style: primaryTextStyle(size: 18),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -173,7 +173,7 @@ class CastDetailScreenState extends State<CastDetailScreen> {
                         openSheet(context);
                       },
                       child: Text(
-                        '${cast.data!.title.validate()}\'${language!.sActing}',
+                        '${cast.data!.title.validate()}\'${language.sActing}',
                         style: boldTextStyle(color: textColorPrimary),
                       ),
                     ).paddingAll(8),
@@ -183,8 +183,8 @@ class CastDetailScreenState extends State<CastDetailScreen> {
             } else {
               return NoDataWidget(
                 imageWidget: noDataImage(),
-                title: language!.detailsAreNotAvailable,
-                subTitle: language!.theContentHasNot,
+                title: language.detailsAreNotAvailable,
+                subTitle: language.theContentHasNot,
               ).center();
             }
           }
@@ -193,7 +193,7 @@ class CastDetailScreenState extends State<CastDetailScreen> {
             loadingWidget: LoaderWidget(),
             errorWidget: NoDataWidget(
               imageWidget: noDataImage(),
-              title: language!.somethingWentWrong,
+              title: language.somethingWentWrong,
             ).center(),
           ).center();
         },

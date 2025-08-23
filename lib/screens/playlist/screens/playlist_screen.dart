@@ -71,13 +71,13 @@ class _PlayListScreenState extends State<PlayListScreen> with TickerProviderStat
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(language!.playlist, style: boldTextStyle(size: 22)),
+          title: Text(language.playlist, style: boldTextStyle(size: 22)),
           actions: [
             TextButton(
               onPressed: () {
                 createPlayList(context);
               },
-              child: Text(language!.createPlaylist, style: primaryTextStyle(size: 14)),
+              child: Text(language.createPlaylist, style: primaryTextStyle(size: 14)),
             ).paddingOnly(right: 8),
           ],
           bottom: PreferredSize(
@@ -105,9 +105,9 @@ class _PlayListScreenState extends State<PlayListScreen> with TickerProviderStat
                 labelColor: colorPrimary,
                 labelPadding: const EdgeInsets.only(left: spacing_large, right: spacing_large),
                 tabs: [
-                  Tab(child: Text(language!.movies)),
-                  Tab(child: Text(language!.episodes)),
-                  Tab(child: Text(language!.videos)),
+                  Tab(child: Text(language.movies)),
+                  Tab(child: Text(language.episodes)),
+                  Tab(child: Text(language.videos)),
                 ],
               ),
             ),

@@ -384,10 +384,10 @@ abstract class AppStoreBase with Store {
 
     language = await AppLocalizations().load(Locale(selectedLanguageCode));
 
-    errorInternetNotAvailable = language!.yourInterNetNotWorking;
-    errorMessage = language!.pleaseTryAgain;
-    errorSomethingWentWrong = language!.somethingWentWrong;
-    errorThisFieldRequired = language!.thisFieldIsRequired;
+    errorInternetNotAvailable = language.yourInterNetNotWorking;
+    errorMessage = language.pleaseTryAgain;
+    errorSomethingWentWrong = language.somethingWentWrong;
+    errorThisFieldRequired = language.thisFieldIsRequired;
   }
 
   @action

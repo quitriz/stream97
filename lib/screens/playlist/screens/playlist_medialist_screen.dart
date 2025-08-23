@@ -57,7 +57,7 @@ class _PlaylistMediaScreenState extends State<PlaylistMediaScreen> {
       setState(() {});
       appStore.setLoading(false);
       log("Error Log ===== $e");
-      toast(language!.somethingWentWrong);
+      toast(language.somethingWentWrong);
       log("====>>>>>Playlist Media Error : ${e.toString()}");
     });
   }
@@ -76,7 +76,7 @@ class _PlaylistMediaScreenState extends State<PlaylistMediaScreen> {
     }).catchError((e) {
       appStore.setLoading(false);
       log("====>>>>Delete From Playlist Error : ${e.toString()}");
-      toast(language!.somethingWentWrong);
+      toast(language.somethingWentWrong);
     });
   }
 
@@ -181,13 +181,13 @@ class _PlaylistMediaScreenState extends State<PlaylistMediaScreen> {
                 if (isError) {
                   return NoDataWidget(
                     imageWidget: noDataImage(),
-                    title: language!.somethingWentWrong,
+                    title: language.somethingWentWrong,
                   ).center();
                 } else {
                   return NoDataWidget(
                     imageWidget: noDataImage(),
-                    title: '${widget.playlistTitle} ${language!.isEmpty}',
-                    subTitle: '${language!.contentAddedTo} ${widget.playlistTitle}, ${language!.willBeShownHere}',
+                    title: '${widget.playlistTitle} ${language.isEmpty}',
+                    subTitle: '${language.contentAddedTo} ${widget.playlistTitle}, ${language.willBeShownHere}',
                   );
                 }
               } else {

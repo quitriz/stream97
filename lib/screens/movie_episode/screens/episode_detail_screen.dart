@@ -32,6 +32,7 @@ class EpisodeDetailScreen extends StatefulWidget {
   final int? index;
   final int? lastIndex;
   final String watchedTime;
+  final bool? tvShowUserHasAccess;
 
   EpisodeDetailScreen({
     this.title,
@@ -40,6 +41,7 @@ class EpisodeDetailScreen extends StatefulWidget {
     this.index,
     this.lastIndex,
     this.watchedTime = '',
+    this.tvShowUserHasAccess,
   });
 
   @override
@@ -54,6 +56,7 @@ class EpisodeDetailScreenState extends State<EpisodeDetailScreen>
   bool showComments = false;
   String restrictedPlans = '';
   bool isSharing = false;
+  bool adsCompleted = false;
 
   late AnimationController _controller;
   late Animation<Offset> _offsetAnimation;
@@ -62,6 +65,19 @@ class EpisodeDetailScreenState extends State<EpisodeDetailScreen>
   late int episodeIndex;
 
   double selectedRating = 0;
+
+  /// Check if user has access to the episode
+  /// This considers both the episode's own access and the TV show's access
+  /// If TV show has access, episode is accessible regardless of episode's own access
+  /// Fallback: If no TV show context, use episode's own access status
+  bool get userHasAccessToEpisode {
+    // If TV show access is provided and true, user has access to episodes
+    if (widget.tvShowUserHasAccess == true) {
+      return true;
+    }
+    // Otherwise, fall back to episode's own access status
+    return data.userHasAccess.validate();
+  }
 
   @override
   void initState() {
@@ -151,6 +167,9 @@ class EpisodeDetailScreenState extends State<EpisodeDetailScreen>
                   adConfig: _episode.adConfiguration,
                   title: _episode.title.validate(),
                   isLive: false,
+                  postType: _episode.postType != null
+                      ? _episode.postType!
+                      : PostType.EPISODE,
                 )
               else
                 VideoContentWidget(
@@ -192,7 +211,7 @@ class EpisodeDetailScreenState extends State<EpisodeDetailScreen>
                           appStore.setToFullScreen(false);
                           setOrientationPortrait();
                         }
-                        if (data.userHasAccess.validate()) {
+                        if (userHasAccessToEpisode) {
                           episodeIndex = i;
                           getEpisodeDetails(episode);
                         }
@@ -207,7 +226,7 @@ class EpisodeDetailScreenState extends State<EpisodeDetailScreen>
     } else {
       return PostRestrictionComponent(
         imageUrl: _episode.image.validate(),
-        isPostRestricted: !data.userHasAccess.validate(),
+        isPostRestricted: !userHasAccessToEpisode,
         restrictedPlans: restrictedPlans,
         callToRefresh: () {
           init();
@@ -227,7 +246,7 @@ class EpisodeDetailScreenState extends State<EpisodeDetailScreen>
             builder: (context) {
               return Scaffold(
                 appBar: ((statusInfo?.status == PiPStatus.enabled) ||
-                        (!data.userHasAccess.validate()) ||
+                        (!userHasAccessToEpisode) ||
                         appStore.hasInFullScreen ||
                         widget.watchedTime.isNotEmpty)
                     ? null
@@ -303,7 +322,7 @@ class EpisodeDetailScreenState extends State<EpisodeDetailScreen>
                             ],
                           ).paddingOnly(
                               left: spacing_standard, right: spacing_standard),
-                          if (data.userHasAccess.validate())
+                          if (userHasAccessToEpisode)
                             HtmlWidget(
                               postContent: data.description.validate(),
                               color: textColorSecondary,
@@ -311,7 +330,7 @@ class EpisodeDetailScreenState extends State<EpisodeDetailScreen>
                             ).paddingAll(8),
                           Divider(thickness: 0.1, color: Colors.grey.shade500)
                               .visible(data.sourcesList.validate().isNotEmpty &&
-                                  data.userHasAccess.validate()),
+                                  userHasAccessToEpisode),
                           MovieDetailLikeWatchListWidget(
                             postId: data.id.validate(),
                             postType: PostType.EPISODE,
@@ -320,15 +339,15 @@ class EpisodeDetailScreenState extends State<EpisodeDetailScreen>
                             likes: data.likes,
                           ).paddingSymmetric(horizontal: 16),
                           if (data.sourcesList.validate().isNotEmpty &&
-                              data.userHasAccess.validate())
+                              userHasAccessToEpisode)
                             Text(
-                              language!.sources,
+                              language.sources,
                               style: primaryTextStyle(size: 18),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ).paddingAll(8),
                           if (data.sourcesList.validate().isNotEmpty &&
-                              data.userHasAccess.validate())
+                              userHasAccessToEpisode)
                             SourcesDataWidget(
                               sourceList: data.sourcesList,
                               onLinkTap: (sources) async {
@@ -355,10 +374,10 @@ class EpisodeDetailScreenState extends State<EpisodeDetailScreen>
                             thickness: 0.1,
                             color: Colors.grey.shade500,
                           ).visible(data.sourcesList.validate().isNotEmpty &&
-                              data.userHasAccess.validate()),
+                              userHasAccessToEpisode),
                           if (showComments &&
                               data.isCommentOpen.validate() &&
-                              data.userHasAccess.validate())
+                              userHasAccessToEpisode)
                             CommentWidget(
                               postId: data.id,
                               noOfComments: data.noOfComments,
@@ -367,7 +386,7 @@ class EpisodeDetailScreenState extends State<EpisodeDetailScreen>
                             ).paddingAll(16),
                           Divider(thickness: 0.1, color: Colors.grey.shade500)
                               .visible(widget.episodes.validate().isNotEmpty),
-                          headingWidViewAll(context, language!.episodes,
+                          headingWidViewAll(context, language.episodes,
                                   showViewMore: false)
                               .paddingOnly(
                                   left: spacing_standard,
@@ -381,7 +400,7 @@ class EpisodeDetailScreenState extends State<EpisodeDetailScreen>
                                 appStore.setToFullScreen(false);
                                 setOrientationPortrait();
                               }
-                              if (data.userHasAccess.validate()) {
+                              if (userHasAccessToEpisode) {
                                 episodeIndex = i;
                                 getEpisodeDetails(episode);
                               }

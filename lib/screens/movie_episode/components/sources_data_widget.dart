@@ -20,10 +20,10 @@ class SourcesDataWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(language!.quality, style: boldTextStyle(color: colorPrimary)),
-              Text(language!.language, style: boldTextStyle(color: colorPrimary)),
-              Text(language!.date, style: boldTextStyle(color: colorPrimary)),
-              Text(language!.links, style: boldTextStyle(color: colorPrimary)),
+              Text(language.quality, style: boldTextStyle(color: colorPrimary)),
+              Text(language.language, style: boldTextStyle(color: colorPrimary)),
+              Text(language.date, style: boldTextStyle(color: colorPrimary)),
+              Text(language.links, style: boldTextStyle(color: colorPrimary)),
             ],
           ),
           Divider(color: Colors.white54),

@@ -110,7 +110,7 @@ class SearchFragmentState extends State<SearchFragment> {
                           textInputAction: TextInputAction.search,
                           style: TextStyle(fontSize: ts_normal, color: Theme.of(context).textTheme.titleLarge!.color),
                           decoration: InputDecoration(
-                            hintText: language!.searchMoviesTvShowsVideos,
+                            hintText: language.searchMoviesTvShowsVideos,
                             hintStyle: TextStyle(
                               color: Theme.of(context).textTheme.titleSmall!.color,
                             ),
@@ -166,8 +166,8 @@ class SearchFragmentState extends State<SearchFragment> {
                       return SizedBox(
                         height: context.height() * 0.7,
                         child: NoDataWidget(
-                          title: language!.pleaseLoginToSearch,
-                          retryText: language!.login,
+                          title: language.pleaseLoginToSearch,
+                          retryText: language.login,
                           onRetry: () {
                             SignInScreen().launch(context);
                           },
@@ -212,8 +212,8 @@ class SearchFragmentState extends State<SearchFragment> {
                         height: context.height() * 0.7,
                         child: NoDataWidget(
                           imageWidget: noDataImage(),
-                          title: language!.noContentFound,
-                          subTitle: language!.theContentHasNot,
+                          title: language.noContentFound,
+                          subTitle: language.theContentHasNot,
                         ).center(),
                       );
                     }
@@ -225,7 +225,7 @@ class SearchFragmentState extends State<SearchFragment> {
                         children: [
                           16.height,
                           Text(
-                            language!.resultFor + " \'" + searchController.text + "\'",
+                            language.resultFor + " \'" + searchController.text + "\'",
                             style: primaryTextStyle(size: 18),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,

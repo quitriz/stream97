@@ -26,6 +26,7 @@ import 'package:streamit_flutter/models/movie_episode/season_detail_model.dart';
 import 'package:streamit_flutter/models/notification_model.dart';
 import 'package:streamit_flutter/models/playlist_model.dart';
 import 'package:streamit_flutter/models/pmp_models/membership_model.dart';
+import 'package:streamit_flutter/models/pmp_models/pay_per_view_orders_model.dart';
 import 'package:streamit_flutter/models/settings/settings_model.dart';
 import 'package:streamit_flutter/models/auth/validate_token_model.dart';
 import 'package:streamit_flutter/models/view_all_response.dart';
@@ -66,7 +67,7 @@ Future<LoginResponse> token(Map request) async {
 }
 
 Future<void> manageFirebaseToken() async {
-  Map<String, dynamic> req = {'firebase_token': getStringAsync(FIREBASE_TOKEN)};
+  Map<String, dynamic> req = {FirebaseMsgConst.firebaseToken: getStringAsync(FIREBASE_TOKEN)};
   log("Firebase token------------token-------${getStringAsync(FIREBASE_TOKEN)}");
   await handleResponse(await buildHttpResponse(APIEndPoint.manageFirebaseToken, method: HttpMethod.POST, body: req)).onError((error, stackTrace) {
     log('Manage-Firebase-Token-Error ${error.toString()}');
@@ -77,10 +78,9 @@ Future<void> logout({bool logoutFromAll = false, bool isNewTask = false, BuildCo
   appStore.setLoading(true);
   if (await isNetworkAvailable()) {
     if (getStringAsync(TOKEN).isNotEmpty) {
-      Map request = {"device_id": appStore.loginDevice, 'firebase_token': getStringAsync(FIREBASE_TOKEN)};
-      // Map request = {"device_id": logoutFromAll ? "" : appStore.loginDevice};
+      Map request = {"device_id": appStore.loginDevice, FirebaseMsgConst.firebaseToken: getStringAsync(FIREBASE_TOKEN)};
       await deleteDevice(request).then((value) {
-        logoutFromAll ? toast(language!.youHaveBeenSignedOutFromAllDevices) : Offstage();
+        logoutFromAll ? toast(language.youHaveBeenSignedOutFromAllDevices) : Offstage();
       }).catchError(onError);
     }
     await PushNotificationService().unsubscribeFirebaseTopic();
@@ -196,7 +196,7 @@ Future<void> updateProfile({required String firstName, required String latName, 
     await sendMultiPartRequest(
       multiPartRequest,
       onSuccess: (data) async {
-        toast(language!.profileHasBeenUpdatedSuccessfully);
+        toast(language.profileHasBeenUpdatedSuccessfully);
         Map<String, dynamic> res = jsonDecode(data);
         log(res);
         if (res['status']) {
@@ -242,7 +242,7 @@ Future<DashboardResponse> getDashboardData(Map request, {String type = dashboard
     await buildHttpResponse(
       '${APIEndPoint.dashboard}/$type',
       body: request,
-      aAuthRequired: type == dashboardTypeHome && appStore.isLogging ? true : false,
+      aAuthRequired: appStore.isLogging ? true : false,
     ),
   ));
 
@@ -609,6 +609,12 @@ Future<List<PmpOrderModel>> pmpOrders({int page = 1}) async {
   return it.map((e) => PmpOrderModel.fromJson(e)).toList();
 }
 
+Future<PayPerViewOrdersModel> getPpvOrders({int page = 1}) async {
+  final response = await buildHttpResponse('${MembershipAPIEndPoint.payPerViewOrders}?page=$page&per_page=$postPerPage', aAuthRequired: true);
+  final fullResponse = await handleResponse(response, responseType: ResponseType.FULL_RESPONSE);
+  return PayPerViewOrdersModel.fromJson(json.decode(fullResponse.body));
+}
+
 Future<void> cancelMembershipLevel({String? levelId}) async {
   String level = levelId == null ? "" : "&level_id=$levelId";
   await handleResponse(await buildHttpResponse('${MembershipAPIEndPoint.cancelMembershipLevel}?user_id=${appStore.userId}$level', method: HttpMethod.POST));
@@ -723,9 +729,17 @@ Future<LiveChannelDetails> getLiveChannelDetails({required int channelId}) async
 }
 
 Future<EpgDataModel> getEPGData({required String date, required int channelId}) async {
+  final cacheKey = 'epg_${channelId}_$date';
+  // Try to get from cache first
+  final cached = CachedData.getCachedData(cachedKey: cacheKey);
+  if (cached != null) {
+    return EpgDataModel.fromJson(cached);
+  }
   final deviceTimezone = DateTime.now().timeZoneName;
   final response = await buildHttpResponse('${APIEndPoint.epgDetail}/$channelId?date=$date&timezone=$deviceTimezone', method: HttpMethod.GET);
   final decoded = await handleResponse(response);
+  // Store in cache for future use
+  await setValue(cacheKey, jsonEncode(decoded));
   return EpgDataModel.fromJson(decoded);
 }
 

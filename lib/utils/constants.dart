@@ -78,7 +78,7 @@ const HAS_IN_APP_SDK_INITIALISE_AT_LEASE_ONCE = 'HAS_IN_APP_SDK_INITIALISE_AT_LE
 const HAS_PURCHASE_STORED = 'HAS_PURCHASE_STORED';
 const PURCHASE_REQUEST = 'PURCHASE_REQUEST';
 const IS_SUBSCRIPTION_PURCHASE_RESTORE_REQUIRED = 'IS_SUBSCRIPTION_PURCHASE_RESTORE_REQUIRED';
-const IS_MEMBERSHIP_ENABLED='IS_MEMBERSHIP_ENABLED';
+const IS_MEMBERSHIP_ENABLED = 'IS_MEMBERSHIP_ENABLED';
 const DOWNLOADED_DATA = 'DOWNLOADED_DATA';
 const IS_LIVE_STREAMING_ENABLED = 'IS_LIVE_STREAMING_ENABLED';
 
@@ -154,11 +154,14 @@ class PaymentMethods {
   static const paylater = 'paylater';
 }
 
-//Comments SHOW-HIDE
-const MOVIE_TYPE = 'MOVIE_TYPE';
-const VIDEO_TYPE = 'VIDEO_TYPE';
-const TV_SHOW_TYPE = 'TV_SHOW_TYPE';
-const EPISODE_TYPE = 'EPISODE_TYPE';
+//Review Constants
+class ReviewConst{
+  static const reviewTypeMovie = 'movie';
+  static const reviewTypeTvShow = 'tv_show';
+  static const reviewTypeEpisode = 'episode';
+  static const reviewTypeVideo = 'video';
+}
+
 
 class APIEndPoint {
   static const login = 'jwt-auth/v1/token';
@@ -172,8 +175,8 @@ class APIEndPoint {
   static const dashboard = 'streamit/api/v1/content/dashboard';
   static const watchlist = 'streamit/api/v1/user/watchlist';
   static const search = 'streamit/api/v1/content/search';
-  static const recentSearchList='streamit/api/v1/content/recent-search-list';
-  static const recentSearchAdd='streamit/api/v1/content/recent-search-add';
+  static const recentSearchList = 'streamit/api/v1/content/recent-search-list';
+  static const recentSearchAdd = 'streamit/api/v1/content/recent-search-add';
   static const recentSearchRemove='streamit/api/v1/content/recent-search-remove';
   static const viewAll = 'streamit/api/v1/content/view-all';
   static const movieDetails = 'streamit/api/v1/movies';
@@ -205,6 +208,7 @@ class MembershipAPIEndPoint {
   static const getMembershipLevelForUser = 'pmpro/v1/get_membership_level_for_user';
   static const membershipLevels = 'streamit/api/v1/membership/levels';
   static const membershipOrders = 'streamit/api/v1/membership/orders';
+  static const payPerViewOrders = 'streamit/api/v1/membership/ppv-orders';
   static const wcProducts = 'wc/v3/products';
   static const wcOrders = 'wc/v3/orders';
   static const cancelMembershipLevel = 'pmpro/v1/cancel_membership_level';
@@ -227,29 +231,22 @@ class FirebaseMsgConst {
   static const apnsNotificationTokenKey = 'APNS Notification Token';
   static const notificationErrorKey = 'Notification Error';
   static const notificationTitleKey = 'Notification Title';
-
   static const notificationKey = 'Notification';
-
   static const onClickListener = "Error On Notification Click Listener";
   static const onMessageListen = "Error On Message Listen";
   static const onMessageOpened = "Error On Message Opened App";
   static const onGetInitialMessage = 'Error On Get Initial Message';
-
   static const messageDataCollapseKey = 'MessageData Collapse Key';
-
   static const messageDataMessageIdKey = 'MessageData Message Id';
-
   static const messageDataMessageTypeKey = 'MessageData Type';
   static const notificationBodyKey = 'Notification Body';
   static const backgroundChannelIdKey = 'background_channel';
   static const backgroundChannelNameKey = 'background_channel';
-
   static const notificationChannelIdKey = 'notification';
   static const notificationChannelNameKey = 'Notification';
-
   static const topicSubscribed = 'topic-----subscribed---->';
-
   static const topicUnSubscribed = 'topic-----Unsubscribed---->';
+  static const firebaseToken = 'firebase_token';
 
   //endregion
   // Notification Click Post type Keys
@@ -258,8 +255,8 @@ class FirebaseMsgConst {
   static const tvShowKey = 'tvshow';
   static const episodeKey = 'episode';
   static const videoKey = 'video';
-static const subscriptionPlanAdded='subscription_plan_added';
-static const contentType='content_added';
+  static const subscriptionPlanAdded = 'subscription_plan_added';
+  static const contentType = 'content_added';
   static const notificationType = 'notification_type';
   static const notificationTypeRead = 'read';
   static const notificationTypeUnread = 'unread';
@@ -318,10 +315,38 @@ class VideoPlayerConstants {
 
 enum PlayerState { loading, playing, paused, ended, error }
 
-enum AdType { preRoll, midRoll, postRoll, overlay, companion }
+enum AdType { preRoll, midRoll, postRoll }
+
+// AdType consts
+class AdTypeConst {
+  static const String video = 'video';
+  static const String vast = 'vast';
+  static const String html = 'html';
+  static const String companion = 'companion';
+}
 
 enum AdEventType { adStarted, adFinished, adSkipped, adError }
 
 typedef AdEventCallback = void Function(AdEventType type, AdUnit? ad);
 
 const APP_LOGO = 'app_logo';
+
+//PurchaseType consts
+class PurchaseType {
+  static const String ppv = 'ppv';
+  static const String anyone = 'anyone';
+  static const String plan = 'plan';
+}
+
+//ValidityStatus consts
+class ValidityStatus {
+  static const String available = 'available';
+  static const String expired = 'expired';
+  static const String lifetimeAccess = 'lifetime access';
+}
+
+//RentalPaymentStatus consts
+class PaymentStatus {
+  static const String success = 'success';
+  static const String failed = 'failed';
+}

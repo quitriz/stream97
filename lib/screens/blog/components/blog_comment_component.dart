@@ -80,8 +80,8 @@ class BlogCommentComponent extends StatelessWidget {
                             });
                           },
                           dialogType: DialogType.DELETE,
-                          title: language!.deleteCommentConfirmation,
-                          positiveText: language!.delete,
+                          title: language.deleteCommentConfirmation,
+                          positiveText: language.delete,
                         );
                       },
                       child: Icon(Icons.delete_outline,color: Colors.red, size: 18),

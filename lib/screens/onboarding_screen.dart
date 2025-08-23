@@ -58,7 +58,7 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
                 onPressed: () {
                   HomeScreen().launch(context, isNewTask: true);
                 },
-                child: Text(language!.skip, style: primaryTextStyle(color: context.primaryColor)),
+                child: Text(language.skip, style: primaryTextStyle(color: context.primaryColor)),
               ),
               top: 30,
               right: 8,

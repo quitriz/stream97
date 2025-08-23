@@ -1,6 +1,6 @@
 name: streamit_flutter
 description: A new Flutter application.
-version: 9.6.0+68
+version: 9.7.0+71
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -18,18 +18,18 @@ dependencies:
 
   # Html
   html: ^0.15.5+1
-  http: ^1.4.0
+  http: ^1.5.0
   flutter_html: ^3.0.0-beta.2
 
   # Voice Search
-  speech_to_text: 7.0.0
+  speech_to_text: ^7.3.0
 
   # State Management
   mobx: ^2.5.0
   flutter_mobx: ^2.3.0
 
   # Font
-  google_fonts: ^6.2.1
+  google_fonts: ^6.3.0
 
   # Launch url
   url_launcher: ^6.3.2
@@ -44,7 +44,7 @@ dependencies:
   image_picker: ^1.1.2
 
   # Video player
-  youtube_player_flutter: ^9.1.1
+  youtube_player_flutter: ^9.1.2
   pod_player:
     git:
       url: https://github.com/iqonic-design/pod_player.git
@@ -74,7 +74,7 @@ dependencies:
   shimmer: ^3.0.0
 
   # Share link
-  share_plus: ^11.0.0
+  share_plus: ^11.1.0
 
   # Download file and store
   flutter_downloader: ^1.12.0
@@ -99,7 +99,7 @@ dependency_overrides:
   intl: ^0.20.2
 
   # in App Purchase
-  purchases_flutter: ^9.1.0
+  purchases_flutter: ^9.2.1
 
 
   crypto: any
@@ -107,8 +107,8 @@ dependency_overrides:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  mobx_codegen: ^2.7.1
-  build_runner: ^2.5.4
+  mobx_codegen: ^2.7.2
+  build_runner: ^2.7.0
   #flutter packages pub run build_runner build --delete-conflicting-outputs
 
 

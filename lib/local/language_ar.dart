@@ -1092,4 +1092,77 @@ class LanguageAr extends BaseLanguage {
 
   @override
   String get recommendedForYou => 'موصى به لك';
+
+
+  @override
+  String get myRentals => 'إيجاراتي';
+
+  @override
+  String get manageRentals => 'إدارة الإيجارات';
+
+  @override
+  String get validity => 'صحة';
+
+  @override
+  String get info => 'معلومات';
+
+  @override
+  String get upgradeToWatch => 'ترقية للمشاهدة';
+
+  @override
+  String get subscribeToWatch => 'اشترك للمشاهدة';
+
+  @override
+  String get rentOrUpgradeToWatch => 'استئجار أو ترقية للمشاهدة';
+
+  @override
+  String get rentOrSubscribeToWatch => 'استئجار أو الاشتراك للمشاهدة';
+
+  @override
+  String get recommended => 'مُستَحسَن';
+
+  @override
+  String get noRentalsFound => 'لم يتم العثور على أي إيجارات';
+
+  @override
+  String get type => 'يكتب';
+
+  @override
+  String get purchaseDate => 'تاريخ الشراء';
+
+  @override
+  String get expires => 'تنتهي صلاحيتها';
+
+  @override
+  String get paymentStatus => 'حالة الدفع';
+
+  @override
+  String get totalAmount => 'المبلغ الإجمالي';
+
+  @override
+  String get day => 'يوم';
+
+  @override
+  String get days => 'أيام';
+
+  @override
+  String get rentFor => 'الإيجار ل';
+
+  @override
+  String get unpaid => 'غير مدفوع الأجر';
+
+  @override
+  String get rent => 'إيجار';
+
+  @override
+  String get rented => 'مستأجر';
+
+  @override
+  String get paymentCompletedSuccessfully => 'تم الدفع بنجاح';
+
+  @override
+  String get checkoutUrlNotAvailable => 'عنوان URL للدفع غير متاح';
+
+  @override
+  String get lifetimeAccess => 'الوصول مدى الحياة';
 }

@@ -35,7 +35,7 @@ class _VideoCastDeviceListScreenState extends State<VideoCastDeviceListScreen> {
     _castSession = session;
     session.stateStream.listen((state) {
       if (state == CastSessionState.connected) {
-        final snackBar = SnackBar(content: Text(language!.deviceConnectedSuccessfully, style: primaryTextStyle()));
+        final snackBar = SnackBar(content: Text(language.deviceConnectedSuccessfully, style: primaryTextStyle()));
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
         _castDevice = object;
         setState(() {});
@@ -101,7 +101,7 @@ class _VideoCastDeviceListScreenState extends State<VideoCastDeviceListScreen> {
     _castSession = null;
     _castDevice = null;
     setState(() {});
-    final snackBar = SnackBar(content: Text(language!.deviceDisconnectedSuccessfully));
+    final snackBar = SnackBar(content: Text(language.deviceDisconnectedSuccessfully));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
@@ -125,7 +125,7 @@ class _VideoCastDeviceListScreenState extends State<VideoCastDeviceListScreen> {
      },
       child: Scaffold(
         appBar: AppBar(
-          title: Text("${language!.cast} ${widget.videoTitle}", style: boldTextStyle(size: 16, color: Colors.white)),
+          title: Text("${language.cast} ${widget.videoTitle}", style: boldTextStyle(size: 16, color: Colors.white)),
           elevation: 0,
         ),
         body: Column(
@@ -136,7 +136,7 @@ class _VideoCastDeviceListScreenState extends State<VideoCastDeviceListScreen> {
                 color: Colors.redAccent.withValues(alpha:0.2),
               ),
               child: Text(
-                language!.notCloseCastScreen,
+                language.notCloseCastScreen,
                 style: secondaryTextStyle(color: Colors.redAccent, fontStyle: FontStyle.italic),
               ),
             ),
@@ -146,7 +146,7 @@ class _VideoCastDeviceListScreenState extends State<VideoCastDeviceListScreen> {
                   CachedImageWidget(url: widget.videoURL, width: context.width(), height: 220),
                   16.height,
                   AppButton(
-                    text: language!.closeConnection,
+                    text: language.closeConnection,
                     textStyle: boldTextStyle(),
                     color: colorPrimary,
                     onTap: () {
@@ -181,13 +181,13 @@ class _VideoCastDeviceListScreenState extends State<VideoCastDeviceListScreen> {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(language!.noCastingDeviceFounded, style: boldTextStyle(color: colorPrimary)),
+                              Text(language.noCastingDeviceFounded, style: boldTextStyle(color: colorPrimary)),
                               16.height,
                               AppButton(
                                 onTap: () {
                                   changeState(() {});
                                 },
-                                text: language!.refresh,
+                                text: language.refresh,
                                 textStyle: boldTextStyle(color: Colors.white),
                                 color: colorPrimary,
                               )
@@ -199,7 +199,7 @@ class _VideoCastDeviceListScreenState extends State<VideoCastDeviceListScreen> {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(language!.castDeviceList, style: boldTextStyle()),
+                          Text(language.castDeviceList, style: boldTextStyle()),
                           16.height,
                           AnimatedListView(
                             itemCount: snapshot.data.validate().length,

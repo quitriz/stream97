@@ -35,11 +35,11 @@ class PlayListItemWidgetState extends State<PlayListItemWidget> {
     super.initState();
 
     if (widget.playlistType == playlistMovie) {
-      noDataTitle = language!.movies;
+      noDataTitle = language.movies;
     } else if (widget.playlistType == playlistEpisodes) {
-      noDataTitle = language!.episodes;
+      noDataTitle = language.episodes;
     } else {
-      noDataTitle = language!.videos;
+      noDataTitle = language.videos;
     }
     future = getPlayListByType(type: widget.playlistType);
     setState(() {});
@@ -65,7 +65,7 @@ class PlayListItemWidgetState extends State<PlayListItemWidget> {
       finish(context);
     }).catchError((e) {
       appStore.setLoading(false);
-      toast(language!.somethingWentWrong);
+      toast(language.somethingWentWrong);
       log("===>>>>>Delete Playlist Error : ${e.toString()}");
     });
   }
@@ -86,7 +86,7 @@ class PlayListItemWidgetState extends State<PlayListItemWidget> {
       finish(context);
     }).catchError((e) {
       appStore.setLoading(false);
-      toast(language!.somethingWentWrong);
+      toast(language.somethingWentWrong);
       log("===>>>>>Delete Playlist Error : ${e.toString()}");
     });
   }
@@ -229,14 +229,14 @@ class PlayListItemWidgetState extends State<PlayListItemWidget> {
             //                                           crossAxisAlignment: CrossAxisAlignment.start,
             //                                           mainAxisSize: MainAxisSize.min,
             //                                           children: [
-            //                                             Text("${language!.edit} ${_playlistItem.postType}", style: primaryTextStyle(size: 22)),
+            //                                             Text("${language.edit} ${_playlistItem.postType}", style: primaryTextStyle(size: 22)),
             //                                             16.height,
             //                                             AppTextField(
             //                                               controller: _playlistTitleController,
             //                                               textFieldType: TextFieldType.NAME,
             //                                               decoration: InputDecoration(
             //                                                 hintText: "E.g. Coffee Break",
-            //                                                 labelText: language!.playlistTitle,
+            //                                                 labelText: language.playlistTitle,
             //                                                 labelStyle: primaryTextStyle(color: Color(0xFFA8A8A8)),
             //                                                 hintStyle: primaryTextStyle(color: Color(0xFF484848)),
             //                                                 focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Color(0xFF696969))),
@@ -245,7 +245,7 @@ class PlayListItemWidgetState extends State<PlayListItemWidget> {
             //                                                 border: OutlineInputBorder(borderSide: BorderSide(color: Color(0xFF696969))),
             //                                               ),
             //                                               validator: (val) {
-            //                                                 if (val.validate().isEmpty) return language!.thisFieldIsRequired;
+            //                                                 if (val.validate().isEmpty) return language.thisFieldIsRequired;
             //                                                 return null;
             //                                               },
             //                                             ),
@@ -266,7 +266,7 @@ class PlayListItemWidgetState extends State<PlayListItemWidget> {
             //                                                               onPressed: () {
             //                                                                 finish(dialogContext);
             //                                                               },
-            //                                                               child: Text(language!.cancel, style: primaryTextStyle()),
+            //                                                               child: Text(language.cancel, style: primaryTextStyle()),
             //                                                             ),
             //                                                             16.width,
             //                                                             TextButton(
@@ -277,7 +277,7 @@ class PlayListItemWidgetState extends State<PlayListItemWidget> {
             //                                                               onPressed: () {
             //                                                                 editPlaylist(dialogContext, playlistId: _playlistItem.playlistId, postType: _playlistItem.postType);
             //                                                               },
-            //                                                               child: Text(language!.edit, style: primaryTextStyle(color: Colors.white)),
+            //                                                               child: Text(language.edit, style: primaryTextStyle(color: Colors.white)),
             //                                                             )
             //                                                           ],
             //                                                         ),
@@ -296,7 +296,7 @@ class PlayListItemWidgetState extends State<PlayListItemWidget> {
             //                                   Icon(Icons.edit_rounded, color: Color(0xFFA8A8A8)),
             //                                   16.width,
             //                                   Text(
-            //                                     language!.editPlaylist,
+            //                                     language.editPlaylist,
             //                                     style: primaryTextStyle(size: 18, color: Color(0xFFA8A8A8)),
             //                                     overflow: TextOverflow.ellipsis,
             //                                     maxLines: 1,
@@ -316,9 +316,9 @@ class PlayListItemWidgetState extends State<PlayListItemWidget> {
             //                                         crossAxisAlignment: CrossAxisAlignment.start,
             //                                         mainAxisSize: MainAxisSize.min,
             //                                         children: [
-            //                                           Text("${language!.delete} ${_playlistItem.postType}", style: primaryTextStyle(size: 22)),
+            //                                           Text("${language.delete} ${_playlistItem.postType}", style: primaryTextStyle(size: 22)),
             //                                           16.height,
-            //                                           Text("${language!.areYouSureYouWantToDelete} ${_playlistItem.postType}?", style: primaryTextStyle()),
+            //                                           Text("${language.areYouSureYouWantToDelete} ${_playlistItem.postType}?", style: primaryTextStyle()),
             //                                           24.height,
             //                                           Observer(
             //                                             builder: (_) {
@@ -336,7 +336,7 @@ class PlayListItemWidgetState extends State<PlayListItemWidget> {
             //                                                             onPressed: () {
             //                                                               finish(dialogContext);
             //                                                             },
-            //                                                             child: Text(language!.cancel, style: primaryTextStyle()),
+            //                                                             child: Text(language.cancel, style: primaryTextStyle()),
             //                                                           ),
             //                                                           16.width,
             //                                                           TextButton(
@@ -347,7 +347,7 @@ class PlayListItemWidgetState extends State<PlayListItemWidget> {
             //                                                             onPressed: () {
             //                                                               removePlaylist(dialogContext, playlistId: _playlistItem.playlistId);
             //                                                             },
-            //                                                             child: Text(language!.delete, style: primaryTextStyle(color: Colors.white)),
+            //                                                             child: Text(language.delete, style: primaryTextStyle(color: Colors.white)),
             //                                                           )
             //                                                         ],
             //                                                       ),
@@ -365,7 +365,7 @@ class PlayListItemWidgetState extends State<PlayListItemWidget> {
             //                                   Icon(Icons.close_rounded, color: Color(0xFFA8A8A8)),
             //                                   16.width,
             //                                   Text(
-            //                                     language!.deletePlaylist,
+            //                                     language.deletePlaylist,
             //                                     style: primaryTextStyle(size: 18, color: Color(0xFFA8A8A8)),
             //                                     overflow: TextOverflow.ellipsis,
             //                                     maxLines: 1,
@@ -391,14 +391,14 @@ class PlayListItemWidgetState extends State<PlayListItemWidget> {
           } else {
             return NoDataWidget(
               imageWidget: noDataImage(),
-              title: '${language!.noPlaylistsFoundFor} $noDataTitle',
-              subTitle: '${language!.createPlaylistAndAdd} $noDataTitle',
+              title: '${language.noPlaylistsFoundFor} $noDataTitle',
+              subTitle: '${language.createPlaylistAndAdd} $noDataTitle',
             );
           }
         } else if (snap.hasError) {
           return NoDataWidget(
             imageWidget: noDataImage(),
-            title: language!.somethingWentWrong,
+            title: language.somethingWentWrong,
           ).center();
         }
         return LoaderWidget();
@@ -467,8 +467,8 @@ class PlayListItemWidgetState extends State<PlayListItemWidget> {
                     }
                   },
                   itemBuilder: (ctx) => [
-                    buildPopupMenuItem(language!.edit, 0),
-                    buildPopupMenuItem(language!.delete, 1),
+                    buildPopupMenuItem(language.edit, 0),
+                    buildPopupMenuItem(language.delete, 1),
                   ],
                 ),
               ],
@@ -500,11 +500,11 @@ class PlayListItemWidgetState extends State<PlayListItemWidget> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                  "${language!.delete} ${playlist.label.capitalizeFirstLetter()} ${language!.playlist}",
+                  "${language.delete} ${playlist.label.capitalizeFirstLetter()} ${language.playlist}",
                   style: primaryTextStyle(size: 22)),
               16.height,
               Text(
-                  "${language!.areYouSureYouWantToDelete} ${playlist.playlistName} ?",
+                  "${language.areYouSureYouWantToDelete} ${playlist.playlistName} ?",
                   style: primaryTextStyle()),
               24.height,
               Observer(
@@ -526,7 +526,7 @@ class PlayListItemWidgetState extends State<PlayListItemWidget> {
                                 onPressed: () {
                                   finish(dialogContext);
                                 },
-                                child: Text(language!.cancel,
+                                child: Text(language.cancel,
                                     style: primaryTextStyle()),
                               ),
                               16.width,
@@ -543,7 +543,7 @@ class PlayListItemWidgetState extends State<PlayListItemWidget> {
                                   removePlaylist(dialogContext,
                                       playlistId: playlist.playlistId);
                                 },
-                                child: Text(language!.delete,
+                                child: Text(language.delete,
                                     style:
                                         primaryTextStyle(color: Colors.white)),
                               )
@@ -572,7 +572,7 @@ class PlayListItemWidgetState extends State<PlayListItemWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text("${language!.edit} ${playlistItem.playlistName}",
+                Text("${language.edit} ${playlistItem.playlistName}",
                     style: primaryTextStyle(size: 22)),
                 16.height,
                 AppTextField(
@@ -580,7 +580,7 @@ class PlayListItemWidgetState extends State<PlayListItemWidget> {
                   textFieldType: TextFieldType.NAME,
                   decoration: InputDecoration(
                     hintText: "E.g. Coffee Break",
-                    labelText: language!.playlistTitle,
+                    labelText: language.playlistTitle,
                     labelStyle: primaryTextStyle(color: Color(0xFFA8A8A8)),
                     hintStyle: primaryTextStyle(color: Color(0xFF484848)),
                     focusedBorder: OutlineInputBorder(
@@ -594,7 +594,7 @@ class PlayListItemWidgetState extends State<PlayListItemWidget> {
                   ),
                   validator: (val) {
                     if (val.validate().isEmpty)
-                      return language!.thisFieldIsRequired;
+                      return language.thisFieldIsRequired;
                     return null;
                   },
                 ),
@@ -618,7 +618,7 @@ class PlayListItemWidgetState extends State<PlayListItemWidget> {
                                   onPressed: () {
                                     finish(dialogContext);
                                   },
-                                  child: Text(language!.cancel,
+                                  child: Text(language.cancel,
                                       style: primaryTextStyle()),
                                 ),
                                 16.width,
@@ -636,7 +636,7 @@ class PlayListItemWidgetState extends State<PlayListItemWidget> {
                                         playlistId: playlistItem.playlistId,
                                         postType: playlistItem.postType);
                                   },
-                                  child: Text(language!.update,
+                                  child: Text(language.update,
                                       style: primaryTextStyle(
                                           color: Colors.white)),
                                 )

@@ -96,9 +96,9 @@ class GenreFragmentState extends State<GenreFragment> {
               labelPadding: EdgeInsets.only(left: 16, right: 16),
               tabAlignment: TabAlignment.fill,
               tabs: [
-                Tab(child: Marquee(child: Text(language!.movies))),
-                Tab(child: Marquee(child: Text(language!.tVShows))),
-                Tab(child: Marquee(child: Text(language!.videos))),
+                Tab(child: Marquee(child: Text(language.movies))),
+                Tab(child: Marquee(child: Text(language.tVShows))),
+                Tab(child: Marquee(child: Text(language.videos))),
                 // Tab(child: Text("Live")),
               ],
             ),

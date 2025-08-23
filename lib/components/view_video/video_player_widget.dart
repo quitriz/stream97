@@ -154,7 +154,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         setState(() {});
       }
     } catch (e) {
-      _showErrorMessage(language!.liveStreamErrorMessage);
+      _showErrorMessage(language.liveStreamErrorMessage);
     }
   }
 
@@ -259,7 +259,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                           const Icon(Icons.error_outline_rounded, size: 34, color: white),
                           10.height,
                           Text(
-                            language!.videoNotFound,
+                            language.videoNotFound,
                             style: boldTextStyle(size: 16, color: white),
                           ),
                         ],

@@ -57,7 +57,7 @@ class ItemHorizontalList extends StatelessWidget {
                       onCancel: (c) {
                         finish(c);
                       },
-                      title: language!.areYouSureYouWantToDeleteThisFromYourContinueWatching,
+                      title: language.areYouSureYouWantToDeleteThisFromYourContinueWatching,
                       onAccept: (_) async {
                         finish(context);
                         await deleteVideoContinueWatch(postId: data.id.validate(), postType: data.postType).then((v) {

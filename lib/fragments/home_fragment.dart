@@ -215,10 +215,10 @@ class HomeFragmentState extends State<HomeFragment> {
                         labelPadding: EdgeInsets.only(
                             left: spacing_large, right: spacing_large),
                         tabs: [
-                          Tab(child: Text(language!.home)),
-                          Tab(child: Text(language!.movies)),
-                          Tab(child: Text(language!.tVShows)),
-                          Tab(child: Text(language!.videos)),
+                          Tab(child: Text(language.home)),
+                          Tab(child: Text(language.movies)),
+                          Tab(child: Text(language.tVShows)),
+                          Tab(child: Text(language.videos)),
                         ],
                       ),
                     ),

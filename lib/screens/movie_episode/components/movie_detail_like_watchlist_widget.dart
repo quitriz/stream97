@@ -197,8 +197,8 @@ class MovieDetailLikeWatchListWidgetState
 
     await watchlistMovie(req).then((value) {
       toast(value.isAdded!
-          ? language!.movieAddedToYourWatchlist
-          : language!.movieRemovedFromYourWatchlist);
+          ? language.movieAddedToYourWatchlist
+          : language.movieRemovedFromYourWatchlist);
       //
     }).catchError((e) {
       widget.isInWatchList = !widget.isInWatchList.validate();

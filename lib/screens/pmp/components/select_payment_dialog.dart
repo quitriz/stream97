@@ -32,7 +32,7 @@ class _SelectPaymentDialogState extends State<SelectPaymentDialog> {
           children: [
             Icon(paymentMethodIndex == 0 ? Icons.radio_button_checked : Icons.circle_outlined, color: context.iconColor, size: 18),
             8.width,
-            Text(language!.pmpPayment, style: primaryTextStyle()),
+            Text(language.pmpPayment, style: primaryTextStyle()),
           ],
         ).onTap(
           () {
@@ -47,7 +47,7 @@ class _SelectPaymentDialogState extends State<SelectPaymentDialog> {
           children: [
             Icon(paymentMethodIndex == 1 ? Icons.radio_button_checked : Icons.circle_outlined, color: context.iconColor, size: 18),
             8.width,
-            Text(language!.wooCommerce, style: primaryTextStyle()),
+            Text(language.wooCommerce, style: primaryTextStyle()),
           ],
         ).onTap(
           () {
@@ -68,7 +68,7 @@ class _SelectPaymentDialogState extends State<SelectPaymentDialog> {
           width: context.width(),
           color: colorPrimary,
           splashColor: colorPrimary,
-          child: Text(language!.makePayment, style: boldTextStyle(color: Colors.white)),
+          child: Text(language.makePayment, style: boldTextStyle(color: Colors.white)),
         )
       ],
     );
@@ -80,7 +80,7 @@ class _SelectPaymentDialogState extends State<SelectPaymentDialog> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(language!.paymentBy, style: boldTextStyle(size: 20, color: Colors.red)),
+        Text(language.paymentBy, style: boldTextStyle(size: 20, color: Colors.red)),
         20.height,
         paymentOptionWidget(),
       ],

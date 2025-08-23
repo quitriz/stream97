@@ -81,7 +81,7 @@ class _AllOrdersScreenState extends State<AllOrdersScreen> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
         centerTitle: true,
-        title: Text(language!.pastInvoices, style: boldTextStyle()),
+        title: Text(language.pastInvoices, style: boldTextStyle()),
       ),
       body: Stack(
         alignment: Alignment.topCenter,
@@ -92,14 +92,14 @@ class _AllOrdersScreenState extends State<AllOrdersScreen> {
               if (snap.hasError) {
                 return NoDataWidget(
                   imageWidget: noDataImage(),
-                  title: language!.somethingWentWrong,
+                  title: language.somethingWentWrong,
                 ).center();
               }
               if (snap.hasData) {
                 if (snap.data.validate().isEmpty) {
                   return NoDataWidget(
                     imageWidget: noDataImage(),
-                    title: language!.noData,
+                    title: language.noData,
                   ).center();
                 } else {
                   return SingleChildScrollView(
@@ -115,9 +115,9 @@ class _AllOrdersScreenState extends State<AllOrdersScreen> {
                       children: [
                         TableRow(
                           children: [
-                            Text(language!.date, style: boldTextStyle()).center().paddingSymmetric(vertical: 12),
-                            Text(language!.plan, style: boldTextStyle()).center().paddingSymmetric(vertical: 12),
-                            Text(language!.amount, style: boldTextStyle()).center().paddingSymmetric(vertical: 12),
+                            Text(language.date, style: boldTextStyle()).center().paddingSymmetric(vertical: 12),
+                            Text(language.plan, style: boldTextStyle()).center().paddingSymmetric(vertical: 12),
+                            Text(language.amount, style: boldTextStyle()).center().paddingSymmetric(vertical: 12),
                           ],
                         ),
                         ...orderList.map((e) {
@@ -128,7 +128,7 @@ class _AllOrdersScreenState extends State<AllOrdersScreen> {
                                   OrderDetailScreen(orderDetail: e).launch(context);
                                 },
                                 child: Text(
-                                  DateFormat(dateFormatPmp).format(DateTime.parse(e.timestamp.validate())),
+                                  DateFormat(dateFormatPmp).format(DateTime(int.parse(e.timestamp.validate().toString()))),
                                   style: primaryTextStyle(size: 14),
                                 ).center(),
                               ).paddingAll(0),

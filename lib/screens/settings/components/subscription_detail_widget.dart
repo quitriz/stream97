@@ -24,9 +24,9 @@ class _SubscriptionDetailWidgetState extends State<SubscriptionDetailWidget> {
           onTap: () async {
             MyAccountScreen().launch(context);
           },
-          title: language!.myAccount,
+          title: language.myAccount,
           titleTextStyle: primaryTextStyle(color: Colors.white),
-          subTitle: language!.reviewMembershipPlanAnd,
+          subTitle: language.reviewMembershipPlanAnd,
           leading: Image.asset(
             ic_user,
             height: 28,

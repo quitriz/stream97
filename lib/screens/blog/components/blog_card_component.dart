@@ -102,7 +102,7 @@ class _BlogCardComponentState extends State<BlogCardComponent> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('${language!.tags}: ', style: boldTextStyle(size: 14)),
+                  Text('${language.tags}: ', style: boldTextStyle(size: 14)),
                   Wrap(
                     children: tags.map((e) {
                       return Text('$e, ', style: secondaryTextStyle());

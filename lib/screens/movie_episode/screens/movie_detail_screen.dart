@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:fl_pip/fl_pip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -22,8 +23,10 @@ import 'package:streamit_flutter/screens/movie_episode/comments/review_widget.da
 import 'package:streamit_flutter/screens/movie_episode/components/movie_detail_like_watchlist_widget.dart';
 import 'package:streamit_flutter/screens/movie_episode/components/post_restriction_component.dart';
 import 'package:streamit_flutter/screens/movie_episode/components/season_data_widget.dart';
+import 'package:streamit_flutter/screens/movie_episode/components/selection_button_widget.dart';
 import 'package:streamit_flutter/screens/movie_episode/components/sources_data_widget.dart';
 import 'package:streamit_flutter/screens/movie_episode/components/upcoming_related_movie_list_widget.dart';
+import 'package:streamit_flutter/screens/web_view_screen.dart';
 import 'package:streamit_flutter/utils/common.dart';
 import 'package:streamit_flutter/utils/constants.dart';
 import 'package:streamit_flutter/utils/html_widget.dart';
@@ -128,19 +131,19 @@ class MovieDetailScreenState extends State<MovieDetailScreen> {
     String type = '';
     switch (movie.postType) {
       case PostType.MOVIE:
-        type = 'movie';
+        type = ReviewConst.reviewTypeMovie;
         break;
       case PostType.TV_SHOW:
-        type = 'tv_show';
+        type = ReviewConst.reviewTypeTvShow;
         break;
       case PostType.EPISODE:
-        type = 'episode';
+        type = ReviewConst.reviewTypeEpisode;
         break;
       case PostType.VIDEO:
-        type = 'video';
+        type = ReviewConst.reviewTypeVideo;
         break;
       default:
-        type = 'movie';
+        type = ReviewConst.reviewTypeMovie;
     }
     final reviews = await getReviewList(postType: type.toLowerCase(), postId: widget.movieData.id.validate());
     appStore.reviewList.clear();
@@ -227,7 +230,7 @@ class MovieDetailScreenState extends State<MovieDetailScreen> {
 
   Future<void> playFirstEpisode() async {
     if (!movie.userHasAccess.validate()) {
-      toast(language!.youDontHaveMembership);
+      toast(language.youDontHaveMembership);
       return;
     }
 
@@ -255,6 +258,7 @@ class MovieDetailScreenState extends State<MovieDetailScreen> {
           episodes: eps,
           index: 0,
           lastIndex: eps.length,
+          tvShowUserHasAccess: movie.userHasAccess.validate(),
         ).launch(context);
       } else {
         toast('No episodes found.');
@@ -300,14 +304,54 @@ class MovieDetailScreenState extends State<MovieDetailScreen> {
     );
   }
 
-  double roundDouble({required double value, int? places}) => ((value * 10).round().toDouble() / 10);
+  /// Handles the rent payment process
+  Future<void> _handleRentPayment() async {
+    /// If the user is not logged in, it redirects to the SignInScreen.
+    if (!appStore.isLogging) {
+      SignInScreen(
+        redirectTo: () {
+          setState(() {});
+        },
+      ).launch(context);
+      return;
+    }
+    /// If the movie does not have a checkout URL, it shows a toast message.
+    if (movie.checkOutUrl.validate().isEmpty) {
+      toast(language.checkoutUrlNotAvailable);
+      return;
+    }
+
+    await WebViewScreen(
+      url: movie.checkOutUrl.validate() + '&web_view_nonce=${appStore.userNonce}&user_id=${appStore.userId}',
+      title: '${language.rent.capitalizeFirstLetter()} - ${movie.title.validate()}',
+      paymentType: 'rent',
+    ).launch(context).then((result) async {
+      /// Handle post-payment actions
+      appStore.setLoading(true);
+      try {
+        await getDetails();
+        setState(() {});
+        if (result == true) {
+          toast(language.paymentCompletedSuccessfully);
+        }
+      } catch (e) {
+        log('Error refreshing movie details: $e');
+      } finally {
+        appStore.setLoading(false);
+      }
+    });
+  }
 
   Widget movieStreamingWidget(MovieData movie) {
     log('AD Config: ${movie.adConfiguration?.adsEnabled}, Pre-roll: ${movie.adConfiguration?.preRollAdsList?.length}, Mid-roll: ${movie.adConfiguration?.midRollAdsList?.length}');
+    final String streamUrl = movie.urlLink.validate().isNotEmpty
+        ? movie.urlLink.validate()
+        : movie.file.validate();
     return AdVideoPlayerWidget(
-      streamUrl: movie.file.validate(),
+      streamUrl: streamUrl,
       adConfig: movie.adConfiguration,
       title: movie.title.validate(),
+      postType: widget.movieData.postType,
       isLive: false,
     );
   }
@@ -350,14 +394,14 @@ class MovieDetailScreenState extends State<MovieDetailScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  language!.loginToWatchMessage,
+                  language.loginToWatchMessage,
                   style: primaryTextStyle(size: 16, color: Colors.white),
                   textAlign: TextAlign.center,
                 ),
                 16.height,
                 AppButton(
                   color: context.primaryColor,
-                  text: language!.login,
+                  text: language.login,
                   elevation: 0,
                   padding: EdgeInsets.zero,
                   onTap: () {
@@ -450,7 +494,7 @@ class MovieDetailScreenState extends State<MovieDetailScreen> {
                                         style: primaryTextStyle(size: 30),
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
-                                      ),
+                                      ).expand(),
                                       Container(
                                         padding: EdgeInsets.all(12),
                                         decoration: BoxDecoration(color: cardColor, borderRadius: radius(4)),
@@ -460,6 +504,13 @@ class MovieDetailScreenState extends State<MovieDetailScreen> {
                                       }).paddingRight(16),
                                     ],
                                   ),
+                                  4.height,
+                                  if (movie.isRented.validate())
+                                    Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(color: Colors.green.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(4)),
+                                      child: Text(language.rented, style: primaryTextStyle(color: Colors.green, size: 16)),
+                                    ),
                                   8.height,
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -484,29 +535,16 @@ class MovieDetailScreenState extends State<MovieDetailScreen> {
                                         ),
                                       ],
                                       4.height,
-                                      Text(
-                                        'English',
-                                        style: secondaryTextStyle(size: 14),
-                                      ),
                                     ],
                                   ),
-                                  16.height,
-
-                                  /// Stream_now_Button
-                                  if (appStore.isTrailerVideoPlaying && widget.movieData.isUpcoming == false)
-                                    Container(
-                                      height: 45,
-                                      width: context.width(),
-                                      decoration: BoxDecoration(
-                                        color: colorPrimary,
-                                        borderRadius: radius(4),
-                                      ),
-                                      child: TextIcon(
-                                        text: language!.streamNow,
-                                        textStyle: boldTextStyle(color: Colors.white),
-                                        suffix: Icon(Icons.play_arrow_rounded, size: 20, color: Colors.white),
-                                      ).center(),
-                                    ).onTap(() {
+                                  /// Dynamic selection buttons
+                                  SelectionButtonsWidget(
+                                    movie: movie,
+                                    genre: genre,
+                                    isTrailerPlaying: appStore.isTrailerVideoPlaying,
+                                    isUpcoming: widget.movieData.isUpcoming == true,
+                                    ///Stream Now button action
+                                    onStreamNow: () {
                                       if (appStore.isLogging) {
                                         appStore.setTrailerVideoPlayer(false);
                                       } else {
@@ -516,7 +554,12 @@ class MovieDetailScreenState extends State<MovieDetailScreen> {
                                           },
                                         ).launch(context);
                                       }
-                                    }),
+                                    },
+                                    ///OnRent button action
+                                    onRent: () {
+                                      _handleRentPayment();
+                                    },
+                                  ).paddingSymmetric(horizontal: 16),
                                   16.height,
                                   if (movie.tag != null && movie.tag!.isNotEmpty)
                                     Wrap(
@@ -552,8 +595,8 @@ class MovieDetailScreenState extends State<MovieDetailScreen> {
                                     style: secondaryTextStyle(),
                                     trimLines: 3,
                                     trimMode: TrimMode.Line,
-                                    trimCollapsedText: ' ...${language!.viewMore}',
-                                    trimExpandedText: '  ${language!.viewLess}',
+                                    trimCollapsedText: ' ...${language.viewMore}',
+                                    trimExpandedText: '  ${language.viewLess}',
                                   ).paddingSymmetric(horizontal: 16, vertical: 16),
                               8.height,
                               MovieDetailLikeWatchListWidget(
@@ -656,7 +699,7 @@ class MovieDetailScreenState extends State<MovieDetailScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      language!.sources,
+                                      language.sources,
                                       style: primaryTextStyle(size: 18),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
@@ -696,7 +739,7 @@ class MovieDetailScreenState extends State<MovieDetailScreen> {
                   if (!hasData && isError)
                     NoDataWidget(
                       imageWidget: noDataImage(),
-                      title: language!.noDataFound,
+                      title: language.noDataFound,
                     ).center(),
                   Observer(builder: (_) => LoaderWidget().visible(appStore.isLoading)).center(),
                 ],

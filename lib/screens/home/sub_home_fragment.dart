@@ -99,16 +99,16 @@ class SubHomeFragmentState extends State<SubHomeFragment> with AutomaticKeepAliv
             errorBuilder: (p0) {
               return NoDataWidget(
                 imageWidget: noDataImage(),
-                title: '${language!.noData}',
-                subTitle: language!.somethingWentWrong,
+                title: '${language.noData}',
+                subTitle: language.somethingWentWrong,
               );
             },
             onSuccess: (data) {
               if (data.banner.validate().isEmpty && data.sliders.validate().isEmpty && data.continueWatch.validate().isEmpty)
                 return NoDataWidget(
                   imageWidget: noDataImage(),
-                  title: '${language!.no} ${widget.type.validate() == 'home' ? '${language!.content}' : widget.type.validate()} ${language!.found}',
-                  subTitle: '${language!.the} ${widget.type.validate() == 'home' ? '${language!.content}' : widget.type.validate()} ${language!.hasNotYetBeenAdded}',
+                  title: '${language.no} ${widget.type.validate() == 'home' ? '${language.content}' : widget.type.validate()} ${language.found}',
+                  subTitle: '${language.the} ${widget.type.validate() == 'home' ? '${language.content}' : widget.type.validate()} ${language.hasNotYetBeenAdded}',
                 );
               return Observer(builder: (context) {
                 return SingleChildScrollView(
@@ -127,7 +127,7 @@ class SubHomeFragmentState extends State<SubHomeFragment> with AutomaticKeepAliv
                           children: [
                             headingWidViewAll(
                               context,
-                              language!.continueWatching,
+                              language.continueWatching,
                               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                               showViewMore: data.continueWatch.validate().length > 4,
                               callback: () async {

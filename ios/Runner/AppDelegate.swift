@@ -6,7 +6,7 @@ import AVKit
 import fl_pip
 
 @UIApplicationMain
-@objc class AppDelegate: FlFlutterAppDelegate {
+@objc class AppDelegate: FlutterAppDelegate {
 
     var url = ""
     var navigationController = UINavigationController()
@@ -24,13 +24,17 @@ import fl_pip
         FlutterDownloaderPlugin.setPluginRegistrantCallback(registerPlugins)
         print("Enter in iOS")
 
-        let controller: FlutterViewController = window?.rootViewController as! FlutterViewController
+        // Safely unwrap the rootViewController and cast its type.
+        guard let controller = window?.rootViewController as? FlutterViewController else {
+            fatalError("rootViewController is not of type FlutterViewController")
+        }
+        
         let webviewChannel = FlutterMethodChannel(name: "webviewChannel", binaryMessenger: controller.binaryMessenger)
 
         navigationController = UINavigationController(rootViewController: controller)
         navigationController.setNavigationBarHidden(true, animated: false)
-        self.window!.rootViewController = navigationController
-        self.window!.makeKeyAndVisible()
+        self.window?.rootViewController = navigationController
+        self.window?.makeKeyAndVisible()
 
         webviewChannel.setMethodCallHandler({ [self] (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
             if (call.method == "webview") {
@@ -42,8 +46,8 @@ import fl_pip
                 vc.dic = dic as! NSMutableDictionary
                 navigationController.pushViewController(vc, animated: false)
 
-                self.window!.rootViewController = navigationController
-                self.window!.makeKeyAndVisible()
+                self.window?.rootViewController = navigationController
+                self.window?.makeKeyAndVisible()
             } else {
                 result("")
             }
@@ -83,7 +87,7 @@ import fl_pip
         pipView.layer.addSublayer(playerLayer)
 
         // Add the custom PiP-like view to the main window
-        if let window = UIApplication.shared.keyWindow {
+        if let window = UIApplication.shared.windows.first {
             window.addSubview(pipView)
             overlayPlayerView = pipView
         }
@@ -107,14 +111,15 @@ import fl_pip
     }
 
     func SwitchViewController() {
-        let controller: FlutterViewController = window?.rootViewController as! FlutterViewController
+        // Safely unwrap the rootViewController and cast its type.
+        guard let controller = window?.rootViewController as? FlutterViewController else {
+            print("Error: Could not get FlutterViewController to switch.")
+            return
+        }
         let navigationController = UINavigationController(rootViewController: controller)
-        self.window.rootViewController = navigationController
-        self.window.makeKeyAndVisible()
-    }
-
-    override func registerPlugin(_ registry: FlutterPluginRegistry) {
-        GeneratedPluginRegistrant.register(with: registry)
+        // Use optional chaining (?) to safely access properties on the optional 'window'.
+        self.window?.rootViewController = navigationController
+        self.window?.makeKeyAndVisible()
     }
 }
 

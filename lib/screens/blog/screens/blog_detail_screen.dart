@@ -100,7 +100,7 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
       setState(() {});
       appStore.setLoading(false);
     }).catchError((e) {
-      toast(language!.canNotViewPost);
+      toast(language.canNotViewPost);
       appStore.setLoading(false);
     });
   }
@@ -154,7 +154,7 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                 if (tags.isNotEmpty)
                   Row(
                     children: [
-                      Text('${language!.tags}: ', style: boldTextStyle(size: 14)),
+                      Text('${language.tags}: ', style: boldTextStyle(size: 14)),
                       Wrap(
                         children: tags.map((e) {
                           return Text('$e, ', style: secondaryTextStyle());
@@ -166,7 +166,7 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(language!.protectedPostText, style: secondaryTextStyle()),
+                      Text(language.protectedPostText, style: secondaryTextStyle()),
                       16.height,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -180,7 +180,7 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                               maxLines: 1,
                               decoration: inputDecorationFilled(
                                 context,
-                                label: language!.password,
+                                label: language.password,
                                 contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
                                 fillColor: context.cardColor,
                               ),
@@ -190,7 +190,7 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                             ),
                           ),
                           TextButton(
-                            child: Text(language!.apply, style: primaryTextStyle(color: context.primaryColor)),
+                            child: Text(language.apply, style: primaryTextStyle(color: context.primaryColor)),
                             onPressed: () async {
                               await getBlog(password: password.text);
                             },
@@ -221,7 +221,7 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(language!.comments, style: boldTextStyle(size: 18)),
+                                  Text(language.comments, style: boldTextStyle(size: 18)),
                                   AnimatedListView(
                                     padding: EdgeInsets.all(8),
                                     itemCount: commentList.length,
@@ -253,7 +253,7 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   16.height,
-                                  Text(language!.leaveAReply, style: boldTextStyle()),
+                                  Text(language.leaveAReply, style: boldTextStyle()),
                                   16.height,
                                   AppTextField(
                                     controller: message,
@@ -263,17 +263,17 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                     textStyle: boldTextStyle(),
                                     minLines: 5,
                                     maxLines: 5,
-                                    decoration: inputDecorationFilled(context, fillColor: search_edittext_color, label: language!.message),
+                                    decoration: inputDecorationFilled(context, fillColor: search_edittext_color, label: language.message),
                                   ),
                                   16.height,
                                   AppButton(
                                     width: context.width() / 2 - 20,
-                                    text: language!.submit.capitalizeFirstLetter(),
+                                    text: language.submit.capitalizeFirstLetter(),
                                     color: context.primaryColor,
                                     onTap: () {
                                       if(message.text=="")
                                         {
-                                          toast(language!.pleaseEnterMessageBeforeSubmitting);
+                                          toast(language.pleaseEnterMessageBeforeSubmitting);
                                         }
                                       else
                                         {
@@ -281,7 +281,7 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                             appStore.setLoading(true);
                                             addBlogComment(postId: blog.id.validate(), content: message.text.trim()).then((value) {
                                               message.clear();
-                                              toast(language!.yourCommentAddedSuccessfully);
+                                              toast(language.yourCommentAddedSuccessfully);
                                               commentList.add(value);
                                               setState(() {});
                                               appStore.setLoading(false);

@@ -88,7 +88,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         appBar: AppBar(
           backgroundColor: Theme.of(context).cardColor,
           centerTitle: true,
-          title: Text(language!.myAccount, style: boldTextStyle()),
+          title: Text(language.myAccount, style: boldTextStyle()),
           leading: BackButton(
             onPressed: () {
               if (widget.fromRegistration) {
@@ -131,7 +131,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         ],
                       ),
                       16.height,
-                      if (!hasError) hasMembership ? Text(language!.myMemberships, style: boldTextStyle()).paddingSymmetric(horizontal: 16) : Offstage(),
+                      if (!hasError) hasMembership ? Text(language.myMemberships, style: boldTextStyle()).paddingSymmetric(horizontal: 16) : Offstage(),
                       16.height,
                       if (!hasError)
                         hasMembership
@@ -160,7 +160,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                                 ),
                                                 if (appStore.subscriptionPlanExpDate.validate().toInt() != 0)
                                                   Text(
-                                                    language!.validTill + DateTime.fromMillisecondsSinceEpoch(appStore.subscriptionPlanExpDate.validate().toInt() * 1000).toString().getFormattedDate()!,
+                                                    language.validTill + DateTime.fromMillisecondsSinceEpoch(appStore.subscriptionPlanExpDate.validate().toInt() * 1000).toString().getFormattedDate()!,
                                                     style: primaryTextStyle(color: white),
                                                   ),
                                               ],
@@ -187,7 +187,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                           ],
                                         ).paddingOnly(top: 8, left: 16, right: 16, bottom: 4),
                                         AppButton(
-                                          child: Text(language!.upgradePlan, style: boldTextStyle(color: white)),
+                                          child: Text(language.upgradePlan, style: boldTextStyle(color: white)),
                                           color: colorPrimary,
                                           onTap: () async {
                                             MembershipPlansScreen(selectedPlanId: appStore.subscriptionPlanId).launch(context).then((v) {
@@ -205,12 +205,12 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       else
                         NoDataWidget(
                           imageWidget: noDataImage(),
-                          title: language!.somethingWentWrong,
+                          title: language.somethingWentWrong,
                         ).center(),
                       PastInvoicesComponent().paddingSymmetric(horizontal: 16),
                       TextButton(
                         child: Text(
-                          '${language!.viewOrdersOf} ${language!.africanMobilePayment}',
+                          '${language.viewOrdersOf} ${language.africanMobilePayment}',
                           style: primaryTextStyle(color: colorPrimary),
                           textAlign: TextAlign.center,
                         ),
