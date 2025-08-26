@@ -137,93 +137,88 @@ class EpisodeDetailScreenState extends State<EpisodeDetailScreen>
     super.dispose();
   }
 
-  Widget subscriptionEpisode(MovieData _episode) {
-    if (data.userHasAccess.validate()) {
-      return GestureDetector(
-        onVerticalDragUpdate: (details) {
-          if (details.delta.dy <= 0 && details.delta.dx == 0) {
-            _controller.forward();
-          }
-          if (details.delta.dy >= 0 && details.delta.dx == 0) {
-            _controller.reverse();
-          }
-        },
-        child: SizedBox(
-          height: !appStore.showPIP && !appStore.hasInFullScreen
-              ? context.height() * 0.3
-              : context.height(),
-          width: context.width(),
-          child: Stack(
-            alignment: Alignment.center,
-            fit: StackFit.expand,
-            children: [
-              if ((_episode.adConfiguration != null &&
-                  (_episode.episodeFile.validate().isNotEmpty ||
-                      _episode.file.validate().isNotEmpty)))
-                AdVideoPlayerWidget(
-                  streamUrl: _episode.episodeFile.validate().isNotEmpty
-                      ? _episode.episodeFile.validate()
-                      : _episode.file.validate(),
-                  adConfig: _episode.adConfiguration,
-                  title: _episode.title.validate(),
-                  isLive: false,
-                  postType: _episode.postType != null
-                      ? _episode.postType!
-                      : PostType.EPISODE,
-                )
-              else
-                VideoContentWidget(
-                  choice: _episode.choice.validate(),
-                  image: _episode.image.validate(),
-                  urlLink: _episode.urlLink.validate().replaceAll(r'\/', '/'),
-                  embedContent: _episode.embedContent,
-                  fileLink: _episode.episodeFile.validate().isNotEmpty
-                      ? _episode.episodeFile.validate()
-                      : _episode.file.validate(),
-                  videoId: _episode.id.validate().toString(),
-                  watchedTime: widget.watchedTime.toString(),
-                  title: _episode.title.validate(),
-                  postType: _episode.postType != null
-                      ? _episode.postType!
-                      : PostType.EPISODE,
-                ),
-              if (!appStore.showPIP && appStore.hasInFullScreen)
-                SlideTransition(
-                  position: _offsetAnimation,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.transparent,
-                          Theme.of(context).scaffoldBackgroundColor
-                        ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        stops: [0.0, 1.0],
-                        tileMode: TileMode.repeated,
-                      ),
-                    ),
-                    child: EpisodeListWidget(
-                      widget.episodes.validate(),
-                      episodeIndex,
-                      onEpisodeChange: (i, episode) {
-                        if (appStore.hasInFullScreen) {
-                          appStore.setToFullScreen(false);
-                          setOrientationPortrait();
-                        }
-                        if (userHasAccessToEpisode) {
-                          episodeIndex = i;
-                          getEpisodeDetails(episode);
-                        }
-                      },
-                    ),
+Widget subscriptionEpisode(MovieData _episode) {
+  return GestureDetector(
+    onVerticalDragUpdate: (details) {
+      if (details.delta.dy <= 0 && details.delta.dx == 0) {
+        _controller.forward();
+      }
+      if (details.delta.dy >= 0 && details.delta.dx == 0) {
+        _controller.reverse();
+      }
+    },
+    child: SizedBox(
+      height: !appStore.showPIP && !appStore.hasInFullScreen
+          ? context.height() * 0.3
+          : context.height(),
+      width: context.width(),
+      child: Stack(
+        alignment: Alignment.center,
+        fit: StackFit.expand,
+        children: [
+          if ((_episode.adConfiguration != null &&
+              (_episode.episodeFile.validate().isNotEmpty ||
+                  _episode.file.validate().isNotEmpty)))
+            AdVideoPlayerWidget(
+              streamUrl: _episode.episodeFile.validate().isNotEmpty
+                  ? _episode.episodeFile.validate()
+                  : _episode.file.validate(),
+              adConfig: _episode.adConfiguration,
+              title: _episode.title.validate(),
+              isLive: false,
+              postType: _episode.postType ?? PostType.EPISODE,
+            )
+          else
+            VideoContentWidget(
+              choice: _episode.choice.validate(),
+              image: _episode.image.validate(),
+              urlLink: _episode.urlLink.validate().replaceAll(r'\/', '/'),
+              embedContent: _episode.embedContent,
+              fileLink: _episode.episodeFile.validate().isNotEmpty
+                  ? _episode.episodeFile.validate()
+                  : _episode.file.validate(),
+              videoId: _episode.id.validate().toString(),
+              watchedTime: widget.watchedTime.toString(),
+              title: _episode.title.validate(),
+              postType: _episode.postType ?? PostType.EPISODE,
+            ),
+          if (!appStore.showPIP && appStore.hasInFullScreen)
+            SlideTransition(
+              position: _offsetAnimation,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.transparent,
+                      Theme.of(context).scaffoldBackgroundColor
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: [0.0, 1.0],
+                    tileMode: TileMode.repeated,
                   ),
                 ),
-            ],
-          ),
-        ),
-      );
-    } else {
+                child: EpisodeListWidget(
+                  widget.episodes.validate(),
+                  episodeIndex,
+                  onEpisodeChange: (i, episode) {
+                    if (appStore.hasInFullScreen) {
+                      appStore.setToFullScreen(false);
+                      setOrientationPortrait();
+                    }
+                    if (userHasAccessToEpisode) {
+                      episodeIndex = i;
+                      getEpisodeDetails(episode);
+                    }
+                  },
+                ),
+              ),
+            ),
+        ],
+      ),
+    ),
+  );
+} else {
       return PostRestrictionComponent(
         imageUrl: _episode.image.validate(),
         isPostRestricted: !userHasAccessToEpisode,
