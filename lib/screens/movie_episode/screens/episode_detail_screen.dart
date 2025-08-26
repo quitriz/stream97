@@ -218,18 +218,7 @@ Widget subscriptionEpisode(MovieData _episode) {
       ),
     ),
   );
-} else {
-      return PostRestrictionComponent(
-        imageUrl: _episode.image.validate(),
-        isPostRestricted: !userHasAccessToEpisode,
-        restrictedPlans: restrictedPlans,
-        callToRefresh: () {
-          init();
-          appStore.setTrailerVideoPlayer(true);
-        },
-      );
-    }
-  }
+} 
 
   @override
   Widget build(BuildContext context) {
