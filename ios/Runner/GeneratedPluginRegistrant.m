@@ -120,12 +120,6 @@
 @import permission_handler_apple;
 #endif
 
-#if __has_include(<purchases_flutter/PurchasesFlutterPlugin.h>)
-#import <purchases_flutter/PurchasesFlutterPlugin.h>
-#else
-@import purchases_flutter;
-#endif
-
 #if __has_include(<screen_protector/ScreenProtectorPlugin.h>)
 #import <screen_protector/ScreenProtectorPlugin.h>
 #else
@@ -202,7 +196,6 @@
   [FPPPackageInfoPlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"FPPPackageInfoPlusPlugin"]];
   [PathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"PathProviderPlugin"]];
   [PermissionHandlerPlugin registerWithRegistrar:[registry registrarForPlugin:@"PermissionHandlerPlugin"]];
-  [PurchasesFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"PurchasesFlutterPlugin"]];
   [ScreenProtectorPlugin registerWithRegistrar:[registry registrarForPlugin:@"ScreenProtectorPlugin"]];
   [FPPSharePlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"FPPSharePlusPlugin"]];
   [SharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"SharedPreferencesPlugin"]];
